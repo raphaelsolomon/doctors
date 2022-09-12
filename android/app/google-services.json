@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "721938423020",
+    "project_id": "gettheskydoctors",
+    "storage_bucket": "gettheskydoctors.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721938423020:android:19d13bf299f4419faa59c9",
+        "android_client_info": {
+          "package_name": "com.gettheskydoctors.doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721938423020-25q2g8okqec2thr1b1c1ec5ge2r09umg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1eyM2zSPQ7YcUYjjp3nffPocX03wjm-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721938423020-25q2g8okqec2thr1b1c1ec5ge2r09umg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "721938423020-ksmpg0c79kngq6je1o36kjovsh7kkecu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gettheskydoctors.patient"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721938423020:android:2bc6eb8d3a877036aa59c9",
+        "android_client_info": {
+          "package_name": "com.gettheskydoctors.patient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721938423020-25q2g8okqec2thr1b1c1ec5ge2r09umg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1eyM2zSPQ7YcUYjjp3nffPocX03wjm-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721938423020-25q2g8okqec2thr1b1c1ec5ge2r09umg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "721938423020-ksmpg0c79kngq6je1o36kjovsh7kkecu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gettheskydoctors.patient"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
