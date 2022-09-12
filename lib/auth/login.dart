@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:doctor/auth/forgotpass.dart';
 import 'package:doctor/auth/register.dart';
 import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/homepage/dashboard.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/resuable/form_widgets.dart';
 import 'package:doctor/services/request.dart';
@@ -366,7 +367,7 @@ class _AuthLoginState extends State<AuthLogin> {
           cat: jsonDecode(res.body)['data']['cat']);
 
       box.put(USERPATH, user).then((value) => {
-        //Get.offAll(() => DashBoard()
+        Get.offAll(() => Dashboard())
         });
     }
   }
