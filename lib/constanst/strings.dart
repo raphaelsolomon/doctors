@@ -1,6 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-
 import 'package:doctor/model/nav_drawer.model.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:flutter/material.dart';
@@ -276,78 +275,63 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         icon: FontAwesome5.dashcube,
         children: [],
         isOpen: false,
-        index: 10),
+        index: 1),
     NavDrawerItem(
-        title: 'My Vitals & Target',
+        title: 'Schedule Timing',
         icon: FontAwesome.heart,
         children: [],
         isOpen: false,
-        index: 1),
+        index: 2),
     NavDrawerItem(
-        title: 'My Medical Records',
+        title: 'My Plans',
         icon: Icons.folder,
         children: [],
         isOpen: false,
-        index: -10),
+        index: 3),
     NavDrawerItem(
         title: 'E-store',
         icon: FontAwesome5.store,
         children: [],
         isOpen: false,
-        index: 4),
+        index: 4), //done
     NavDrawerItem(
-        title: 'Doctor Booking',
+        title: 'My Calender',
         icon: FontAwesome5.user_nurse,
         children: [],
         isOpen: false,
-        index: 3),
-    // NavDrawerItem(
-    //     title: 'My Appointment',
-    //     icon: FontAwesome5.meetup,
-    //     children: [],
-    //     isOpen: false,
-    //     index: 4),
+        index: 5), //done
     NavDrawerItem(
         title: 'My Reminder',
         icon: Icons.alarm,
         children: [],
         isOpen: false,
-        index: 8),
+        index: 6), //done
     NavDrawerItem(
-        title: 'My Family',
+        title: 'My Prescriptions',
         icon: Icons.family_restroom,
         children: [],
         isOpen: false,
-        index: 7),
+        index: 7), //done
     NavDrawerItem(
         title: 'Communication',
         icon: FontAwesome5.facebook_messenger,
         children: [
-           {'index': -13, 'title': 'Social Media'},
+          {'index': -1, 'title': 'Chat Messages'}, //done
+          {'index': -2, 'title': 'Social Media'}, //done
         ],
         isOpen: false,
-        index: 5),
-    // NavDrawerItem(
-    //     title: 'My Prescription',
-    //     icon: Icons.family_restroom,
-    //     children: [],
-    //     isOpen: false,
-    //     index: -11),
-    NavDrawerItem(
-        title: 'Profile Settings',
-        icon: FontAwesome5.user,
-        children: [],
-        isOpen: false,
-        index: -2),
+        index: -0),
     NavDrawerItem(
         title: 'My Transaction',
         icon: FontAwesome5.file_invoice,
         children: [
-          {'index': -12, 'title': 'My Offer'},
-          {'index': 6, 'title': 'My Invoices'},
-          {'index': -0, 'title': 'Account'},
-          {'index': 8, 'title': 'Favourite'},
-          //{'index': -0, 'title': 'Reviews'}
+          {'index': -3, 'title': 'My Offers/Coupons'},//done
+          {'index': -5, 'title': 'My Invoices'}, //done
+          {'index': -6, 'title': 'Account'},
+          {'index': -7, 'title': 'Request Funds'},
+          {'index': -8, 'title': 'Withdraw Funds'},
+          {'index': -9, 'title': 'Favourite'}, //done
+          {'index': -10, 'title': 'Reviews'} //done
         ],
         isOpen: false,
         index: -0),
@@ -355,22 +339,28 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         title: 'Company',
         icon: FontAwesome5.industry,
         children: [
-          //{'index': -0, 'title': 'My Invites'},
-          {'index': 9, 'title': 'My Referrals'},
-          {'index': -9, 'title': 'Contact Us'},
-          {'index': -6, 'title': 'Rate Us'},
-          {'index': -7, 'title': 'Share App'},
+          //{'index': -11, 'title': 'My Invites'},
+          {'index': -12, 'title': 'My Referrals'}, //done
+          {'index': -13, 'title': 'Contact Us'}, //done
+          {'index': -14, 'title': 'Rate Us'}, //done
+          {'index': -15, 'title': 'Share App'}, //done
         ],
         isOpen: false,
         index: -0),
     NavDrawerItem(
+        title: 'My Profile',
+        icon: FontAwesome.home,
+        children: [],
+        isOpen: false,
+        index: 8),
+    NavDrawerItem(
         title: 'Settings',
         icon: Icons.settings,
         children: [
-          // {'index': -13, 'title': 'Language'},
-          {'index': -14, 'title': 'Currency'},
-          {'index': -8, 'title': 'Change Password'},
-          {'index': -5, 'title': 'Notification'}
+          {'index': -16, 'title': 'Profile Settings'},//done
+          {'index': -17, 'title': 'Currency'}, //done
+          {'index': -18, 'title': 'Change Password'}, //done
+          {'index': -19, 'title': 'Notification Settings'} //done
         ],
         isOpen: false,
         index: -0),
@@ -379,15 +369,14 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         icon: FontAwesome5.sign_out_alt,
         children: [],
         isOpen: false,
-        index: 11),
+        index: 9), //done
   ];
 }
 
 const DUMMYTEXT =
     'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled';
 
-
-List<Map<String, dynamic>>countryListDrop = [
+List<Map<String, dynamic>> countryListDrop = [
   {"id": 1, "code": "93", "shortname": "AFG", "name": "Afghanistan"},
   {"id": 2, "code": "358 18", "shortname": "ALA", "name": "Åland Islands"},
   {"id": 3, "code": "355", "shortname": "ALB", "name": "Albania"},
@@ -828,7 +817,6 @@ List<Map<String, dynamic>>countryListDrop = [
   {"id": 248, "code": "260", "shortname": "ZMB", "name": "Zambia"},
   {"id": 249, "code": "263", "shortname": "ZWE", "name": "Zimbabwe"}
 ];
-
 
 List countryList = [
   {"id": 1, "code": "93", "shortname": "AFG", "name": "Afghanistan"},

@@ -1,5 +1,5 @@
 // import 'dart:async';
-// import 'package:doccure_patient/constanst/strings.dart';
+// import 'package:doctor/constanst/strings.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_calendar_week/src/custom_scroll_behaiver.dart';
 // import 'package:flutter_calendar_week/src/date_item.dart';

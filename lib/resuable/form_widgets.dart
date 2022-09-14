@@ -2,6 +2,7 @@ import 'package:doctor/constanst/strings.dart';
 import 'package:doctor/dialog/curreency.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/providers/page_controller.dart';
+import 'package:doctor/store/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -254,7 +255,8 @@ getOtpForm({ctl, node, onChange}) => Container(
       child: TextFormField(
         controller: ctl,
         focusNode: node,
-        style: getCustomFont(size: 16.0, color: Colors.black, weight: FontWeight.w500),
+        style: getCustomFont(
+            size: 16.0, color: Colors.black, weight: FontWeight.w500),
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),
         ],
@@ -357,7 +359,7 @@ navDrawer(BuildContext context, scaffold) => Container(
                 );
               }
               return ExpansionTile(
-                  tilePadding: const EdgeInsets.symmetric( horizontal: 15.0),
+                  tilePadding: const EdgeInsets.symmetric(horizontal: 15.0),
                   leading: CircleAvatar(
                     radius: 18.0,
                     child: Icon(
@@ -397,30 +399,21 @@ navDrawer(BuildContext context, scaffold) => Container(
 
 setChildrenClickListener(e, BuildContext context) {
   switch (e['index']) {
-    case 6:
-      context.read<HomeController>().setPage(6);
-      break;
-    case 8:
-      context.read<HomeController>().setPage(8);
-      break;
-    case 9:
-      context.read<HomeController>().setPage(9);
+    //=================TRANSACTION=================
+    case -3:
+      context.read<HomeController>().setPage(-3);
       break;
     case -5:
       context.read<HomeController>().setPage(-5);
       break;
-    case -6:
-      context.read<HomeController>().setPage(-6);
-      break;
-    case -7:
-      context.read<HomeController>().setPage(-7);
-      break;
-    case -8:
-      context.read<HomeController>().setPage(-8);
-      break;
     case -9:
       context.read<HomeController>().setPage(-9);
       break;
+    case -10:
+      context.read<HomeController>().setPage(-10);
+      break;
+    //===============END OF TRANSACTION============
+    //====================COMPANY===================
     case -12:
       context.read<HomeController>().setPage(-12);
       break;
@@ -428,8 +421,27 @@ setChildrenClickListener(e, BuildContext context) {
       context.read<HomeController>().setPage(-13);
       break;
     case -14:
+      context.read<HomeController>().setPage(-14);
+      break;
+    case -15:
+      context.read<HomeController>().setPage(-15);
+      break;
+    //====================END OF COMPANY============
+
+    //=====================SETTINGS==================
+    case 16:
+      context.read<HomeController>().setPage(6);
+      break;
+    case -17:
       dialogMessage(context, CurrencyDialog());
       break;
+    case 18:
+      context.read<HomeController>().setPage(8);
+      break;
+    case 19:
+      context.read<HomeController>().setPage(9);
+      break;
+    //======================END OF SETTINGS=============
   }
 }
 
@@ -449,30 +461,21 @@ setClickListener(e, BuildContext context) {
       break;
     case 4:
       context.read<HomeController>().isEstore(true);
-      //Get.to(() => StorePage(0));
+      Get.to(() => StorePage(0));
       break;
     case 5:
       context.read<HomeController>().setPage(5);
+      break;
+    case 6:
+     context.read<HomeController>().setPage(6);
       break;
     case 7:
       context.read<HomeController>().setPage(7);
       break;
     case 8:
-      context.read<HomeController>().setPage(8);
+     context.read<HomeController>().setPage(8);
       break;
-    case 10:
-      context.read<HomeController>().setPage(10);
-      break;
-    case -10:
-      context.read<HomeController>().setPage(-10);
-      break;
-    case -11:
-      context.read<HomeController>().setPage(-11);
-      break;
-    case -2:
-      context.read<HomeController>().setPage(-2);
-      break;
-    case 11:
+    case 9:
       dialogMessage(context, logoutPop(context));
       break;
     default:
@@ -691,7 +694,7 @@ Widget secondScroll(context) => Container(
 
 Widget thirdScroll(context) => GestureDetector(
       onTap: () {
-       // Get.to(() => ProductList()
+        // Get.to(() => ProductList()
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

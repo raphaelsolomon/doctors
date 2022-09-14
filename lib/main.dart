@@ -4,6 +4,7 @@ import 'package:doctor/constanst/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/notification/helper_notification.dart';
+import 'package:doctor/providers/calendar_controller.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/providers/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +18,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:phone_form_field/l10n/generated/phone_field_localization.dart';
 import 'package:provider/provider.dart';
-
+import 'package:calendar_view/calendar_view.dart';
 import 'firebase_options.dart';
 
 bool isFlutterLocalNotificationsInitialized = false;
@@ -35,13 +36,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Set the background messaging handler early on, as a named top-level function
-  final RemoteMessage ? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
-  if(remoteMessage != null){
-
-  }
+  final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
+  if (remoteMessage != null) {}
   await HelperNotification.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
 
   var directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
@@ -84,31 +82,35 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
         ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
+        ChangeNotifierProvider<CalendarController>(create: (_) => CalendarController()),
       ],
-      child: GetMaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          PhoneFieldLocalization.delegate
-        ],
-        locale: Locale('en', ''),
-        supportedLocales: const [
-          Locale('en', ''),
-          Locale('ar', ''),
-        ],
-        title: 'DocCure Doctor',
-        defaultTransition: Transition.zoom,
-        debugShowCheckedModeBanner: true,
-        theme: ThemeData(
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            primarySwatch: Colors.blue,
-            primaryColor: Colors.black54),
-        home: box.get('isFirst') == null
-            ? const OnBoardingScreen()
-            : user.get(USERPATH) == null
-                ? const AuthLogin()
-                : Dashboard(),
+      child: CalendarControllerProvider(
+        controller: context.read<CalendarController>().controller,
+        child: GetMaterialApp(
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            PhoneFieldLocalization.delegate
+          ],
+          locale: Locale('en', ''),
+          supportedLocales: const [
+            Locale('en', ''),
+            Locale('ar', ''),
+          ],
+          title: 'DocCure Doctor',
+          defaultTransition: Transition.zoom,
+          debugShowCheckedModeBanner: true,
+          theme: ThemeData(
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              primarySwatch: Colors.blue,
+              primaryColor: Colors.black54),
+          home: box.get('isFirst') == null
+              ? const OnBoardingScreen()
+              : user.get(USERPATH) == null
+                  ? const AuthLogin()
+                  : Dashboard(),
+        ),
       ),
     );
   }

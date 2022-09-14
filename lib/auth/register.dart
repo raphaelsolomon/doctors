@@ -288,7 +288,7 @@ class _AuthRegisterState extends State<AuthRegister> {
               ? {
                   'email': email.text.trim(),
                   'name': fullname.text.trim(),
-                  'category_id': '3',
+                  'category_id': '1',
                   'password': password.text.trim(),
                   'country_id': '$country_id'
                 }
@@ -296,7 +296,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                   'phone':
                       '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
                   'name': fullname.text.trim(),
-                  'category_id': '3',
+                  'category_id': '1',
                   'password': password.text.trim(),
                   'country_id': '$country_id'
                 });
