@@ -1,12 +1,8 @@
 import 'package:doctor/auth/login.dart';
 import 'package:doctor/constanst/strings.dart';
-import 'package:doctor/dialog/add_family.dart';
-import 'package:doctor/main.dart';
 import 'package:doctor/resuable/form_widgets.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
@@ -520,106 +516,6 @@ Widget referral(BuildContext context) {
                   ))
                 ],
               ),
-              const SizedBox(
-                height: 25.0,
-              ),
-            ],
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget familyPop(BuildContext context) {
-  return Stack(
-    alignment: Alignment.center,
-    children: <Widget>[
-      Container(
-        width: MediaQuery.of(context).size.width,
-        margin:
-            const EdgeInsets.all(40), // to push the box half way below circle
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        padding: const EdgeInsets.only(
-            top: 15, left: 20, right: 20), // spacing inside the box
-        child: Material(
-          color: Colors.transparent,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'New Family',
-                    style: getCustomFont(size: 14.0, color: Colors.black45),
-                  ),
-                  Text(
-                    'x',
-                    style: getCustomFont(size: 20.0, color: Colors.black),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Icon(
-                Icons.add_home_sharp,
-                size: 70.0,
-                color: BLUECOLOR,
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Text('Are you sure you want to create a family',
-                  textAlign: TextAlign.center,
-                  style: getCustomFont(
-                      size: 16.0,
-                      color: Colors.black,
-                      weight: FontWeight.w500)),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Flexible(
-                    child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.grey.shade200),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 8.0),
-                    child: Text(
-                      'Cancel',
-                      style: getCustomFont(size: 14.0, color: Colors.black),
-                    ),
-                  ),
-                )),
-                Flexible(
-                    child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    showRequestSheet(context, AddFamilyDailog());
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: BLUECOLOR),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 10.0),
-                    child: Text(
-                      'Continue',
-                      style: getCustomFont(size: 14.0, color: Colors.white),
-                    ),
-                  ),
-                )),
-              ]),
               const SizedBox(
                 height: 25.0,
               ),
@@ -1420,23 +1316,3 @@ showRequestSheet(BuildContext c, Widget widget, {onClose}) {
       }).whenComplete(() => onClose == null ? null : onClose());
 }
 
-void showFlutterNotification(
-    RemoteMessage message, flutterLocalNotificationsPlugin) {
-  RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-  if (notification != null && android != null) {
-    flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          icon: 'launch_background',
-        ),
-      ),
-    );
-  }
-}

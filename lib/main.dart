@@ -4,26 +4,21 @@ import 'package:doctor/constanst/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/notification/helper_notification.dart';
-import 'package:doctor/providers/calendar_controller.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/providers/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:phone_form_field/l10n/generated/phone_field_localization.dart';
 import 'package:provider/provider.dart';
-import 'package:calendar_view/calendar_view.dart';
 import 'firebase_options.dart';
 
-bool isFlutterLocalNotificationsInitialized = false;
-late AndroidNotificationChannel channel;
-late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -38,7 +33,7 @@ Future<void> main() async {
   // Set the background messaging handler early on, as a named top-level function
   final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
   if (remoteMessage != null) {}
-  await HelperNotification.initialize(flutterLocalNotificationsPlugin);
+  await HelperNotification.initialize();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   var directory = await getApplicationDocumentsDirectory();
@@ -82,11 +77,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
         ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
-        ChangeNotifierProvider<CalendarController>(create: (_) => CalendarController()),
       ],
-      child: CalendarControllerProvider(
-        controller: context.read<CalendarController>().controller,
-        child: GetMaterialApp(
+      child: GetMaterialApp(
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -98,7 +90,7 @@ class MyApp extends StatelessWidget {
             Locale('en', ''),
             Locale('ar', ''),
           ],
-          title: 'DocCure Doctor',
+          title: 'Doctor',
           defaultTransition: Transition.zoom,
           debugShowCheckedModeBanner: true,
           theme: ThemeData(
@@ -111,7 +103,6 @@ class MyApp extends StatelessWidget {
                   ? const AuthLogin()
                   : Dashboard(),
         ),
-      ),
     );
   }
 }

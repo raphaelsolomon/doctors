@@ -23,6 +23,7 @@ import 'package:doctor/providers/msg_log.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/resuable/custom_nav.dart';
 import 'package:doctor/resuable/form_widgets.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -46,6 +47,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      FirebaseMessaging.instance.getToken().then((value) => print(value));
       dialogMessage(context, subscribe(context));
       createClient();
     });

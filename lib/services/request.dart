@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 const String ROOTAPI = 'https://api.gettheskydoctors.com';
 
 
-class ResquestApiServices {
+class RequestApiServices {
   
   String GOOGLEAPI = 'https://fcm.googleapis.com/fcm/send';
 

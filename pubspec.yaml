@@ -77,6 +77,7 @@ dependencies:
   image_picker: ^0.8.5+3
   rxdart: ^0.27.5
   calendar_view: ^1.0.0
+  table_calendar: ^3.0.7
   
 
 dev_dependencies:
