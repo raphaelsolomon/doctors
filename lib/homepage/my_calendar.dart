@@ -15,7 +15,6 @@ class MyCalendar extends StatefulWidget {
 }
 
 class _MyCalendarState extends State<MyCalendar> {
-  int counter = 0;
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDate = new DateTime.now();
   DateTime focusDate = new DateTime.now();
@@ -57,13 +56,7 @@ class _MyCalendarState extends State<MyCalendar> {
                         children: [
                           GestureDetector(
                               onTap: () {
-                                if (counter <= 0) {
                                   context.read<HomeController>().onBackPress();
-                                } else {
-                                  setState(() {
-                                    counter = counter - 1;
-                                  });
-                                }
                               },
                               child: Icon(
                                 Icons.arrow_back_ios,
@@ -73,7 +66,7 @@ class _MyCalendarState extends State<MyCalendar> {
                           const SizedBox(
                             width: 20.0,
                           ),
-                          Text(counter == 0 ? 'My Calender' : 'Create Event',
+                          Text('My Calender',
                               style: getCustomFont(
                                   size: 18.0, color: Colors.white)),
                         ],
@@ -106,8 +99,7 @@ class _MyCalendarState extends State<MyCalendar> {
                 ]),
               ),
               Expanded(
-                  child: counter == 0
-                      ? Column(
+                  child: Column(
                           children: [
                             TableCalendar(
                                 focusedDay: focusDate,
@@ -146,19 +138,28 @@ class _MyCalendarState extends State<MyCalendar> {
                                 onFormatChanged: (format) => setState(() {
                                       this.format = format;
                                     })),
+                                    const SizedBox(height: 20.0,),
                             Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: getEventFromDay(selectedDate)
-                                    .map((e) => Text(e.title))
+                                    .map((e) => Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(e.title, style: getCustomFont(size: 14.0),),
+                                        const SizedBox(height: 10.0,),
+                                        Text(e.description, style: getCustomFont(size: 12.0, color: Colors.black45),),
+                                        const SizedBox(height: 5.0,),
+                                        Divider(),
+                                        const SizedBox(height: 5.0,),
+                                      ],
+                                    ))
                                     .toList(),
                               ),
                             )
                           ],
                         )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [],
-                        ))
+              ),
             ])),
         Align(
           alignment: Alignment.bottomRight,

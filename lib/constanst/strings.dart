@@ -313,6 +313,12 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         isOpen: false,
         index: 7), //done
     NavDrawerItem(
+        title: 'My Profile',
+        icon: FontAwesome.home,
+        children: [],
+        isOpen: false,
+        index: 8),
+    NavDrawerItem(
         title: 'Communication',
         icon: FontAwesome5.facebook_messenger,
         children: [
@@ -325,7 +331,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         title: 'My Transaction',
         icon: FontAwesome5.file_invoice,
         children: [
-          {'index': -3, 'title': 'My Offers/Coupons'},//done
+          {'index': -3, 'title': 'My Offers/Coupons'}, //done
           {'index': -5, 'title': 'My Invoices'}, //done
           {'index': -6, 'title': 'Account'},
           {'index': -7, 'title': 'Request Funds'},
@@ -348,16 +354,10 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         isOpen: false,
         index: -0),
     NavDrawerItem(
-        title: 'My Profile',
-        icon: FontAwesome.home,
-        children: [],
-        isOpen: false,
-        index: 8),
-    NavDrawerItem(
         title: 'Settings',
         icon: Icons.settings,
         children: [
-          {'index': -16, 'title': 'Profile Settings'},//done
+          {'index': -16, 'title': 'Profile Settings'}, //done
           {'index': -17, 'title': 'Currency'}, //done
           {'index': -18, 'title': 'Change Password'}, //done
           {'index': -19, 'title': 'Notification Settings'} //done
