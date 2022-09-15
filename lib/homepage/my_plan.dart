@@ -22,6 +22,9 @@ class _MyPlanState extends State<MyPlan> {
     {'title': 'Chat', 'icon': FontAwesome5.facebook_messenger},
     {'title': 'Physical Visit', 'icon': FontAwesome5.walking}
   ];
+
+  List<String> services = [];
+  List<String> Specialization = [];
   List<String> currencies = [];
   Map curMap = {};
   String shift = 'Morning';
@@ -332,10 +335,10 @@ class _MyPlanState extends State<MyPlan> {
               ),
             ),
             const SizedBox(
-              height: 15.0,
+              height: 20.0,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Text(
                 'Select Currency',
                 style: getCustomFont(
@@ -345,15 +348,11 @@ class _MyPlanState extends State<MyPlan> {
             const SizedBox(
               height: 15.0,
             ),
-            Container(
-              child: Row(
-                children: [
-                  _buildDropDownButton(fromCurrency)
-                ],
-              ),
-            ),
+              _buildDropDownButton(fromCurrency),
+              const SizedBox(height: 15.0),
+              _buildConvert(toCurrency),
              const SizedBox(
-              height: 15.0,
+              height: 25.0,
             ),
             Container(
               decoration: BoxDecoration(
@@ -401,13 +400,10 @@ class _MyPlanState extends State<MyPlan> {
                       children: [
                         Flexible(
                           fit: FlexFit.tight,
-                          child: Wrap(children: [
-                            itemContainer(),
-                            itemContainer(),
-                            itemContainer()
-                          ]),
+                          child: Wrap(children: services.map((e) => itemContainer(services, e)).toList()),
                         ),
                         GestureDetector(
+                          onTap: () => showServicesDropDown(),
                             child: Icon(
                           Icons.add_circle_outline,
                           color: Colors.green,
@@ -429,7 +425,7 @@ class _MyPlanState extends State<MyPlan> {
                         weight: FontWeight.w500),
                   ),
                   const SizedBox(
-                    height: 20.0,
+                    height: 35.0,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -455,13 +451,10 @@ class _MyPlanState extends State<MyPlan> {
                       children: [
                         Flexible(
                           fit: FlexFit.tight,
-                          child: Wrap(children: [
-                            itemContainer(),
-                            itemContainer(),
-                            itemContainer()
-                          ]),
+                          child: Wrap(children: Specialization.map((e) => itemContainer(Specialization, e)).toList()),
                         ),
                         GestureDetector(
+                          onTap: () => showBottomSheet(),
                             child: Icon(
                           Icons.add_circle_outline,
                           color: Colors.green,
@@ -496,7 +489,7 @@ class _MyPlanState extends State<MyPlan> {
         ),
       );
 
-  Widget itemContainer() => Container(
+  Widget itemContainer(List<String> item, e) => Container(
         width: 130.0,
         margin: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
@@ -504,20 +497,33 @@ class _MyPlanState extends State<MyPlan> {
           borderRadius: BorderRadius.circular(50.0),
         ),
         padding: const EdgeInsets.all(8.0),
-        child: Row(children: [
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
           Flexible(
-              child: FittedBox(
-                  child: Text(
-            'Tooth Cleaning',
-            style: getCustomFont(size: 11.0, color: Colors.white),
-          ))),
-          const SizedBox(
-            width: 10.0,
-          ),
-          Icon(
-            Icons.cancel_outlined,
-            size: 19.0,
-            color: Colors.white,
+              child: Text(
+            '$e',
+            maxLines: 1,
+            style: getCustomFont(size: 12.0, color: Colors.white),
+          )),
+          
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                int i = item.indexWhere((element) => element == e);
+                if(i > 0){
+                  item.removeAt(i);
+                }
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Icon(
+                Icons.cancel_outlined,
+                size: 19.0,
+                color: Colors.white,
+              ),
+            ),
           )
         ]),
       );
@@ -564,18 +570,23 @@ class _MyPlanState extends State<MyPlan> {
 
   Widget _buildDropDownButton(String currencyCategory) {
     return Container(
-      height: 45.0,
-      decoration: BoxDecoration(color: BLUECOLOR.withOpacity(.1)),
+      width: MediaQuery.of(context).size.width,
+      height: 48.0,
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: BLUECOLOR.withOpacity(.05)),
       child: Row(
         children: [
           DropdownButton(
+            underline: SizedBox(),
             value: currencyCategory,
             items: currencies
                 .map((String value) => DropdownMenuItem(
                       value: value,
                       child: Row(
                         children: <Widget>[
-                          Text(value),
+                          Text(value, style: getCustomFont(size: 13.0, color: Colors.black45),),
                         ],
                       ),
                     ))
@@ -588,7 +599,185 @@ class _MyPlanState extends State<MyPlan> {
               }
             },
           ),
+          const SizedBox(width: 10.0,),
+          Flexible(child: TextFormField(
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            style: getCustomFont(size: 13.0, color: Colors.black45),
+            decoration: InputDecoration(
+              hintText: 'Enter price',
+              helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
+              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+              border: OutlineInputBorder(borderSide: BorderSide.none)
+            ),
+          ))
         ],
+      ),
+    );
+  }
+
+  Widget _buildConvert(String currencyCategory) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 48.0,
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: BLUECOLOR.withOpacity(.05)),
+      child: Row(
+        children: [
+          DropdownButton(
+            underline: SizedBox(),
+            value: currencyCategory,
+            items: currencies
+                .map((String value) => DropdownMenuItem(
+                      value: value,
+                      child: Row(
+                        children: <Widget>[
+                          Text(value, style: getCustomFont(size: 13.0, color: Colors.black45),),
+                        ],
+                      ),
+                    ))
+                .toList(),
+            onChanged: (String? value) {
+              if (currencyCategory == fromCurrency) {
+                _onFromChanged(value!);
+              } else {
+                _onToChanged(value!);
+              }
+            },
+          ),
+          const SizedBox(width: 10.0,),
+          Flexible(child: TextFormField(
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            readOnly: true,
+            enabled: false,
+            style: getCustomFont(size: 13.0, color: Colors.black45),
+            decoration: InputDecoration(
+              hintText: '0.00',
+              helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
+              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+              border: OutlineInputBorder(borderSide: BorderSide.none)
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  void showBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 8.0,
+            ),
+            Text(
+              'Select Specialization',
+              style: getCustomFont(
+                  size: 28.0,
+                  color: Colors.black,
+                  weight: FontWeight.w700),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                      children: List.generate(
+                          SpecialitiesFilter.length,
+                          (i) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        if(!Specialization.contains(SpecialitiesFilter[i])){
+                                          Specialization.add(SpecialitiesFilter[i]);
+                                        }
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        '${SpecialitiesFilter[i]}',
+                                        style: getCustomFont(
+                                            size: 16.0, color: Colors.black),
+                                      ),
+                                    ),
+                                  ),
+                                  Divider(),
+                                ],
+                              ))),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+   void showServicesDropDown() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 8.0,
+            ),
+            Text(
+              'Select Services',
+              style: getCustomFont(
+                  size: 28.0,
+                  color: Colors.black,
+                  weight: FontWeight.w700),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                      children: List.generate(
+                          SpecialitiesFilter.length,
+                          (i) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                         if(!services.contains(SpecialitiesFilter[i])){
+                                          services.add(SpecialitiesFilter[i]);
+                                        }
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        '${SpecialitiesFilter[i]}',
+                                        style: getCustomFont(
+                                            size: 16.0, color: Colors.black),
+                                      ),
+                                    ),
+                                  ),
+                                  Divider(),
+                                ],
+                              ))),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
