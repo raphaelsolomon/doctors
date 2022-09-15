@@ -16,17 +16,6 @@ const String CALL_STATUS_DIALLED = "dialled";
 const String CALL_STATUS_RECEIVED = "received";
 const String CALL_STATUS_MISSED = "missed";
 const USERPATH = 'details';
-List removeBottom = [12, -5, 9, -12, -6, -7, -9, 8, -8, 4];
-List removeBottom1 = [
-  7,
-  1,
-  5,
-  -1,
-  -4,
-  -2,
-  4,
-  8,
-];
 
 List<User> users = [
   // User(
@@ -262,6 +251,9 @@ getNavdraweritem(BuildContext context) {
   ];
 }
 
+List removeBottom = [2, 3, -2,-3, -5, -9, -10, -12, -13, -14, -15, -16, -17, -18, -19];
+List removeBottom1 = [3, -2, -3, -5, -9, -10, -12, -13, -14, -15, -16, -17, -18, -19];
+
 List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
   return [
     NavDrawerItem(
@@ -312,12 +304,12 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         children: [],
         isOpen: false,
         index: 7), //done
-    NavDrawerItem(
-        title: 'My Profile',
-        icon: FontAwesome.home,
-        children: [],
-        isOpen: false,
-        index: 8),
+    // NavDrawerItem(
+    //     title: 'My Profile',
+    //     icon: FontAwesome.home,
+    //     children: [],
+    //     isOpen: false,
+    //     index: 8),
     NavDrawerItem(
         title: 'Communication',
         icon: FontAwesome5.facebook_messenger,
@@ -1411,3 +1403,54 @@ List<String> Frquency = [
 ];
 
 List<String> doctorServices = ['None', 'None', 'None', 'None'];
+
+List<String> SurgeryAndTrans = [
+  'Zenith Medical & Kidney Centre',
+  'Clarion Call Kidney Transplant program',
+  'Grandville Medical Center',
+  'Primus Hospital Nigeria',
+  'Clearview Hospital',
+  'Vedic Lifecare Hospital',
+  'Primrose Specialist Hospital',
+  'St. I\'ve Hospital',
+  'Reddington Hospital',
+  'Eko Hospital',
+  'St. Nicholas Hospital',
+  'Lagoon Hospital'
+];
+
+List<String> DiagnosisTest = [
+  'Vcare Diagnosis Limited',
+  'Hallmark Diagnostic Center',
+  'O2 Medical Diagnostic Services',
+  'Accunalysus Medical Diagnostic',
+  'Landmark Diagnostics',
+  'EL-Lab Medical Diagnostics and Research Center',
+  'Synlab',
+  'RiverLabs',
+  'Cleveland Clinic',
+  'Everight Diagnostic & Lab'
+];
+
+List<String> ServicesList = [
+  'Dental & Tooth Cleaning',
+  'Lab. Test',
+  'Surgical',
+  'Diagnostic',
+  'Ambulances',
+  'chiropractic',
+  'Mental',
+  'Substance abuse',
+  'Fluid & Allergy',
+  'Anesthesiology',
+  'Anticoagulation',
+  'Audiology',
+  'Breast Cancer',
+  'Cardiac',
+  'Dialysis',
+  'Dermatology',
+  'Diabetes',
+  'Diagnostic',
+  'Otorhinolaryngology',
+  'Orthopedics'
+];

@@ -1,4 +1,6 @@
 import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/dialog/edit_prescription.dart';
+import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,34 +18,25 @@ class Prescription extends StatelessWidget {
         child: Column(children: [
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 16.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
             width: MediaQuery.of(context).size.width,
-            height: 86.0,
             color: BLUECOLOR,
             child: Column(children: [
               const SizedBox(
-                height: 25.0,
+                height: 45.0,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                            onTap: () => scaffold.currentState!.openDrawer(),
-                            child: Icon(Icons.menu, color: Colors.white)),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Text('My Prescriptions',
-                            style:
-                                getCustomFont(size: 18.0, color: Colors.white))
-                      ],
-                    ),
-                  ),
+                  GestureDetector(
+                      onTap: () => context.read<HomeController>().onBackPress(),
+                      child: Icon(Icons.arrow_back_ios,
+                          size: 18.0, color: Colors.white)),
+                  Text('My Prescriptions',
+                      style: getCustomFont(size: 16.0, color: Colors.white)),
                   InkWell(
                     onTap: () {
-                      context.read<HomeController>().setPage(12);
+                      context.read<HomeController>().setPage(-22);
                     },
                     child: Icon(
                       Icons.notifications_active,
@@ -51,6 +44,9 @@ class Prescription extends StatelessWidget {
                     ),
                   )
                 ],
+              ),
+              const SizedBox(
+                height: 15.0,
               )
             ]),
           ),
@@ -70,7 +66,7 @@ class Prescription extends StatelessWidget {
   Widget prescriptionItem(context) {
     return Container(
         padding: const EdgeInsets.all(15.0),
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5.0),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
@@ -133,14 +129,20 @@ class Prescription extends StatelessWidget {
                         const SizedBox(
                           width: 10.0,
                         ),
-                        getButton(context, () {},
+                        getButton(context,
+                            () => showRequestSheet(context, EditPrescription()),
                             icon: Icons.edit_outlined,
                             text: 'Edit',
                             color: Colors.amberAccent),
                         const SizedBox(
                           width: 10.0,
                         ),
-                        getButton(context, () {},
+                        getButton(context, () {
+                          dialogMessage(
+                              context,
+                              serviceMessage(context, 'Invoice Deleted....',
+                                  status: true));
+                        },
                             icon: Icons.delete_outline,
                             text: 'Delete',
                             color: Colors.redAccent),

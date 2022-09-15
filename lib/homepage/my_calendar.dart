@@ -47,30 +47,24 @@ class _MyCalendarState extends State<MyCalendar> {
                 color: BLUECOLOR,
                 child: Column(children: [
                   const SizedBox(
-                    height: 40.0,
+                    height: 45.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                              onTap: () {
-                                  context.read<HomeController>().onBackPress();
-                              },
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.white,
-                                size: 18.0,
-                              )),
-                          const SizedBox(
-                            width: 20.0,
-                          ),
-                          Text('My Calender',
-                              style: getCustomFont(
-                                  size: 18.0, color: Colors.white)),
-                        ],
-                      ),
+                      GestureDetector(
+                          onTap: () {
+                              context.read<HomeController>().onBackPress();
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: 18.0,
+                          )),
+                     
+                      Text('My Calender',
+                          style: getCustomFont(
+                              size: 16.0, color: Colors.white)),
                       Icon(
                         null,
                         color: Colors.white,

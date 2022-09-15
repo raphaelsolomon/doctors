@@ -399,6 +399,14 @@ navDrawer(BuildContext context, scaffold) => Container(
 
 setChildrenClickListener(e, BuildContext context) {
   switch (e['index']) {
+    //================SOCIAL MEDIA================
+    case -1:
+      context.read<HomeController>().setPage(-1);
+      break;
+    case -2:
+      context.read<HomeController>().setPage(-2);
+      break;
+    //===========END OF SOCIAL MEDIA=============
     //=================TRANSACTION=================
     case -3:
       context.read<HomeController>().setPage(-3);
@@ -429,17 +437,17 @@ setChildrenClickListener(e, BuildContext context) {
     //====================END OF COMPANY============
 
     //=====================SETTINGS==================
-    case 16:
-      context.read<HomeController>().setPage(6);
+    case -16:
+      context.read<HomeController>().setPage(-16);
       break;
     case -17:
       dialogMessage(context, CurrencyDialog());
       break;
-    case 18:
-      context.read<HomeController>().setPage(8);
+    case -18:
+      context.read<HomeController>().setPage(-18);
       break;
-    case 19:
-      context.read<HomeController>().setPage(9);
+    case -19:
+      context.read<HomeController>().setPage(-19);
       break;
     //======================END OF SETTINGS=============
   }

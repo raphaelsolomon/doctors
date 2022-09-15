@@ -3,9 +3,11 @@ import 'package:doctor/auth/change_password.dart';
 import 'package:doctor/auth/profile_settings.dart';
 import 'package:doctor/callscreens/pickup/pick_layout.dart';
 import 'package:doctor/chat/chat_list.dart';
+import 'package:doctor/company/invoice_receipt.dart';
 import 'package:doctor/company/myoffer.dart';
 import 'package:doctor/company/myorder.dart';
 import 'package:doctor/company/myreferral.dart';
+import 'package:doctor/company/notification.dart';
 import 'package:doctor/company/notificationsetting.dart';
 import 'package:doctor/company/rateus.dart';
 import 'package:doctor/company/reviews.dart';
@@ -16,6 +18,9 @@ import 'package:doctor/constanst/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/homepage/invoice.dart';
 import 'package:doctor/homepage/my_calendar.dart';
+import 'package:doctor/homepage/my_dashboard.dart';
+import 'package:doctor/homepage/my_home.dart';
+import 'package:doctor/homepage/my_patients.dart';
 import 'package:doctor/homepage/my_plan.dart';
 import 'package:doctor/homepage/prescription.dart';
 import 'package:doctor/homepage/reminder.dart';
@@ -78,9 +83,7 @@ class _DashboardState extends State<Dashboard> {
                     backgroundColor: Colors.white,
                     body: Stack(children: [
                       _pages(page, scaffold),
-                      !isVisible &&
-                              (!removeBottom.contains(page) &&
-                                  !removeBottom1.contains(page))
+                      !isVisible && (!removeBottom.contains(page) && !removeBottom1.contains(page))
                           ? Align(
                               alignment: Alignment.bottomCenter,
                               child: CustomNavBar(
@@ -111,7 +114,17 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _pages(page, scaffold) {
+     if(page == -22) {
+      return NotificationPage();
+    }
+    if(page == -21) {
+      return InvoiceReceipt();
+    }
+    if (page == -20) {
+      return MyPatients();
+    }
     if (page == -19) {
+      print('here');
       return NotificationSettingsPage();
     }
     if (page == -18) {
@@ -139,7 +152,7 @@ class _DashboardState extends State<Dashboard> {
       return MyFavourite(scaffold);
     }
     if (page == -5) {
-      return MyInvoicePage(scaffold);
+      return MyInvoicePage();
     }
     if (page == -3) {
       return MyOffer();
@@ -163,13 +176,15 @@ class _DashboardState extends State<Dashboard> {
       return MyCalendar();
     }
     if (page == 3) {
-      print('here');
       return MyPlan();
     }
     if (page == 2) {
-      return ScheduleTiming(scaffold);
+      return ScheduleTiming();
     }
-    return Container();
+    if(page == 1){
+    return MyDashBoard(scaffold);
+    }
+    return HomePage();
   }
 }
 //

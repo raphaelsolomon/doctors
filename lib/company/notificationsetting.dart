@@ -26,31 +26,23 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
             width: MediaQuery.of(context).size.width,
-            height: 86.0,
             color: BLUECOLOR,
             child: Column(children: [
               const SizedBox(
-                height: 50.0,
+                height: 45.0,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                            onTap: () =>
-                                context.read<HomeController>().onBackPress(),
-                            child: Icon(Icons.arrow_back_ios,
-                                size: 19.0, color: Colors.white)),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Text('Notification Settings',
-                            style:
-                                getCustomFont(size: 18.0, color: Colors.white))
-                      ],
-                    ),
-                  ),
+                  GestureDetector(
+                      onTap: () =>
+                          context.read<HomeController>().onBackPress(),
+                      child: Icon(Icons.arrow_back_ios,
+                          size: 18.0, color: Colors.white)),
+                 
+                  Text('Notification Settings',
+                      style:
+                          getCustomFont(size: 16.0, color: Colors.white)),
                   Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 13.0, vertical: 5.0),
@@ -63,7 +55,10 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                     ),
                   )
                 ],
-              )
+              ),
+               const SizedBox(
+            height: 15.0,
+          ),
             ]),
           ),
           const SizedBox(

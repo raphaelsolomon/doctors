@@ -16,13 +16,12 @@ class MyReferrals extends StatelessWidget {
         child: Column(children: [
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 16.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
             width: MediaQuery.of(context).size.width,
-            height: 86.0,
             color: BLUECOLOR,
             child: Column(children: [
               const SizedBox(
-                height: 25.0,
+                height: 45.0,
               ),
               Row(
                 children: [
@@ -34,13 +33,14 @@ class MyReferrals extends StatelessWidget {
                     width: 10.0,
                   ),
                   Text('My Referrals',
-                      style: getCustomFont(size: 18.0, color: Colors.white)),
+                      style: getCustomFont(size: 16.0, color: Colors.white)),
                   Icon(
                     null,
                     color: Colors.white,
                   )
                 ],
               )
+              ,const SizedBox(height: 15.0,)
             ]),
           ),
           Expanded(

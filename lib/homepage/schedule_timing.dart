@@ -1,13 +1,14 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:doctor/constanst/strings.dart';
 import 'package:doctor/model/scheduleModel.dart';
+import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class ScheduleTiming extends StatefulWidget {
-  final GlobalKey<ScaffoldState> scaffold;
-  const ScheduleTiming(this.scaffold, {super.key});
+  const ScheduleTiming({super.key});
 
   @override
   State<ScheduleTiming> createState() => _ScheduleTimingState();
@@ -30,30 +31,24 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
             color: BLUECOLOR,
             child: Column(children: [
               const SizedBox(
-                height: 43.0,
+                height: 45.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            widget.scaffold.currentState!.openDrawer();
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
-                            size: 18.0,
-                          )),
-                      const SizedBox(
-                        width: 20.0,
-                      ),
-                      Text('Schedule Timinig',
-                          style:
-                              getCustomFont(size: 18.0, color: Colors.white)),
-                    ],
-                  ),
+                  GestureDetector(
+                      onTap: () {
+                        context.read<HomeController>().onBackPress();
+                      },
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 18.0,
+                      )),
+                 
+                  Text('Schedule Timinig',
+                      style:
+                          getCustomFont(size: 16.0, color: Colors.white)),
                   Icon(
                     Icons.notifications,
                     color: Colors.white,

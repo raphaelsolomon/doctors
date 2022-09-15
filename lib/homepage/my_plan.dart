@@ -61,7 +61,7 @@ class _MyPlanState extends State<MyPlan> {
             color: BLUECOLOR,
             child: Column(children: [
               const SizedBox(
-                height: 40.0,
+                height: 45.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,7 +92,7 @@ class _MyPlanState extends State<MyPlan> {
                 ],
               ),
               const SizedBox(
-                height: 10.0,
+                height: 15.0,
               ),
             ]),
           ),
@@ -764,15 +764,15 @@ class _MyPlanState extends State<MyPlan> {
                 child: SingleChildScrollView(
                   child: Column(
                       children: List.generate(
-                          SpecialitiesFilter.length,
+                          ServicesList.length,
                           (i) => Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                         if(!services.contains(SpecialitiesFilter[i])){
-                                          services.add(SpecialitiesFilter[i]);
+                                         if(!services.contains(ServicesList[i])){
+                                          services.add(ServicesList[i]);
                                         }
                                       });
                                       Navigator.pop(context);

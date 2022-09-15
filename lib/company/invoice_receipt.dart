@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class InvoiceReceipt extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffold;
-  const InvoiceReceipt(this.scaffold, {Key? key}) : super(key: key);
+  const InvoiceReceipt({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,34 +15,25 @@ class InvoiceReceipt extends StatelessWidget {
         child: Column(children: [
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 17.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
             width: MediaQuery.of(context).size.width,
-            height: 90.0,
             color: BLUECOLOR,
             child: Column(children: [
               const SizedBox(
-                height: 25.0,
+                height: 45.0,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                            onTap: () => scaffold.currentState!.openDrawer(),
-                            child: Icon(Icons.menu, color: Colors.white)),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Text('Invoice',
-                            style:
-                                getCustomFont(size: 18.0, color: Colors.white))
-                      ],
-                    ),
-                  ),
+                  GestureDetector(
+                      onTap: () =>context.read<HomeController>().onBackPress(),
+                      child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 18.0,)),
+                  Text('Invoice Receipt',
+                      style:
+                          getCustomFont(size: 16.0, color: Colors.white)),
                   InkWell(
                     onTap: () {
-                      context.read<HomeController>().setPage(12);
+                      context.read<HomeController>().setPage(-22);
                     },
                     child: Icon(
                       Icons.notifications_active,
@@ -51,7 +41,10 @@ class InvoiceReceipt extends StatelessWidget {
                     ),
                   )
                 ],
-              )
+              ),
+               const SizedBox(
+            height: 15.0,
+          ),
             ]),
           ),
           Expanded(

@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyInvoicePage extends StatefulWidget {
-  final GlobalKey<ScaffoldState> scaffold;
-  const MyInvoicePage(this.scaffold, {Key? key}) : super(key: key);
+  const MyInvoicePage({Key? key}) : super(key: key);
 
   @override
   State<MyInvoicePage> createState() => _MyInvoicePageState();
@@ -23,33 +22,24 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: 15.0, vertical: 0.0),
                 width: MediaQuery.of(context).size.width,
-                height: 89.0,
                 color: BLUECOLOR,
                 child: Column(children: [
                   const SizedBox(
-                    height: 50.0,
+                    height: 45.0,
                   ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                            onTap: () =>
-                                widget.scaffold.currentState!.openDrawer(),
-                            child: Icon(Icons.menu, color: Colors.white)),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Text('Invoices',
-                            style:
-                                getCustomFont(color: Colors.white, size: 18.0))
-                      ],
-                    ),
-                  ),
+                  GestureDetector(
+                      onTap: () => context.read<HomeController>().onBackPress(),
+                      child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 18.0,)),
+                 
+                  Text('Invoices',
+                      style:
+                          getCustomFont(color: Colors.white, size: 16.0)),
                   InkWell(
                     onTap: () {
-                      context.read<HomeController>().setPage(12);
+                      context.read<HomeController>().setPage(-22);
                     },
                     child: Icon(
                       Icons.notifications_active,
@@ -57,7 +47,10 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                     ),
                   )
                 ],
-              )
+              ),
+               const SizedBox(
+            height: 15.0,
+          ),
             ]),
           ),
           Expanded(
@@ -96,12 +89,12 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                     child: Text(
                   '#MR-0010',
                   style: getCustomFont(
-                      size: 15.0, color: Colors.black, weight: FontWeight.w400),
+                      size: 13.0, color: Colors.black, weight: FontWeight.w400),
                 )),
                 Text(
                   'Paid on - 14 Mar 2022',
                   style: getCustomFont(
-                      size: 15.0,
+                      size: 13.0,
                       color: Colors.black45,
                       weight: FontWeight.w400),
                 )
@@ -154,7 +147,7 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: getButton(context, () {
-                            context.read<HomeController>().setPage(-14);
+                            context.read<HomeController>().setPage(-21);
                           }),
                         ),
                       )
