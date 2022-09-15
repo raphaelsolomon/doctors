@@ -1404,4 +1404,10 @@ List<String> HospitalClinic = [
   'El-Dunamis Medical Center'
 ];
 
+List<String> Frquency = [
+  'Seconds',
+  'Minutes',
+  'Hours'
+];
+
 List<String> doctorServices = ['None', 'None', 'None', 'None'];

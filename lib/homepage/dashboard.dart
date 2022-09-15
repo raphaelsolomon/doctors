@@ -16,6 +16,7 @@ import 'package:doctor/constanst/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/homepage/invoice.dart';
 import 'package:doctor/homepage/my_calendar.dart';
+import 'package:doctor/homepage/my_plan.dart';
 import 'package:doctor/homepage/prescription.dart';
 import 'package:doctor/homepage/reminder.dart';
 import 'package:doctor/homepage/schedule_timing.dart';
@@ -158,12 +159,21 @@ class _DashboardState extends State<Dashboard> {
     if (page == 8) {
       return Container(); //my profile
     }
-    if(page == 5) {
+    if (page == 5) {
       return MyCalendar();
     }
-     if(page == 2) {
+    if (page == 3) {
+      print('here');
+      return MyPlan();
+    }
+    if (page == 2) {
       return ScheduleTiming(scaffold);
     }
     return Container();
   }
 }
+//
+//
+//
+//SELECT commodity, COUNT(*) AS magnitude FROM commodities WHERE userId=8 GROUP BY commodity ORDER BY magnitude DESC//
+//SELECT status, COUNT(*) AS magnitude FROM commodities GROUP BY status ORDER BY magnitude DESC LIMIT 2

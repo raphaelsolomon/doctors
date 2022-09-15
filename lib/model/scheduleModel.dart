@@ -10,8 +10,16 @@ class ScheduleModel {
 }
 
 class ScheduleTimingModel {
-  final DateTime timeStart;
-  final DateTime timeEnd;
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
-  ScheduleTimingModel({required this.timeStart, required this.timeEnd});
+  ScheduleTimingModel({required this.timeStart,  required this.timeEnd});
+
+  void setStart(DateTime time){
+    this.timeStart = time;
+  }
+
+  void setEnd(DateTime time){
+    this.timeEnd = time;
+  }
 }

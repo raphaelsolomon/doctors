@@ -457,7 +457,7 @@ setClickListener(e, BuildContext context) {
       context.read<HomeController>().setPage(2);
       break;
     case 3:
-      context.read<HomeController>().setPage(-3);
+      context.read<HomeController>().setPage(3);
       break;
     case 4:
       context.read<HomeController>().isEstore(true);

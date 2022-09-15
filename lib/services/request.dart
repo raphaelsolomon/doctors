@@ -27,6 +27,15 @@ class RequestApiServices {
     if (res.statusCode == 200) {}
   }
 
+  static Future<Map<String, dynamic>> loadCurrencies() async {
+    String uri = "https://api.apilayer.com/exchangerates_data/latest";
+    var response = await http.get(Uri.parse(uri), headers: {
+      "Accept": "application/json",
+      "apikey": "p4qW5VLnHaRmgJd84qqszBU3j81sXRu8"
+    });
+    return json.decode(response.body);
+  }
+
   static Future<String> downloadFile(String url, String filename) async {
     final directory = await getApplicationDocumentsDirectory();
     final filePath = '${directory.path}/$filename';

@@ -187,15 +187,21 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
         ]));
   }
 
-  scheduleItem(ScheduleModel e) =>
-      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  Future<TimeOfDay?> _selectTime(BuildContext context) async {
+    TimeOfDay selectedTime = TimeOfDay.now();
+     return await showTimePicker(
+        context: context,
+        initialTime: selectedTime);
+  }
+
+  scheduleItem(ScheduleModel e) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
                 child: FittedBox(
                     child: Text(
-              'Time Slot - ${DateFormat('EEE, dd').format(e.scheduleData.keys.last)}',
+              'Time Slot - ${DateFormat('EEEE, dd MMM').format(e.scheduleData.keys.last)}',
               style: getCustomFont(
                   size: 15.0, color: Colors.black, weight: FontWeight.w500),
             ))),
@@ -257,20 +263,40 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
           border: Border.all(width: 1.3, color: BLUECOLOR),
         ),
         child: Row(children: [
-          Text(
-            '2: 00 PM',
-            style: getCustomFont(
-                size: 14.0, color: Colors.black, weight: FontWeight.w500),
+          GestureDetector(
+            onTap: () async{
+              _selectTime(context).then((t) {
+                   setState(() {
+                  final now = new DateTime.now();
+                  value[i].setStart(DateTime(now.year, now.month, now.day, t!.hour, t.minute));
+                });
+              });
+            },
+            child: Text(
+               '${DateFormat('hh:mm a').format(value[i].timeStart)}',
+              style: getCustomFont(
+                  size: 14.0, color: Colors.black, weight: FontWeight.w500),
+            ),
           ),
           Text(
             ' - ',
             style: getCustomFont(
                 size: 14.0, color: Colors.black, weight: FontWeight.w500),
           ),
-          Text(
-            '2: 00 PM',
-            style: getCustomFont(
-                size: 14.0, color: Colors.black, weight: FontWeight.w500),
+          GestureDetector(
+            onTap: () async{
+              _selectTime(context).then((t) {
+                   setState(() {
+                  final now = new DateTime.now();
+                  value[i].setEnd(DateTime(now.year, now.month, now.day, t!.hour, t.minute));
+                });
+              });
+            },
+            child: Text(
+              '${DateFormat('hh:mm a').format(value[i].timeEnd)}',
+              style: getCustomFont(
+                  size: 14.0, color: Colors.black, weight: FontWeight.w500),
+            ),
           ),
           const SizedBox(
             width: 20.0,
@@ -285,4 +311,11 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
           )
         ]),
       );
+
+  String formatTimeOfDay(TimeOfDay tod) {
+    final now = new DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
+    final format = DateFormat.jm();  //"6:00 AM"
+    return format.format(dt);
+}
 }

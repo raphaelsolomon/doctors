@@ -54,12 +54,16 @@ class Prescription extends StatelessWidget {
               )
             ]),
           ),
-          const SizedBox(height: 10.0,),
-          Expanded(child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
-            itemCount: 10,
-            shrinkWrap: true,
-            itemBuilder: ((context, index) => prescriptionItem(context))))
+          const SizedBox(
+            height: 10.0,
+          ),
+          Expanded(
+              child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.0, vertical: 0.0),
+                  itemCount: 10,
+                  shrinkWrap: true,
+                  itemBuilder: ((context, index) => prescriptionItem(context))))
         ]));
   }
 
@@ -81,12 +85,12 @@ class Prescription extends StatelessWidget {
                     child: Text(
                   'Prescription 1',
                   style: getCustomFont(
-                      size: 15.0, color: Colors.black, weight: FontWeight.w400),
+                      size: 13.0, color: Colors.black, weight: FontWeight.w400),
                 )),
                 Text(
                   '14 Mar 2022',
                   style: getCustomFont(
-                      size: 15.0,
+                      size: 13.0,
                       color: Colors.black45,
                       weight: FontWeight.w400),
                 )
@@ -109,14 +113,14 @@ class Prescription extends StatelessWidget {
                       'Dr. Ruby Perrln',
                       style: getCustomFont(
                           color: Colors.black,
-                          size: 19.0,
+                          size: 16.0,
                           weight: FontWeight.w400),
                     ),
                     Text(
                       'Dental',
                       style: getCustomFont(
                           color: Colors.black54,
-                          size: 14.0,
+                          size: 13.0,
                           weight: FontWeight.w400),
                     ),
                     const SizedBox(
@@ -130,9 +134,16 @@ class Prescription extends StatelessWidget {
                           width: 10.0,
                         ),
                         getButton(context, () {},
-                            icon: Icons.print,
-                            text: 'Print',
-                            color: Colors.grey),
+                            icon: Icons.edit_outlined,
+                            text: 'Edit',
+                            color: Colors.green),
+                        const SizedBox(
+                          width: 10.0,
+                        ),
+                        getButton(context, () {},
+                            icon: Icons.delete_outline,
+                            text: 'Delete',
+                            color: Colors.redAccent),
                       ],
                     )
                   ],
@@ -166,12 +177,14 @@ class Prescription extends StatelessWidget {
                 const SizedBox(
                   width: 2.0,
                 ),
-                Text(
-                  '$text',
-                  style: getCustomFont(
-                      size: 14.0,
-                      color: Colors.white,
-                      weight: FontWeight.normal),
+                FittedBox(
+                  child: Text(
+                    '$text',
+                    style: getCustomFont(
+                        size: 13.0,
+                        color: Colors.white,
+                        weight: FontWeight.normal),
+                  ),
                 ),
               ],
             ),
