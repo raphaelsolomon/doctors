@@ -136,7 +136,7 @@ class Prescription extends StatelessWidget {
                         getButton(context, () {},
                             icon: Icons.edit_outlined,
                             text: 'Edit',
-                            color: Colors.green),
+                            color: Colors.amberAccent),
                         const SizedBox(
                           width: 10.0,
                         ),
