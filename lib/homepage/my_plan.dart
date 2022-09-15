@@ -15,6 +15,8 @@ class MyPlan extends StatefulWidget {
 }
 
 class _MyPlanState extends State<MyPlan> {
+  final currency = TextEditingController();
+  final converted = TextEditingController();
   String pricing = 'Free';
   List CONSULT_TYPE = [
     {'title': 'Audio Call', 'icon': Icons.spatial_audio},
@@ -348,9 +350,19 @@ class _MyPlanState extends State<MyPlan> {
             const SizedBox(
               height: 15.0,
             ),
-              _buildDropDownButton(fromCurrency),
+              _buildDropDownButton(fromCurrency, callBack: (s) {
+                var total = double.parse('${curMap[toCurrency]}') * int.parse(s);
+                setState(() {
+                  converted.text = '${total}';
+                });
+              }),
               const SizedBox(height: 15.0),
-              _buildConvert(toCurrency),
+              _buildConvert(toCurrency, callBack: (s) {
+                var total = double.parse('${curMap[s]}') * int.parse(currency.text.isEmpty ? '0' : currency.text);
+                setState(() {
+                  converted.text = '${total}';
+                });
+              }),
              const SizedBox(
               height: 25.0,
             ),
@@ -568,7 +580,7 @@ class _MyPlanState extends State<MyPlan> {
     });
   }
 
-  Widget _buildDropDownButton(String currencyCategory) {
+  Widget _buildDropDownButton(String currencyCategory, {callBack}) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 48.0,
@@ -603,6 +615,8 @@ class _MyPlanState extends State<MyPlan> {
           Flexible(child: TextFormField(
             keyboardType: TextInputType.numberWithOptions(decimal: true),
             style: getCustomFont(size: 13.0, color: Colors.black45),
+            controller: currency,
+            onChanged: (s) => callBack(s),
             decoration: InputDecoration(
               hintText: 'Enter price',
               helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
@@ -615,7 +629,7 @@ class _MyPlanState extends State<MyPlan> {
     );
   }
 
-  Widget _buildConvert(String currencyCategory) {
+  Widget _buildConvert(String currencyCategory, {callBack}) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 48.0,
@@ -643,6 +657,7 @@ class _MyPlanState extends State<MyPlan> {
                 _onFromChanged(value!);
               } else {
                 _onToChanged(value!);
+                callBack(value);
               }
             },
           ),
@@ -651,6 +666,7 @@ class _MyPlanState extends State<MyPlan> {
             keyboardType: TextInputType.numberWithOptions(decimal: true),
             readOnly: true,
             enabled: false,
+            controller: converted,
             style: getCustomFont(size: 13.0, color: Colors.black45),
             decoration: InputDecoration(
               hintText: '0.00',
