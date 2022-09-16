@@ -16,6 +16,7 @@ import 'package:doctor/company/socialmedia.dart';
 import 'package:doctor/company/support.dart';
 import 'package:doctor/constanst/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
+import 'package:doctor/homepage/account.dart';
 import 'package:doctor/homepage/invoice.dart';
 import 'package:doctor/homepage/my_calendar.dart';
 import 'package:doctor/homepage/my_dashboard.dart';
@@ -171,6 +172,9 @@ class _DashboardState extends State<Dashboard> {
     }
     if (page == 8) {
       return Container(); //my profile
+    }
+    if(page == -6){
+      return AccountPage();
     }
     if (page == 5) {
       return MyCalendar();

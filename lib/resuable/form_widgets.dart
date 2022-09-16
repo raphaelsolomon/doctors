@@ -415,6 +415,9 @@ setChildrenClickListener(e, BuildContext context) {
     case -5:
       context.read<HomeController>().setPage(-5);
       break;
+    case -6:
+      context.read<HomeController>().setPage(-6);
+      break;
     case -9:
       context.read<HomeController>().setPage(-9);
       break;
@@ -799,13 +802,13 @@ Widget createPrescriptionNote(text) => Row(
     );
 
     Widget dashHeader(context) => Positioned(
-          top: 82.0,
+          top: 80.0,
           right: 0,
           left: 0,
           child: Container(
               width: MediaQuery.of(context).size.width,
               padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 6.0),
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
                   boxShadow: [
@@ -816,15 +819,15 @@ Widget createPrescriptionNote(text) => Row(
                         offset: Offset(0.0, 1.0))
                   ],
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0)),
+                  borderRadius: BorderRadius.circular(15.0)),
               child: Row(
                 children: [
                   ClipRRect(
                       borderRadius: BorderRadius.circular(100.0),
                       child: Image.asset(
                         'assets/imgs/3.png',
-                        width: 80,
-                        height: 80,
+                        width: 70,
+                        height: 70,
                         fit: BoxFit.contain,
                       )),
                   const SizedBox(
@@ -838,16 +841,18 @@ Widget createPrescriptionNote(text) => Row(
                         Text(
                           'Dr. Darren Elder',
                           style: getCustomFont(
-                              size: 20.0,
+                              size: 18.0,
                               color: Colors.black,
                               weight: FontWeight.w400),
                         ),
-                        Text(
-                          'BDS, MDS - Oral & Maxillofacial Surgery',
-                          style: getCustomFont(
-                              size: 12.0,
-                              color: Colors.black54,
-                              weight: FontWeight.w400),
+                        FittedBox(
+                          child: Text(
+                            'BDS, MDS - Oral & Maxillofacial Surgery',
+                            style: getCustomFont(
+                                size: 12.0,
+                                color: Colors.black54,
+                                weight: FontWeight.w400),
+                          ),
                         ),
                         const SizedBox(
                           height: 2.0,
@@ -927,21 +932,22 @@ dashWidget(context, {icon = FontAwesome5.calendar_day,
           borderRadius: BorderRadius.circular(15.0), color: Colors.white),
       child: Column(children: [
         SizedBox(
-          width: 100,
-          height: 100,
-          child: CircularPercentIndicator(
-            radius: 45.0,
-            lineWidth: 8.0,
-            percent: progress,
-            center: Icon(
-              icon,
-              size: 35.0,
-              color: color,
-            ),
-            backgroundColor: Colors.grey.shade100,
-            progressColor: Colors.lightBlueAccent.withOpacity(.7),
-          ),
-        ),
+                          width: 100,
+                          height: 100,
+                          child: CircularPercentIndicator(
+                            radius: 40.0,
+                            lineWidth: 8.0,
+                            percent: 0.5,
+                            center: Image.asset(
+                              'assets/imgs/patient.png',
+                              height: 35.0,
+                              width: 35.0,
+                              fit: BoxFit.contain,
+                            ),
+                            backgroundColor: Colors.grey.shade100,
+                            progressColor: Colors.lightBlueAccent.withOpacity(.7),
+                          ),
+                        ),
         const SizedBox(
           height: 7.0,
         ),
@@ -981,7 +987,7 @@ dashWidget(context, {icon = FontAwesome5.calendar_day,
 appointmentButton(context, text) => Container(
   width: MediaQuery.of(context).size.width,
   margin: const EdgeInsets.symmetric(horizontal: 5.0),
-  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 26.0),
+  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 18.0),
   decoration: BoxDecoration(
     color: BLUECOLOR,
     borderRadius: BorderRadius.circular(9.0),
