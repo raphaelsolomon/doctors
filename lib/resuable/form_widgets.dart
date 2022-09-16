@@ -9,6 +9,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:provider/provider.dart';
 
@@ -796,3 +797,195 @@ Widget createPrescriptionNote(text) => Row(
         )))
       ],
     );
+
+    Widget dashHeader(context) => Positioned(
+          top: 82.0,
+          right: 0,
+          left: 0,
+          child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black26,
+                        spreadRadius: 1.0,
+                        blurRadius: 10.0,
+                        offset: Offset(0.0, 1.0))
+                  ],
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0)),
+              child: Row(
+                children: [
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(100.0),
+                      child: Image.asset(
+                        'assets/imgs/3.png',
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.contain,
+                      )),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Dr. Darren Elder',
+                          style: getCustomFont(
+                              size: 20.0,
+                              color: Colors.black,
+                              weight: FontWeight.w400),
+                        ),
+                        Text(
+                          'BDS, MDS - Oral & Maxillofacial Surgery',
+                          style: getCustomFont(
+                              size: 12.0,
+                              color: Colors.black54,
+                              weight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 2.0,
+                        ),
+                        Row(
+                          children: [
+                            PhysicalModel(
+                              elevation: 10.0,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100.0),
+                              shadowColor: Colors.grey,
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5.0, vertical: 5.0),
+                                  child: Image.asset(
+                                    'assets/imgs/tooth.png',
+                                    width: 15.0,
+                                    height: 15.0,
+                                    fit: BoxFit.contain,
+                                  )),
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            Text(
+                              'Dentist',
+                              style: getCustomFont(
+                                  color: Colors.black54,
+                                  size: 13.0,
+                                  weight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: FittedBox(
+                                child: Text(
+                                  '+15 Years Exp.',
+                                  style: getCustomFont(
+                                      size: 13.0,
+                                      color: Colors.red,
+                                      weight: FontWeight.w400),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '(Lagos, Nigeria)',
+                              style: getCustomFont(
+                                  size: 12.0,
+                                  color: Colors.black45,
+                                  weight: FontWeight.w400),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              )),
+        );
+
+dashWidget(context, {icon = FontAwesome5.calendar_day,
+      text = "Total patients",
+      progress = 0.8,
+      result = '1300+',
+      color = BLUECOLOR}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 14.0),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        boxShadow: SHADOW,
+          borderRadius: BorderRadius.circular(15.0), color: Colors.white),
+      child: Column(children: [
+        SizedBox(
+          width: 100,
+          height: 100,
+          child: CircularPercentIndicator(
+            radius: 45.0,
+            lineWidth: 8.0,
+            percent: progress,
+            center: Icon(
+              icon,
+              size: 35.0,
+              color: color,
+            ),
+            backgroundColor: Colors.grey.shade100,
+            progressColor: Colors.lightBlueAccent.withOpacity(.7),
+          ),
+        ),
+        const SizedBox(
+          height: 7.0,
+        ),
+        Text(
+          '$text',
+          style: getCustomFont(size: 15.0, color: Colors.black, weight: FontWeight.w500),
+        ),
+        const SizedBox(
+          height: 3.0,
+        ),
+        Text(
+          '$result',
+          style: getCustomFont(
+              size: 19.0, color: Colors.black54, weight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 7.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100.0), color: Colors.green.shade300),
+          child: FittedBox(
+            child: Text(
+              'March 18, 2022',
+              style: getCustomFont(size: 13.0, color: Colors.white),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 4.0,
+        ),
+      ]),
+    );
+  }
+
+appointmentButton(context, text) => Container(
+  width: MediaQuery.of(context).size.width,
+  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 26.0),
+  decoration: BoxDecoration(
+    color: BLUECOLOR,
+    borderRadius: BorderRadius.circular(9.0),
+  ),
+  child: Center(child: Text(text, textAlign: TextAlign.center, style: getCustomFont(size: 15.0, color: Colors.white),)),
+);
+
