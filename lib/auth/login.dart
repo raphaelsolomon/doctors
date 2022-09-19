@@ -5,6 +5,7 @@ import 'package:doctor/auth/register.dart';
 import 'package:doctor/constanst/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
 import 'package:doctor/model/person/user.dart';
+import 'package:doctor/resources/firebase_method.dart';
 import 'package:doctor/resuable/form_widgets.dart';
 import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';
@@ -170,17 +171,17 @@ class _AuthLoginState extends State<AuthLogin> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   socialAccount(FontAwesome.facebook, Color(0xFF1777F2),
-                      callBack: () {}),
-                  const SizedBox(
-                    width: 20.0,
-                  ),
-                  socialAccount(FontAwesome.linkedin, Color(0xFF0078B5),
-                      callBack: () {}),
-                  const SizedBox(
-                    width: 20.0,
-                  ),
-                  socialAccount(FontAwesome.google, Colors.redAccent,
-                      callBack: () {}),
+                            callBack: () => FirebaseMethods.facebookLogin()),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
+                        socialAccount(FontAwesome.linkedin, Color(0xFF0078B5),
+                            callBack: () {}),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
+                        socialAccount(FontAwesome.google, Colors.redAccent,
+                            callBack: () => FirebaseMethods.googleSignIn()),
                 ],
               ),
               const SizedBox(

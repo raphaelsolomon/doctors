@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
           home: box.get('isFirst') == null
               ? const OnBoardingScreen()
               : user.get(USERPATH) == null
-                  ? const Dashboard()
+                  ? const AuthLogin()
                   : Dashboard(),
         ),
     );

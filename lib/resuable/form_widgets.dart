@@ -399,7 +399,7 @@ navDrawer(BuildContext context, scaffold) => Container(
     );
 
 setChildrenClickListener(e, BuildContext context) {
-  switch (e['index']) {
+  switch (e['index'] as int) {
     //================SOCIAL MEDIA================
     case -1:
       context.read<HomeController>().setPage(-1);
@@ -994,4 +994,142 @@ appointmentButton(context, text) => Container(
   ),
   child: Center(child: Text(text, textAlign: TextAlign.center, style: getCustomFont(size: 15.0, color: Colors.white),)),
 );
+
+Widget patientItem(context) => Container(
+      padding: const EdgeInsets.all(15.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5.0),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          color: Colors.white,
+          boxShadow: SHADOW),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  'Patient ID - PT0025',
+                  style: getCustomFont(
+                      color: Colors.black54,
+                      size: 13.0,
+                      weight: FontWeight.w400),
+                ),
+              ),
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(Icons.location_on, size: 15.0, color: Colors.black),
+                    const SizedBox(
+                      width: 5.0,
+                    ),
+                    Flexible(
+                      child: Text(
+                        'Florida, USA',
+                        textAlign: TextAlign.end,
+                        style: getCustomFont(
+                            color: Colors.black54,
+                            size: 13.0,
+                            weight: FontWeight.w400),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Divider(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 27.0,
+                backgroundImage: AssetImage('assets/imgs/1.png'),
+              ),
+              const SizedBox(
+                width: 15.0,
+              ),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Michelle Fairfax',
+                      style: getCustomFont(
+                          color: Colors.black,
+                          size: 17.0,
+                          weight: FontWeight.w400),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            '25 Years, Female',
+                            style: getCustomFont(
+                                color: Colors.black54,
+                                size: 13.0,
+                                weight: FontWeight.w400),
+                          ),
+                        ),
+                        Flexible(
+                          child: Text(
+                            'Blood Group - O+',
+                            style: getCustomFont(
+                                color: Colors.black54,
+                                size: 13.0,
+                                weight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    Row(
+                      children: [
+                       PhysicalModel(
+                        elevation: 10.0,
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(100.0),
+                        shadowColor: Colors.grey,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5.0, vertical: 5.0),
+                          child: Icon(
+                            Icons.phone,
+                            size: 19.0,
+                            color: Color(0xFF838383),
+                          ),
+                        ),
+                      ),
+                        const SizedBox(
+                          width: 10.0,
+                        ),
+                        Flexible(
+                          child: FittedBox(
+                            child: Text(
+                              '+1 504 368 6874',
+                              style: getCustomFont(
+                                  color: Colors.black54,
+                                  size: 13.0,
+                                  weight: FontWeight.w400),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+        ],
+      ));
+
 

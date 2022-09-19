@@ -325,9 +325,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         children: [
           {'index': -3, 'title': 'My Offers/Coupons'}, //done
           {'index': -5, 'title': 'My Invoices'}, //done
-          {'index': -6, 'title': 'Account'},
-          {'index': -7, 'title': 'Request Funds'},
-          {'index': -8, 'title': 'Withdraw Funds'},
+          {'index': -6, 'title': 'Account'}, //done
           {'index': -9, 'title': 'Favourite'}, //done
           {'index': -10, 'title': 'Reviews'} //done
         ],

@@ -136,7 +136,11 @@ class _MyCalendarState extends State<MyCalendar> {
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: getEventFromDay(selectedDate)
+                                children: [
+                                  const SizedBox(height: 20.0,),
+                                  Text('Records', style: getCustomFont(size: 18.0, color: Colors.black),),
+                                  const SizedBox(height: 15.0,),
+                                  ...getEventFromDay(selectedDate)
                                     .map((e) => Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
@@ -149,6 +153,8 @@ class _MyCalendarState extends State<MyCalendar> {
                                       ],
                                     ))
                                     .toList(),
+                                  const SizedBox(height: 80.0),
+                                ]
                               ),
                             )
                           ],

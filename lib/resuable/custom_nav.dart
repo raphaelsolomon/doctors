@@ -109,14 +109,14 @@ class _CustomNavBarState extends State<CustomNavBar> {
                                   Get.to(() => RecentOrder());
                                 }, false),
                                 Divider(),
-                                getNavItems(Icons.person, 'profile', () {
-                                  readExec.setPage(-16);
+                                getNavItems(Icons.person, 'Account', () {
+                                  readExec.setPage(-6);
                                    Navigator.pop(context);
                                   if (readExec.isEstoreClicked) {
                                     readExec.isEstore(false);
                                     Get.back();
                                   }
-                                }, counter.last == -16 && !readExec.isEstoreClicked)
+                                }, counter.last == -6 && !readExec.isEstoreClicked)
                               ],
                             ),
                           ),
