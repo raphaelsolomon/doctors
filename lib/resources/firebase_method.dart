@@ -6,7 +6,10 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class FirebaseMethods {
   static googleSignIn() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignIn googleSignIn = GoogleSignIn(scopes: [
+          'email',
+          'https://www.googleapis.com/auth/userinfo.profile',
+        ],);
     final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
@@ -182,3 +185,8 @@ class FirebaseMethods {
 //     setImageMsg(url, receiverId, senderId);
 //   }
 // }
+//facebook
+// {name: Michael John, email: phoenixk54@gmail.com, picture: {data: {height: 180, is_silhouette: true, url: https://scontent-los2-1.xx.fbcdn.net/v/t1.30497-1/84628273_176159830277856_972693363922829312_n.jpg?stp=dst-jpg_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=12b3be&_nc_ohc=sNd81ffHUP0AX_-l9hB&_nc_ht=scontent-los2-1.xx&edm=AP4hL3IEAAAA&oh=00_AT92s7WpFSHIcZrCGn93wSjZMmkDGsmqWFFRP0L6fOIwCw&oe=634EDF99, width: 180}}, id: 1983437901855452}
+//EAASH0QZCNu34BADEL8cp0mdF285WEtmz0kIAYPrPy8Dw1uyNwKWm7FhCBbzTZC8NSP5nTxoni1rWIEtbqykaJCuIZAHcY7TkH9BZBWS4XSNoSRO9HdDZCTk4POX25Eln2sHc3rYxCKsMXiW8alIYWKRZAZAdLMjT32V0nwVZCSALZB7WEZBcipDwFFTY2MjzCz3SjMDFEBdUmKh5ONiGtA4wkvdYNNZBvZCTjcRlmILxeFZA52W6L92WO9F16JHIbT8wkoSGJlaJvLPoo0Qf
+
+//google

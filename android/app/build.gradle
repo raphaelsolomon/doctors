@@ -56,7 +56,21 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        debug{
+            keyAlias 'key0'
+            keyPassword 'darkseid'
+            storeFile file('key.jks')
+            storePassword 'darkseid'
+        }
+    }
+
     buildTypes {
+
+        debug {
+             signingConfig signingConfigs.debug
+        }
+
        release {
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
@@ -73,7 +87,7 @@ android {
                     'proguard-android-optimize.txt'),
                     'proguard-rules.pro'
 
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }
