@@ -6,18 +6,8 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class FirebaseMethods {
   static googleSignIn() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn(scopes: [
-          'email',
-          'https://www.googleapis.com/auth/userinfo.profile',
-        ],);
-    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-      final AuthCredential authCredential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken);
-          print(authCredential.asMap());
-    }
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
   }
 
   static facebookLogin() async {
