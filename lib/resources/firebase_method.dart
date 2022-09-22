@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:doctor/homepage/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -6,10 +8,14 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class FirebaseMethods {
   static googleSignIn() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn(scopes: [
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: [
           'email',
           'https://www.googleapis.com/auth/userinfo.profile',
-        ],);
+        ],
+        serverClientId: Platform.isIOS ? null : '721938423020-eik2a0mla614l6ic5tstmhlb1j8gutej.apps.googleusercontent.com',
+        clientId: Platform.isIOS ? '' : null
+    );
     final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
