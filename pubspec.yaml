@@ -78,6 +78,8 @@ dependencies:
   rxdart: ^0.27.5
   calendar_view: ^1.0.0
   table_calendar: ^3.0.7
+  linkedin_login: ^2.2.1
+  webview_flutter: ^3.0.4
   
 
 dev_dependencies:
