@@ -1,4 +1,4 @@
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/request_form.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/dialog/top_up.dart';

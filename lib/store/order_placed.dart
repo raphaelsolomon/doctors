@@ -1,4 +1,4 @@
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/store/recent_order.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

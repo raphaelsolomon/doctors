@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/resuable/form_widgets.dart';
 import 'package:flutter/material.dart';

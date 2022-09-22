@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:doctor/callscreens/videocallscreen.dart';
 import 'package:doctor/callscreens/voicecallscreen.dart';
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/model/call.dart';
 import 'package:doctor/permission/permissions.dart';
 import 'package:doctor/resources/call_methods.dart';

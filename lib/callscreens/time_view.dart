@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:flutter/material.dart';
 
 class TimerView extends StatefulWidget {

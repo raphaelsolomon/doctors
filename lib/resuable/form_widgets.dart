@@ -1,8 +1,9 @@
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/curreency.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/store/index.dart';
+import 'package:doctor/store/product_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -670,44 +671,51 @@ Widget getCardForm(hint, {ctl}) {
   );
 }
 
-Widget firstScroll() => Container(
-      width: 150,
-      height: 190,
+Widget firstScroll(e) => Container(
+      width: 130,
+      height: 170,
       padding: const EdgeInsets.all(15.0),
       margin: const EdgeInsets.only(right: 10.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0), color: Colors.amber),
+          borderRadius: BorderRadius.circular(10.0), color: e['color']),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'OTC\nMEDICINES',
+            '${e['title']}',
             style: getCustomFont(
                 size: 15.0, color: Colors.white, weight: FontWeight.bold),
-          )
+          ),
+          Expanded(child: Align(
+            alignment: Alignment.bottomRight,
+            child: Image.asset('${e['icon']}', width: 50.0, height: 55.0,),
+          ))
         ],
       ),
     );
 
-Widget secondScroll(context) => Container(
+Widget secondScroll(context, e) => Container(
       width: MediaQuery.of(context).size.width / 1.4,
       height: 110,
       padding: const EdgeInsets.all(15.0),
       margin: const EdgeInsets.only(right: 10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: Colors.amber,
+        color: e['color'],
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [],
+        children: [
+          Flexible(
+            fit: FlexFit.tight,
+            child: Text(e['title'], style: getCustomFont(size: 17.0, color: Colors.white, weight: FontWeight.w500),)),
+          Image.asset('${e['icon']}', height: double.infinity,)
+        ],
       ),
     );
 
-Widget thirdScroll(context) => GestureDetector(
-      onTap: () {
-        // Get.to(() => ProductList()
-      },
+Widget thirdScroll(context, e) => GestureDetector(
+      onTap: () => Get.to(() => ProductList()),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -717,8 +725,11 @@ Widget thirdScroll(context) => GestureDetector(
             width: 50.0,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(
-                    image: AssetImage('assets/imgs/1.png'), fit: BoxFit.cover)),
+                color: e['color']
+                ),
+                child: Center(
+                  child: Image.asset('${e['icon']}', width: 30.0, height: 30.0,),
+                ),
           ),
           const SizedBox(
             width: 10.0,
@@ -730,7 +741,7 @@ Widget thirdScroll(context) => GestureDetector(
               children: [
                 FittedBox(
                     child: Text(
-                  'Well Life Store',
+                  '${e['title']}',
                   style: getCustomFont(
                       color: Colors.black, size: 14.0, weight: FontWeight.w500),
                 )),
@@ -750,7 +761,7 @@ Widget thirdScroll(context) => GestureDetector(
                     Flexible(
                         child: FittedBox(
                             child: Text(
-                      'Willington Bridge',
+                      '${e['desc']}',
                       style: getCustomFont(
                           color: Colors.black45,
                           size: 12.0,
@@ -1131,5 +1142,3 @@ Widget patientItem(context) => Container(
           ),
         ],
       ));
-
-

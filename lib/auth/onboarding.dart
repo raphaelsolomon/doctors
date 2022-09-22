@@ -1,6 +1,6 @@
 import 'package:doctor/auth/login.dart';
 import 'package:doctor/auth/register.dart';
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

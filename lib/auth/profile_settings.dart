@@ -1,4 +1,4 @@
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';

@@ -14,7 +14,7 @@ import 'package:doctor/company/reviews.dart';
 import 'package:doctor/company/shareapp.dart';
 import 'package:doctor/company/socialmedia.dart';
 import 'package:doctor/company/support.dart';
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/homepage/account.dart';
 import 'package:doctor/homepage/invoice.dart';

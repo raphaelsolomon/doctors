@@ -1,6 +1,6 @@
 import 'package:agora_rtm/src/agora_rtm_client.dart';
 import 'package:doctor/chat/msg_screen.dart';
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/providers/msg_log.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,6 +1,6 @@
 import 'package:doctor/auth/login.dart';
 import 'package:doctor/auth/onboarding.dart';
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/notification/helper_notification.dart';

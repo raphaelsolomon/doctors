@@ -1,5 +1,5 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/model/scheduleModel.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';

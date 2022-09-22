@@ -1,5 +1,5 @@
 
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:flutter/material.dart';
 
 class SelectDays extends StatelessWidget {

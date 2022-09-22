@@ -258,6 +258,18 @@ getNavdraweritem(BuildContext context) {
 List removeBottom = [2, 3, -2,-3, -5, -9, -10, -12, -13, -14, -15, -16, -17, -18, -19];
 List removeBottom1 = [3, -2, -3, -5, -9, -10, -12, -13, -14, -15, -16, -17, -18, -19];
 
+List shop_by_categgory = [{'title': 'OTC MEDICINES', 'color': Colors.blueGrey, 'icon': 'assets/estore/estore5.png'}, 
+{'title': 'DIABETIC MEDICINES', 'color': Colors.lightBlueAccent, 'icon': 'assets/estore/estore6.png'},
+{'title': 'BABY & MOTHER', 'color': Colors.orangeAccent, 'icon': 'assets/estore/estore7.png'},];
+
+List shop_by_offer = [{'title': 'STAY HOME GET DISCOUNT', 'color': Colors.purpleAccent, 'icon': 'assets/estore/bro.png'}, 
+{'title': 'GET 50% OFF ON FIRST ORDER', 'color': Colors.amber, 'icon': 'assets/estore/bro.png'},];
+
+List allStores = [{'title': 'Wild Life Store', 'desc': 'Willington Bridge', 'color': Colors.lightGreen, 'icon': 'assets/estore/estore4.png'}, 
+{'title': 'Healthyfy', 'desc': 'New Park Maryland', 'color': Colors.lightBlueAccent, 'icon': 'assets/estore/estore2.png'},
+{'title': 'Success Store', 'desc': 'Shoprite Aluasa', 'color': Colors.amber, 'icon': 'assets/estore/estore1.png'},
+{'title': 'Healthy Family', 'desc': 'Manchester New Park', 'color': Colors.lightGreenAccent, 'icon': 'assets/estore/estore3.png'}];
+
 List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
   return [
     NavDrawerItem(

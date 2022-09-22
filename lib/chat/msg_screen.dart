@@ -1,6 +1,6 @@
 import 'package:agora_rtm/agora_rtm.dart';
 import 'package:doctor/callscreens/pickup/pick_layout.dart';
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/providers/msg_log.dart';
 import 'package:flutter/foundation.dart';

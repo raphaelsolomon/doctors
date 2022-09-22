@@ -1,4 +1,4 @@
-import 'package:doctor/constanst/strings.dart';
+import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/schedule.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/model/event_model.dart';

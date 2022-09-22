@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:doctor/auth/login.dart';
-import 'package:doctor/auth/stage_two.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/resuable/form_widgets.dart';
@@ -13,16 +13,16 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 import 'package:doctor/dialog/subscribe.dart' as popupMessage;
 
-class AuthOtp extends StatefulWidget {
+class ForgotOtp extends StatefulWidget {
   final String body;
   bool isLoggedIn = false;
-  AuthOtp(this.body, this.isLoggedIn, {Key? key}) : super(key: key);
+  ForgotOtp(this.body, this.isLoggedIn, {Key? key}) : super(key: key);
 
   @override
-  State<AuthOtp> createState() => _AuthOtpState();
+  State<ForgotOtp> createState() => _ForgotOtpState();
 }
 
-class _AuthOtpState extends State<AuthOtp> {
+class _ForgotOtpState extends State<ForgotOtp> {
   bool isLoading = false;
   bool isResending = false;
   var listOTp = {};
@@ -34,7 +34,8 @@ class _AuthOtpState extends State<AuthOtp> {
   final node3 = FocusNode();
   final otp4 = TextEditingController();
   final node4 = FocusNode();
-
+   final password = TextEditingController();
+  final confirmPassword = TextEditingController();
   final box = Hive.box<User>(BoxName);
 
   @override
@@ -53,6 +54,8 @@ class _AuthOtpState extends State<AuthOtp> {
     otp2.dispose();
     otp3.dispose();
     otp4.dispose();
+    password.dispose();
+    confirmPassword.dispose();
     super.dispose();
   }
 
@@ -205,6 +208,20 @@ class _AuthOtpState extends State<AuthOtp> {
                       ],
                     ),
                   ),
+
+                  const SizedBox(height: 10.0,),
+                  getRegisterForm(
+                        ctl: password,
+                        icon: Icons.lock_outlined,
+                        obscure: true,
+                        hint: 'Password'),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    getRegisterPasswordForm(
+                      ctl: confirmPassword,
+                      hint: 'Confirm Password',
+                    ),
                   const SizedBox(
                     height: 50.0,
                   ),
@@ -257,7 +274,7 @@ class _AuthOtpState extends State<AuthOtp> {
                   const SizedBox(
                     height: 15.0,
                   ),
-                  widget.body.isEmail ? const SizedBox() : InkWell(
+                   widget.body.isEmail ? const SizedBox() : InkWell(
                     onTap: () {},
                     child: Text('Call me',
                         style: GoogleFonts.poppins(
@@ -276,10 +293,29 @@ class _AuthOtpState extends State<AuthOtp> {
   }
 
   void validDate() async {
-    print(listOTp);
     if (listOTp.length < 4) {
       popupMessage.dialogMessage(
           context, popupMessage.serviceMessage(context, 'Input not valid'));
+      return;
+    }
+
+    if (password.text.trim().isEmpty) {
+      popupMessage.dialogMessage(
+          context, popupMessage.serviceMessage(context, 'password required'));
+      return;
+    }
+
+    if (confirmPassword.text.trim().isEmpty) {
+      popupMessage.dialogMessage(context,
+          popupMessage.serviceMessage(context, 'comfirm password required'));
+      return;
+    }
+
+    if (confirmPassword.text.trim() != password.text.trim()) {
+      popupMessage.dialogMessage(
+          context,
+          popupMessage.serviceMessage(
+              context, 'confirm password does not match'));
       return;
     }
 
@@ -288,15 +324,20 @@ class _AuthOtpState extends State<AuthOtp> {
     });
 
     try {
-      final res = await http.post(Uri.parse('${ROOTAPI}/api/user/email/verify'),
+      final res = await http.post(Uri.parse('${ROOTAPI}/api/user/change/password'),
           body: widget.body.isEmail
               ? {
                   'email': widget.body.trim(),
-                  'otp': '${listOTp['1']}${listOTp['2']}${listOTp['3']}${listOTp['4']}'
+                  'new_password': '${password.text.trim()}',
+                  'otp':
+                      '${listOTp['1']}${listOTp['2']}${listOTp['3']}${listOTp['4']}'
+
                 }
               : {
                   'phone': widget.body.trim(),
-                  'otp': '${listOTp['1']}${listOTp['2']}${listOTp['3']}${listOTp['4']}'
+                  'new_password': '${password.text.trim()}',
+                  'otp':
+                      '${listOTp['1']}${listOTp['2']}${listOTp['3']}${listOTp['4']}'
                 });
       if (res.statusCode == 200) {
         final parsed = jsonDecode(res.body);
@@ -304,13 +345,7 @@ class _AuthOtpState extends State<AuthOtp> {
             context,
             popupMessage.serviceMessage(context, parsed['message'],
                 status: true, cB: () {
-              if (widget.isLoggedIn) {
-                User user = box.get(USERPATH)!;
-                user.verified = true;
-                box.put(USERPATH, user).then((value) => Get.back());
-                return;
-              }
-              Get.to(() => CompleteRegistration('${parsed['data']['access_token']}'));
+              Get.off(() => AuthLogin());
             }),
             barrierDismiss: false);
       } else {
@@ -341,7 +376,7 @@ class _AuthOtpState extends State<AuthOtp> {
     setState(() => isResending = true);
     try {
       final res = await http.post(Uri.parse('${ROOTAPI}/api/user/otp/resend'),
-           body: widget.body.isEmail ? {'email': widget.body.trim()} : {'phone': widget.body.trim()});
+          body: widget.body.isEmail ? {'email': widget.body.trim()} : {'phone': widget.body.trim()});
       if (res.statusCode == 200) {
         final parsed = jsonDecode(res.body);
         popupMessage.dialogMessage(
