@@ -22,9 +22,7 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
-// START: FlutterFire Configuration
 apply plugin: 'com.google.gms.google-services'
-// END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -72,7 +70,6 @@ android {
     }
 
     buildTypes {
-
        debug {
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.

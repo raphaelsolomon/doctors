@@ -333,8 +333,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   'password': password.text.trim(),
                 }
               : {
-                  'phone':
-                      '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
+                  'phone': '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
                   'password': password.text.trim(),
                 });
       if (res.statusCode == 200) {
