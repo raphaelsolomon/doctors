@@ -166,6 +166,58 @@ const DUMMYREVIEW =
 
 const BoxName = 'userBox';
 
+List homeItem1 = [{
+  'icon': '',
+  'title': 'Find a Medical Center',
+  'desc': 'Find hospitals, laboratories, pharmacies and clinics'
+}, {
+  'icon': '',
+  'title': 'Speak to a Doctor',
+  'desc': 'Discuss your health issues and book appointments'
+},{
+  'icon': '',
+  'title': 'Visit the ePharamcy',
+  'desc': 'Order medications and get it delivered anywhere'
+},{
+  'icon': '',
+  'title': 'Symptoms Checker',
+  'desc': 'Input symptoms and get instant diagnosis advice'
+},{
+  'icon': '',
+  'title': 'Book an Ambulance',
+  'desc': 'Find land, sea and air ambulance providers and book for their services.'
+},{
+  'icon': '',
+  'title': 'Cementeries Center',
+  'desc': 'Find the best cemetery center at your neighborhood to lay your love one to rest.'
+}];
+
+List homeItem2 = [{
+  'icon': '',
+  'title': 'My Patient',
+  'desc': 'Manage All your patient medical records and billing with just a click.'
+}, {
+  'icon': '',
+  'title': 'E-Prescription',
+  'desc': 'Create, edit and delect prescription for all your patients with just a click.'
+},{
+  'icon': '',
+  'title': 'Timing',
+  'desc': 'Create, Set , edit, delete and block your practice timing at your own convinience'
+},{
+  'icon': '',
+  'title': 'Availability',
+  'desc': 'Let your patient and colleges know your availabilty'
+},{
+  'icon': '',
+  'title': 'Appointments',
+  'desc': 'See all incoming and past appointments, you can also reschedule and accept or reject appoinments'
+},{
+  'icon': '',
+  'title': 'Book A Test',
+  'desc': 'Conviniently Book Diagnosis test from any of our Partner Center closer to you.'
+}];
+
 List ONBOARDING = [
   {
     'image': 'assets/imgs/1.png',

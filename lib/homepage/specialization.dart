@@ -1,0 +1,123 @@
+import 'package:doctor/constant/strings.dart';
+import 'package:doctor/providers/page_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class Specialization extends StatelessWidget {
+  const Specialization({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Color(0xFFf6f6f6),
+        child: Column(children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: BLUECOLOR,
+            child: Column(children: [
+              const SizedBox(
+                height: 45.0,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                        onTap: () =>
+                            context.read<HomeController>().onBackPress(),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: 18.0,
+                        )),
+                    Text('Search Speciality',
+                        style: getCustomFont(color: Colors.white, size: 16.0)),
+                    InkWell(
+                      onTap: () {
+                        context.read<HomeController>().setPage(-23);
+                      },
+                      child: Icon(
+                        Icons.notifications_active,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Divider(),
+              const SizedBox(
+                height: 15.0,
+              ),
+            ]),
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.only(right: 40.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, top: 20.0, bottom: 20.0, right: 30.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(20.0),
+                          bottomRight: Radius.circular(20.0)),
+                      color: BLUECOLOR),
+                  child: Text(
+                    'Select your Speciality',
+                    style: getCustomFont(size: 14.0, color: Colors.white),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  margin: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.white),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: [
+
+                        ],
+                      )),
+                )
+              ],
+            ),
+          )
+        ]));
+  }
+
+  Widget viewAllSpecial(BuildContext context) => Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        child: Column(
+          children: [
+            Row(children: [
+              Flexible(
+                  fit: FlexFit.tight,
+                  child: Text(
+                    'Addiction psychiatrists',
+                    style: getCustomFont(size: 14.0, color: Colors.black87),
+                  )),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Icon(Icons.check_circle,
+                    size: 18.0, color: Colors.green),
+              )
+            ]),
+            const SizedBox(height: 1.0,),
+            Divider(),
+            const SizedBox(height: 1.0,),
+          ],
+        ),
+      );
+}

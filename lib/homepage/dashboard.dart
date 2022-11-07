@@ -125,7 +125,6 @@ class _DashboardState extends State<Dashboard> {
       return MyPatients();
     }
     if (page == -19) {
-      print('here');
       return NotificationSettingsPage();
     }
     if (page == -18) {
@@ -188,7 +187,7 @@ class _DashboardState extends State<Dashboard> {
     if(page == 1){
     return MyDashBoard(scaffold);
     }
-    return HomePage();
+    return HomePage(scaffold);
   }
 }
 //
