@@ -11,56 +11,78 @@ class Prescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: Color(0xFFf6f6f6),
-        child: Column(children: [
-          Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+    return Stack(
+      children: [
+        Container(
             width: MediaQuery.of(context).size.width,
-            color: BLUECOLOR,
+            height: MediaQuery.of(context).size.height,
+            color: Color(0xFFf6f6f6),
             child: Column(children: [
-              const SizedBox(
-                height: 45.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                      onTap: () => context.read<HomeController>().onBackPress(),
-                      child: Icon(Icons.arrow_back_ios,
-                          size: 18.0, color: Colors.white)),
-                  Text('My Prescriptions',
-                      style: getCustomFont(size: 16.0, color: Colors.white)),
-                  InkWell(
-                    onTap: () {
-                      context.read<HomeController>().setPage(-22);
-                    },
-                    child: Icon(
-                      Icons.notifications_active,
-                      color: Colors.white,
-                    ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+                width: MediaQuery.of(context).size.width,
+                color: BLUECOLOR,
+                child: Column(children: [
+                  const SizedBox(
+                    height: 45.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                          onTap: () => context.read<HomeController>().onBackPress(),
+                          child: Icon(Icons.arrow_back_ios,
+                              size: 18.0, color: Colors.white)),
+                      Text('My Prescriptions',
+                          style: getCustomFont(size: 16.0, color: Colors.white)),
+                      InkWell(
+                        onTap: () {
+                          context.read<HomeController>().setPage(-22);
+                        },
+                        child: Icon(
+                          Icons.notifications_active,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15.0,
                   )
-                ],
+                ]),
               ),
               const SizedBox(
-                height: 15.0,
-              )
-            ]),
+                height: 10.0,
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 0.0, vertical: 0.0),
+                      itemCount: 10,
+                      shrinkWrap: true,
+                      itemBuilder: ((context, index) => prescriptionItem(context))))
+            ])),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            child: FloatingActionButton(
+              tooltip: 'Add',
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                
+              },
+              backgroundColor: BLUECOLOR,
+            ),
           ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Expanded(
-              child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 0.0, vertical: 0.0),
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  itemBuilder: ((context, index) => prescriptionItem(context))))
-        ]));
+        ),
+      ],
+    );
   }
 
   Widget prescriptionItem(context) {
@@ -109,14 +131,14 @@ class Prescription extends StatelessWidget {
                       'Dr. Ruby Perrln',
                       style: getCustomFont(
                           color: Colors.black,
-                          size: 16.0,
+                          size: 15.0,
                           weight: FontWeight.w400),
                     ),
                     Text(
                       'Dental',
                       style: getCustomFont(
                           color: Colors.black54,
-                          size: 13.0,
+                          size: 12.0,
                           weight: FontWeight.w400),
                     ),
                     const SizedBox(
@@ -124,8 +146,11 @@ class Prescription extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        getButton(context, () {},
-                            color: Colors.lightGreen.shade300),
+                        getButton(context,
+                            () => showRequestSheet(context, EditPrescription()),
+                            icon: Icons.download,
+                            text: 'Download',
+                            color: Colors.amberAccent),
                         const SizedBox(
                           width: 10.0,
                         ),
@@ -138,10 +163,7 @@ class Prescription extends StatelessWidget {
                           width: 10.0,
                         ),
                         getButton(context, () {
-                          dialogMessage(
-                              context,
-                              serviceMessage(context, 'Invoice Deleted....',
-                                  status: true));
+                          dialogMessage(context, serviceMessage(context, 'Invoice Deleted....', status: true));
                         },
                             icon: Icons.delete_outline,
                             text: 'Delete',

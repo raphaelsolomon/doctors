@@ -1,9 +1,11 @@
 import 'package:doctor/auth/otp.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/model/person/user.dart';
+import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffold;
@@ -162,12 +164,15 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    'View All Specialization',
-                    style: getCustomFont(
-                        size: 14.0, color: BLUECOLOR, weight: FontWeight.w500),
+                GestureDetector(
+                  onTap: () => context.read<HomeController>().setPage(-23),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      'View All Specialization',
+                      style: getCustomFont(
+                          size: 14.0, color: BLUECOLOR, weight: FontWeight.w500),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -179,12 +184,15 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    'View All Services',
-                    style: getCustomFont(
-                        size: 14.0, color: BLUECOLOR, weight: FontWeight.w500),
+                GestureDetector(
+                  onTap: () => context.read<HomeController>().setPage(-0),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      'View All Services',
+                      style: getCustomFont(
+                          size: 14.0, color: BLUECOLOR, weight: FontWeight.w500),
+                    ),
                   ),
                 ),
                 const SizedBox(

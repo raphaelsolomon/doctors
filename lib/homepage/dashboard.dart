@@ -26,6 +26,7 @@ import 'package:doctor/homepage/my_plan.dart';
 import 'package:doctor/homepage/prescription.dart';
 import 'package:doctor/homepage/reminder.dart';
 import 'package:doctor/homepage/schedule_timing.dart';
+import 'package:doctor/homepage/specialization.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/providers/msg_log.dart';
 import 'package:doctor/providers/page_controller.dart';
@@ -115,7 +116,10 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _pages(page, scaffold) {
-     if(page == -22) {
+    if(page == -23) {
+      return Specialization();
+    }
+    if(page == -22) {
       return NotificationPage();
     }
     if(page == -21) {

@@ -333,14 +333,14 @@ class _MyDashBoardState extends State<MyDashBoard> {
                                   Flexible(
                                       child: Text('Recent Prescription',
                                           style: getCustomFont(
-                                              size: 14.0,
+                                              size: 13.0,
                                               color: Colors.black,
                                               weight: FontWeight.w500))),
                                   Row(
                                     children: [
                                       Text('View All',
                                           style: getCustomFont(
-                                              size: 14.0, color: Colors.red)),
+                                              size: 13.0, color: Colors.red)),
                                       Icon(
                                         Icons.arrow_forward,
                                         size: 19.0,
@@ -369,8 +369,8 @@ class _MyDashBoardState extends State<MyDashBoard> {
     child: Row(
           children: [
             Container(
-              width: 60.0,
-              height: 60.0,
+              width: 45.0,
+              height: 45.0,
               decoration: BoxDecoration(
                 image: DecorationImage(image: AssetImage('assets/imgs/pills.png'), fit: BoxFit.contain, scale: 2.0),
                   borderRadius: BorderRadius.circular(10.0),
@@ -383,11 +383,11 @@ class _MyDashBoardState extends State<MyDashBoard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text('Abacavoir', style: getCustomFont(size: 17.0, color: Colors.black, weight: FontWeight.bold)),
-                  Text('#8995447', style: getCustomFont(size: 15.0, color: Colors.red, weight: FontWeight.normal)),
+                  Text('Abacavoir', style: getCustomFont(size: 16.0, color: Colors.black, weight: FontWeight.bold)),
+                  Text('#8995447', style: getCustomFont(size: 13.0, color: Colors.red, weight: FontWeight.normal)),
                 ],),
               ),
-              Text('Type: Onetime', style: getCustomFont(size: 15.0, color: Colors.black54, weight: FontWeight.normal)),
+              Text('Type: Onetime', style: getCustomFont(size: 12.0, color: Colors.black54, weight: FontWeight.normal)),
             ]),)
           ],
         ),
