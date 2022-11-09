@@ -63,7 +63,7 @@ class ByBrand extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0, left: 15.0),
-                      child: getCardForm('Search medicines'),
+                      child: getCardForm('Search Brands'),
                     ),
                     const SizedBox(
                       height: 20.0,

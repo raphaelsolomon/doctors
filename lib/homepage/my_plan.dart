@@ -145,18 +145,18 @@ class _MyPlanState extends State<MyPlan> {
                     child: Row(
                   children: [
                     Radio(
-                        value: pricing == 'Custom Price (per hour)',
+                        value: pricing == 'Custom Price',
                         groupValue: true,
                         activeColor: BLUECOLOR,
                         onChanged: (b) {
                           setState(() {
-                            pricing = 'Custom Price (per hour)';
+                            pricing = 'Custom Price';
                           });
                         }),
                     Flexible(
                       child: FittedBox(
                         child: Text(
-                          'Custom Price (per hour)',
+                          'Custom Price',
                           style: getCustomFont(size: 13.0, color: Colors.black),
                         ),
                       ),
@@ -492,7 +492,7 @@ class _MyPlanState extends State<MyPlan> {
             const SizedBox(
               height: 30.0,
             ),
-            getButton(context, () {}, 'Proceed'),
+            getButton(context, () {}, 'Save Plan'),
             const SizedBox(
               height: 80.0,
             ),

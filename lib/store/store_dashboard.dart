@@ -63,7 +63,7 @@ Widget getDashboard(context, width) => Padding(
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 20.0),
-                      child: getCardForm('Search medicines'),
+                      child: getCardForm('Search For Pharmacy Store'),
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -106,7 +106,7 @@ Widget getDashboard(context, width) => Padding(
                         children: [
                           Flexible(
                             child: Text(
-                              'Offers',
+                              'Deals & Offers',
                               style: getCustomFont(
                                   size: 14.0, color: Colors.black45),
                             ),
@@ -246,7 +246,7 @@ Widget getHospital(context, Function brand, {onBack}) => Padding(
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0, left: 15.0),
-                      child: getCardForm('Search medicines'),
+                      child: getCardForm('Search For Hospitals'),
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -522,7 +522,7 @@ Widget getPharmacy(context, Function brand, {onBack}) => Padding(
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0, left: 15.0),
-                      child: getCardForm('Search medicines'),
+                      child: getCardForm('Search For Pharmacy Stores'),
                     ),
                     const SizedBox(
                       height: 20.0,
