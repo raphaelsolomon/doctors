@@ -2,7 +2,8 @@ import 'package:doctor/constant/strings.dart';
 import 'package:flutter/material.dart';
 
 class EditPrescription extends StatefulWidget {
-  const EditPrescription({Key? key}) : super(key: key);
+  final bool isEdit;
+  const EditPrescription(this.isEdit, {Key? key}) : super(key: key);
 
   @override
   State<EditPrescription> createState() => _EditPrescriptionState();

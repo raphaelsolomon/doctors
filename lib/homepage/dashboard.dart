@@ -135,7 +135,7 @@ class _DashboardState extends State<Dashboard> {
       return AuthChangePass();
     }
     if (page == -16) {
-      return ProfileSettings(scaffold);
+      return ProfileSettings();
     }
     if (page == -15) {
       return ShareApp();
@@ -150,7 +150,7 @@ class _DashboardState extends State<Dashboard> {
       return MyReferrals();
     }
     if (page == -10) {
-      return MyReviews(scaffold); //reviews
+      return MyReviews(); //reviews
     }
     if (page == -9) {
       return MyFavourite(scaffold);

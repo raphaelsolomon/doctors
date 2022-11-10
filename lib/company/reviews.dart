@@ -6,8 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class MyReviews extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffold;
-  const MyReviews(this.scaffold, {Key? key}) : super(key: key);
+  const MyReviews({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +192,7 @@ class MyReviews extends StatelessWidget {
                         DottedBorder(
                           borderType: BorderType.RRect,
                           radius: Radius.circular(100.0),
-                          padding: EdgeInsets.all(6),
+                          padding: EdgeInsets.all(5.0),
                           dashPattern: [8, 4],
                           strokeCap: StrokeCap.butt,
                           color: Colors.black,
@@ -223,11 +222,11 @@ class MyReviews extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10.0),
+                        const SizedBox(width: 20.0),
                         DottedBorder(
                           borderType: BorderType.RRect,
                           radius: Radius.circular(100.0),
-                          padding: EdgeInsets.all(6),
+                          padding: EdgeInsets.all(5.0),
                           dashPattern: [8, 4],
                           strokeCap: StrokeCap.butt,
                           color: Colors.black,
@@ -259,6 +258,17 @@ class MyReviews extends StatelessWidget {
                         )
                       ],
                     ),
+                    Row(
+                      children: [
+                        Flexible(child: TextFormField(
+                    
+                        )),
+                        const SizedBox(width: 25.0,),
+                        Transform.rotate(
+                          angle: 5.9,
+                          child: Icon(Icons.send, color: BLUECOLOR, size: 30.0,))
+                      ],
+                    )
                   ],
                 ),
               )

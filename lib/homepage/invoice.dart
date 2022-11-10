@@ -11,6 +11,12 @@ class MyInvoicePage extends StatefulWidget {
 }
 
 class _MyInvoicePageState extends State<MyInvoicePage> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,24 +25,26 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
         color: Color(0xFFf6f6f6),
         child: Column(children: [
           Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0, vertical: 0.0),
-                width: MediaQuery.of(context).size.width,
-                color: BLUECOLOR,
-                child: Column(children: [
-                  const SizedBox(
-                    height: 45.0,
-                  ),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+            width: MediaQuery.of(context).size.width,
+            color: BLUECOLOR,
+            child: Column(children: [
+              const SizedBox(
+                height: 45.0,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
                       onTap: () => context.read<HomeController>().onBackPress(),
-                      child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 18.0,)),
-                 
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 18.0,
+                      )),
                   Text('Invoices',
-                      style:
-                          getCustomFont(color: Colors.white, size: 16.0)),
+                      style: getCustomFont(color: Colors.white, size: 16.0)),
                   InkWell(
                     onTap: () {
                       context.read<HomeController>().setPage(-22);
@@ -48,9 +56,9 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                   )
                 ],
               ),
-               const SizedBox(
-            height: 15.0,
-          ),
+              const SizedBox(
+                height: 15.0,
+              ),
             ]),
           ),
           Expanded(
@@ -89,12 +97,12 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                     child: Text(
                   '#MR-0010',
                   style: getCustomFont(
-                      size: 13.0, color: Colors.black, weight: FontWeight.w400),
+                      size: 12.0, color: Colors.black, weight: FontWeight.w400),
                 )),
                 Text(
                   'Paid on - 14 Mar 2022',
                   style: getCustomFont(
-                      size: 13.0,
+                      size: 12.0,
                       color: Colors.black45,
                       weight: FontWeight.w400),
                 )
@@ -121,7 +129,7 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                             'Michelle Fairfax',
                             style: getCustomFont(
                                 color: Colors.black,
-                                size: 19.0,
+                                size: 17.0,
                                 weight: FontWeight.w400),
                           ),
                           Flexible(
@@ -135,22 +143,54 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 3.0),
                       Text(
                         '#PT0025',
                         style: getCustomFont(
                             color: Colors.black45,
-                            size: 14.0,
+                            size: 13.0,
                             weight: FontWeight.w400),
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: getButton(context, () {
-                            context.read<HomeController>().setPage(-21);
-                          }),
-                        ),
+                      const SizedBox(height: 3.0),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: getButton(context, () => null,
+                                icon: Icons.download,
+                                text: 'Download',
+                                color: Colors.amberAccent),
+                          ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Flexible(
+                            child: getButton(context, () => null,
+                                icon: Icons.share,
+                                text: 'Share',
+                                color: Colors.lightBlue),
+                          ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Flexible(
+                            child: getButton(context, () {
+                              context.read<HomeController>().setPage(-21);
+                            },
+                                icon: Icons.delete_outline,
+                                text: 'Delete',
+                                color: Colors.redAccent),
+                          ),
+                        ],
                       )
+                      // SizedBox(
+                      //   width: MediaQuery.of(context).size.width,
+                      //   child: Align(
+                      //     alignment: Alignment.centerRight,
+                      //     child: getButton(context, () {
+                      //       context.read<HomeController>().setPage(-21);
+                      //     }),
+                      //   ),
+                      // )
                     ],
                   ),
                 )
@@ -160,22 +200,40 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
         ));
   }
 
-  Widget getButton(context, callBack) => GestureDetector(
+  Widget getButton(context, callBack,
+          {text = 'View',
+          icon = Icons.remove_red_eye,
+          color = Colors.lightBlueAccent}) =>
+      GestureDetector(
         onTap: () => callBack(),
         child: Container(
-          width: 100.0,
           decoration: BoxDecoration(
-              color: Colors.lightBlueAccent,
-              borderRadius: BorderRadius.circular(50.0)),
+              color: color, borderRadius: BorderRadius.circular(50.0)),
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 7.0),
-            child: Center(
-              child: Text(
-                'View',
-                style: getCustomFont(
-                    size: 14.0, color: Colors.white, weight: FontWeight.normal),
-              ),
+                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  icon,
+                  size: 14.0,
+                  color: Colors.white,
+                ),
+                const SizedBox(
+                  width: 2.0,
+                ),
+                Flexible(
+                  child: Text(
+                    '$text',
+                    maxLines: 1,
+                    style: getCustomFont(
+                        size: 12.0,
+                        color: Colors.white,
+                        weight: FontWeight.normal),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

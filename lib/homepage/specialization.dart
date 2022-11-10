@@ -8,13 +8,13 @@ class Specialization extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: Color(0xFFf6f6f6),
-        child: Stack(
-          children: [
-            Column(children: [
+    return Stack(
+      children: [
+        Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Color(0xFFf6f6f6),
+            child: Column(children: [
               Container(
                 width: MediaQuery.of(context).size.width,
                 color: BLUECOLOR,
@@ -60,11 +60,14 @@ class Specialization extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
+                    const SizedBox(
+                      height: 15.0,
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.only(right: 40.0),
+                      margin: const EdgeInsets.only(right: 60.0),
                       padding: const EdgeInsets.only(
-                          left: 15.0, top: 20.0, bottom: 20.0, right: 30.0),
+                          left: 15.0, top: 30.0, bottom: 30.0, right: 30.0),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(20.0),
@@ -76,51 +79,53 @@ class Specialization extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 15.0,
+                      height: 10.0,
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      margin: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.white),
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                            children: [
-                              ...List.generate(
-                                  7, (i) => viewAllSpecial(context))
-                            ],
-                          )),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        margin: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.white),
+                        child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: [
+                                ...List.generate(7, (i) => viewAllSpecial(context))
+                              ],
+                            )),
+                      ),
                     )
                   ],
                 ),
               )
-            ]),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 20.0),
-                child: FloatingActionButton(
-                  tooltip: 'Save',
-                  child: Icon(
-                    Icons.check_sharp,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                  backgroundColor: BLUECOLOR,
-                ),
+            ])),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            child: FloatingActionButton(
+              tooltip: 'Save',
+              child: Icon(
+                Icons.check_sharp,
+                color: Colors.white,
               ),
+              onPressed: () {},
+              backgroundColor: BLUECOLOR,
             ),
-          ],
-        ));
+          ),
+        ),
+      ],
+    );
   }
 
   Widget viewAllSpecial(BuildContext context) => Container(
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        padding: const EdgeInsets.symmetric(vertical: 9.0),
         child: Column(
           children: [
             Row(children: [

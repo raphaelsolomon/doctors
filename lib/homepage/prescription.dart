@@ -74,9 +74,7 @@ class Prescription extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              onPressed: () {
-                
-              },
+              onPressed: () => showRequestSheet(context, EditPrescription(false)),
               backgroundColor: BLUECOLOR,
             ),
           ),
@@ -147,7 +145,7 @@ class Prescription extends StatelessWidget {
                     Row(
                       children: [
                         getButton(context,
-                            () => showRequestSheet(context, EditPrescription()),
+                            () => null,
                             icon: Icons.download,
                             text: 'Download',
                             color: Colors.amberAccent),
@@ -155,7 +153,7 @@ class Prescription extends StatelessWidget {
                           width: 10.0,
                         ),
                         getButton(context,
-                            () => showRequestSheet(context, EditPrescription()),
+                            () => showRequestSheet(context, EditPrescription(true)),
                             icon: Icons.edit_outlined,
                             text: 'Edit',
                             color: Colors.amberAccent),

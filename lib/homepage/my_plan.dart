@@ -1,9 +1,9 @@
-
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +55,8 @@ class _MyPlanState extends State<MyPlan> {
         color: Color(0xFFf6f6f6),
         child: Column(children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
             width: MediaQuery.of(context).size.width,
             color: BLUECOLOR,
             child: Column(children: [
@@ -288,53 +289,11 @@ class _MyPlanState extends State<MyPlan> {
               ),
             ),
             const SizedBox(
-              height: 15.0,
+              height: 20.0,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                'Select Booking Shift',
-                style: getCustomFont(
-                    size: 13.0, color: Colors.black, weight: FontWeight.w500),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ...consultationShift.map((e) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            shift = e;
-                          });
-                        },
-                        child: Container(
-                          width: 120.0,
-                          margin:
-                              const EdgeInsets.only(right: 15.0, left: 10.0),
-                          decoration: BoxDecoration(
-                              color: shift == e ? BLUECOLOR : Colors.white,
-                              border: Border.all(
-                                  color: shift == e ? BLUECOLOR : Colors.black,
-                                  width: 1.0),
-                              borderRadius: BorderRadius.circular(50.0)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Center(
-                              child: Text(
-                                '$e',
-                                style: getCustomFont(
-                                    size: 13.0,
-                                    color:
-                                        shift == e ? Colors.white : BLUECOLOR),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ))
-                ],
-              ),
-            ),
+            dropDown(
+                label: 'Booking Shift',
+                text: 'Select Booking Shift'),
             const SizedBox(
               height: 20.0,
             ),
@@ -349,20 +308,21 @@ class _MyPlanState extends State<MyPlan> {
             const SizedBox(
               height: 15.0,
             ),
-              _buildDropDownButton(fromCurrency, callBack: (s) {
-                var total = double.parse('${curMap[toCurrency]}') * int.parse(s);
-                setState(() {
-                  converted.text = '${total}';
-                });
-              }),
-              const SizedBox(height: 15.0),
-              _buildConvert(toCurrency, callBack: (s) {
-                var total = double.parse('${curMap[s]}') * int.parse(currency.text.isEmpty ? '0' : currency.text);
-                setState(() {
-                  converted.text = '${total}';
-                });
-              }),
-             const SizedBox(
+            _buildDropDownButton(fromCurrency, callBack: (s) {
+              var total = double.parse('${curMap[toCurrency]}') * int.parse(s);
+              setState(() {
+                converted.text = '${total}';
+              });
+            }),
+            const SizedBox(height: 15.0),
+            _buildConvert(toCurrency, callBack: (s) {
+              var total = double.parse('${curMap[s]}') *
+                  int.parse(currency.text.isEmpty ? '0' : currency.text);
+              setState(() {
+                converted.text = '${total}';
+              });
+            }),
+            const SizedBox(
               height: 25.0,
             ),
             Container(
@@ -411,14 +371,17 @@ class _MyPlanState extends State<MyPlan> {
                       children: [
                         Flexible(
                           fit: FlexFit.tight,
-                          child: Wrap(children: services.map((e) => itemContainer(services, e)).toList()),
+                          child: Wrap(
+                              children: services
+                                  .map((e) => itemContainer(services, e))
+                                  .toList()),
                         ),
                         GestureDetector(
-                          onTap: () => showServicesDropDown(),
+                            onTap: () => showServicesDropDown(),
                             child: Icon(
-                          Icons.add_circle_outline,
-                          color: Colors.green,
-                        )),
+                              Icons.add_circle_outline,
+                              color: Colors.green,
+                            )),
                         const SizedBox(
                           width: 5.0,
                         )
@@ -429,7 +392,7 @@ class _MyPlanState extends State<MyPlan> {
                     height: 3.0,
                   ),
                   Text(
-                    'Note: press the add button to add new services',
+                    'Note: press the add button to add new specialization',
                     style: getCustomFont(
                         size: 12.0,
                         color: Colors.black45,
@@ -462,14 +425,17 @@ class _MyPlanState extends State<MyPlan> {
                       children: [
                         Flexible(
                           fit: FlexFit.tight,
-                          child: Wrap(children: Specialization.map((e) => itemContainer(Specialization, e)).toList()),
+                          child: Wrap(
+                              children: Specialization.map(
+                                      (e) => itemContainer(Specialization, e))
+                                  .toList()),
                         ),
                         GestureDetector(
-                          onTap: () => showBottomSheet(),
+                            onTap: () => showBottomSheet(),
                             child: Icon(
-                          Icons.add_circle_outline,
-                          color: Colors.green,
-                        )),
+                              Icons.add_circle_outline,
+                              color: Colors.green,
+                            )),
                         const SizedBox(
                           width: 5.0,
                         )
@@ -508,21 +474,19 @@ class _MyPlanState extends State<MyPlan> {
           borderRadius: BorderRadius.circular(50.0),
         ),
         padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Flexible(
               child: Text(
             '$e',
             maxLines: 1,
             style: getCustomFont(size: 12.0, color: Colors.white),
           )),
-          
           GestureDetector(
             onTap: () {
               setState(() {
                 int i = item.indexWhere((element) => element == e);
-                if(i > 0){
+                if (i > 0) {
                   item.removeAt(i);
                 }
               });
@@ -585,8 +549,8 @@ class _MyPlanState extends State<MyPlan> {
       height: 48.0,
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        color: BLUECOLOR.withOpacity(.05)),
+          borderRadius: BorderRadius.circular(8.0),
+          color: BLUECOLOR.withOpacity(.05)),
       child: Row(
         children: [
           DropdownButton(
@@ -597,7 +561,11 @@ class _MyPlanState extends State<MyPlan> {
                       value: value,
                       child: Row(
                         children: <Widget>[
-                          Text(value, style: getCustomFont(size: 13.0, color: Colors.black45),),
+                          Text(
+                            value,
+                            style: getCustomFont(
+                                size: 13.0, color: Colors.black45),
+                          ),
                         ],
                       ),
                     ))
@@ -610,18 +578,20 @@ class _MyPlanState extends State<MyPlan> {
               }
             },
           ),
-          const SizedBox(width: 10.0,),
-          Flexible(child: TextFormField(
+          const SizedBox(
+            width: 10.0,
+          ),
+          Flexible(
+              child: TextFormField(
             keyboardType: TextInputType.numberWithOptions(decimal: true),
             style: getCustomFont(size: 13.0, color: Colors.black45),
             controller: currency,
             onChanged: (s) => callBack(s),
             decoration: InputDecoration(
-              hintText: 'Enter price',
-              helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
-              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-              border: OutlineInputBorder(borderSide: BorderSide.none)
-            ),
+                hintText: 'Enter price',
+                helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                border: OutlineInputBorder(borderSide: BorderSide.none)),
           ))
         ],
       ),
@@ -634,8 +604,8 @@ class _MyPlanState extends State<MyPlan> {
       height: 48.0,
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        color: BLUECOLOR.withOpacity(.05)),
+          borderRadius: BorderRadius.circular(8.0),
+          color: BLUECOLOR.withOpacity(.05)),
       child: Row(
         children: [
           DropdownButton(
@@ -646,7 +616,11 @@ class _MyPlanState extends State<MyPlan> {
                       value: value,
                       child: Row(
                         children: <Widget>[
-                          Text(value, style: getCustomFont(size: 13.0, color: Colors.black45),),
+                          Text(
+                            value,
+                            style: getCustomFont(
+                                size: 13.0, color: Colors.black45),
+                          ),
                         ],
                       ),
                     ))
@@ -660,24 +634,83 @@ class _MyPlanState extends State<MyPlan> {
               }
             },
           ),
-          const SizedBox(width: 10.0,),
-          Flexible(child: TextFormField(
+          const SizedBox(
+            width: 10.0,
+          ),
+          Flexible(
+              child: TextFormField(
             keyboardType: TextInputType.numberWithOptions(decimal: true),
             readOnly: true,
             enabled: false,
             controller: converted,
             style: getCustomFont(size: 13.0, color: Colors.black45),
             decoration: InputDecoration(
-              hintText: '0.00',
-              helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
-              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-              border: OutlineInputBorder(borderSide: BorderSide.none)
-            ),
+                hintText: '0.00',
+                helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                border: OutlineInputBorder(borderSide: BorderSide.none)),
           ))
         ],
       ),
     );
   }
+
+  Widget dropDown({list, text, label}) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '$text',
+              style: getCustomFont(
+                  size: 13.0, color: Colors.black, weight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 7.0,
+            ),
+            Row(
+              children: [
+                Flexible(
+                  child: Container(
+                    height: 45.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: BLUECOLOR.withOpacity(.05),
+                    ),
+                    margin: const EdgeInsets.only(top: 5.0),
+                    child: FormBuilderDropdown(
+                      name: 'skill',
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black54,
+                      ),
+                      decoration: InputDecoration(
+                        
+                        labelStyle: getCustomFont(size: 13.0, color: Colors.black45),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 9.9, vertical: 5.0),
+                        border: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      // initialValue: 'Male',
+                      items: ['Morning', 'Afternoon', 'Evening', 'Mid Night ']
+                          .map((gender) => DropdownMenuItem(
+                                value: gender,
+                                child: Text(
+                                  gender,
+                                  style: getCustomFont(size: 13.0, color: Colors.black45),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
 
   void showBottomSheet() {
     showModalBottomSheet(
@@ -691,9 +724,7 @@ class _MyPlanState extends State<MyPlan> {
             Text(
               'Select Specialization',
               style: getCustomFont(
-                  size: 28.0,
-                  color: Colors.black,
-                  weight: FontWeight.w700),
+                  size: 28.0, color: Colors.black, weight: FontWeight.w700),
             ),
             const SizedBox(
               height: 20.0,
@@ -711,8 +742,10 @@ class _MyPlanState extends State<MyPlan> {
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        if(!Specialization.contains(SpecialitiesFilter[i])){
-                                          Specialization.add(SpecialitiesFilter[i]);
+                                        if (!Specialization.contains(
+                                            SpecialitiesFilter[i])) {
+                                          Specialization.add(
+                                              SpecialitiesFilter[i]);
                                         }
                                       });
                                       Navigator.pop(context);
@@ -738,7 +771,7 @@ class _MyPlanState extends State<MyPlan> {
     );
   }
 
-   void showServicesDropDown() {
+  void showServicesDropDown() {
     showModalBottomSheet(
       context: context,
       builder: (context) => Container(
@@ -750,9 +783,7 @@ class _MyPlanState extends State<MyPlan> {
             Text(
               'Select Services',
               style: getCustomFont(
-                  size: 28.0,
-                  color: Colors.black,
-                  weight: FontWeight.w700),
+                  size: 28.0, color: Colors.black, weight: FontWeight.w700),
             ),
             const SizedBox(
               height: 20.0,
@@ -770,7 +801,8 @@ class _MyPlanState extends State<MyPlan> {
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                         if(!services.contains(ServicesList[i])){
+                                        if (!services
+                                            .contains(ServicesList[i])) {
                                           services.add(ServicesList[i]);
                                         }
                                       });
