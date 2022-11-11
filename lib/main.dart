@@ -1,8 +1,7 @@
 import 'package:doctor/auth/login.dart';
-import 'package:doctor/company/reviews.dart';
+import 'package:doctor/auth/onboarding.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
-import 'package:doctor/homepage/invoice.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/notification/helper_notification.dart';
 import 'package:doctor/providers/page_controller.dart';
@@ -99,7 +98,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               primaryColor: Colors.black54),
           home: box.get('isFirst') == null
-              ? Scaffold(body: MyReviews())
+              ? Scaffold(body: OnBoardingScreen())
               : user.get(USERPATH) == null
                   ? const AuthLogin()
                   : Dashboard(),

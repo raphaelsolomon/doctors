@@ -1,3 +1,4 @@
+
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/edit_prescription.dart';
 import 'package:doctor/dialog/subscribe.dart';
@@ -5,9 +6,15 @@ import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Prescription extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffold;
-  const Prescription(this.scaffold, {Key? key}) : super(key: key);
+class Prescription extends StatefulWidget {
+  const Prescription({Key? key}) : super(key: key);
+
+  @override
+  State<Prescription> createState() => _PrescriptionState();
+}
+
+class _PrescriptionState extends State<Prescription> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +38,13 @@ class Prescription extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                          onTap: () => context.read<HomeController>().onBackPress(),
+                          onTap: () =>
+                              context.read<HomeController>().onBackPress(),
                           child: Icon(Icons.arrow_back_ios,
                               size: 18.0, color: Colors.white)),
                       Text('My Prescriptions',
-                          style: getCustomFont(size: 16.0, color: Colors.white)),
+                          style:
+                              getCustomFont(size: 16.0, color: Colors.white)),
                       InkWell(
                         onTap: () {
                           context.read<HomeController>().setPage(-22);
@@ -57,11 +66,12 @@ class Prescription extends StatelessWidget {
               ),
               Expanded(
                   child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 0.0, vertical: 0.0),
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      itemBuilder: ((context, index) => prescriptionItem(context))))
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 0.0, vertical: 0.0),
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: ((context, index) =>
+                              prescriptionItem(context))))
             ])),
         Align(
           alignment: Alignment.bottomRight,
@@ -82,6 +92,8 @@ class Prescription extends StatelessWidget {
       ],
     );
   }
+
+  
 
   Widget prescriptionItem(context) {
     return Container(
@@ -122,53 +134,64 @@ class Prescription extends StatelessWidget {
                 const SizedBox(
                   width: 15.0,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Dr. Ruby Perrln',
-                      style: getCustomFont(
-                          color: Colors.black,
-                          size: 15.0,
-                          weight: FontWeight.w400),
-                    ),
-                    Text(
-                      'Dental',
-                      style: getCustomFont(
-                          color: Colors.black54,
-                          size: 12.0,
-                          weight: FontWeight.w400),
-                    ),
-                    const SizedBox(
-                      height: 5.0,
-                    ),
-                    Row(
-                      children: [
-                        getButton(context,
-                            () => null,
-                            icon: Icons.download,
-                            text: 'Download',
-                            color: Colors.amberAccent),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        getButton(context,
-                            () => showRequestSheet(context, EditPrescription(true)),
-                            icon: Icons.edit_outlined,
-                            text: 'Edit',
-                            color: Colors.amberAccent),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        getButton(context, () {
-                          dialogMessage(context, serviceMessage(context, 'Invoice Deleted....', status: true));
-                        },
-                            icon: Icons.delete_outline,
-                            text: 'Delete',
-                            color: Colors.redAccent),
-                      ],
-                    )
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Dr. Ruby Perrln',
+                        style: getCustomFont(
+                            color: Colors.black,
+                            size: 15.0,
+                            weight: FontWeight.w400),
+                      ),
+                      Text(
+                        'Dental',
+                        style: getCustomFont(
+                            color: Colors.black54,
+                            size: 12.0,
+                            weight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: getButton(context, () => null,
+                                icon: Icons.download,
+                                text: 'Download',
+                                color: Colors.amberAccent),
+                          ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Flexible(
+                            child: getButton(
+                                context,
+                                () => showRequestSheet(context, EditPrescription(true)),
+                                icon: Icons.edit_outlined,
+                                text: 'Edit',
+                                color: Colors.amberAccent),
+                          ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Flexible(
+                            child: getButton(context, () {
+                              dialogMessage(
+                                  context,
+                                  serviceMessage(context, 'Invoice Deleted....',
+                                      status: true));
+                            },
+                                icon: Icons.delete_outline,
+                                text: 'Delete',
+                                color: Colors.redAccent),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
@@ -193,19 +216,22 @@ class Prescription extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  size: 14.0,
+                  size: 12.0,
                   color: Colors.white,
                 ),
                 const SizedBox(
                   width: 2.0,
                 ),
-                FittedBox(
-                  child: Text(
-                    '$text',
-                    style: getCustomFont(
-                        size: 13.0,
-                        color: Colors.white,
-                        weight: FontWeight.normal),
+                Flexible(
+                  child: Center(
+                    child: Text(
+                      '$text',
+                      maxLines: 1,
+                      style: getCustomFont(
+                          size: 11.0,
+                          color: Colors.white,
+                          weight: FontWeight.normal),
+                    ),
                   ),
                 ),
               ],

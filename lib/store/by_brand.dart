@@ -89,7 +89,7 @@ class ByBrand extends StatelessWidget {
                                     padding: const EdgeInsets.all(10.0),
                                     decoration: BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(14.0),
+                                            BorderRadius.circular(9.0),
                                         color: Colors.white,
                                         boxShadow: SHADOW),
                                     child: Column(
@@ -99,14 +99,14 @@ class ByBrand extends StatelessWidget {
                                         Expanded(
                                             child: Center(
                                           child: Image.asset(
-                                              'assets/imgs/logo.png',
+                                              'assets/imgs/pills.png',
                                               width: 150.0,
                                               fit: BoxFit.contain),
                                         )),
                                         Text(
                                           'Peak',
                                           style: getCustomFont(
-                                              size: 13.0, color: Colors.black, weight: FontWeight.w500),
+                                              size: 14.0, color: Colors.black, weight: FontWeight.w400),
                                         )
                                       ],
                                     ),

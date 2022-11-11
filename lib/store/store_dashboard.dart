@@ -1,5 +1,6 @@
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/resuable/form_widgets.dart';
+import 'package:doctor/store/categories_and_sub.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:doctor/store/hospital_details.dart';
 import 'package:doctor/store/my_cart.dart';
@@ -78,12 +79,15 @@ Widget getDashboard(context, width) => Padding(
                                   size: 14.0, color: Colors.black45),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20.0),
-                            child: Text(
-                              'view all',
-                              style: getCustomFont(
-                                  size: 14.0, color: Colors.greenAccent),
+                          GestureDetector(
+                            onTap: () => Get.to(() => CategoriesAndSub()),
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: Text(
+                                'view all',
+                                style: getCustomFont(
+                                    size: 14.0, color: Colors.greenAccent),
+                              ),
                             ),
                           ),
                         ]),

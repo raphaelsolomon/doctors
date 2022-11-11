@@ -266,7 +266,7 @@ class MyReviews extends StatelessWidget {
                         const SizedBox(width: 25.0,),
                         Transform.rotate(
                           angle: 5.9,
-                          child: Icon(Icons.send, color: BLUECOLOR, size: 30.0,))
+                          child: Icon(Icons.send, color: BLUECOLOR.withOpacity(.7), size: 30.0,))
                       ],
                     )
                   ],

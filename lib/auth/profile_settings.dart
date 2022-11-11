@@ -32,6 +32,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     'Awards & Memberships',
     'Registration'
   ];
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -732,7 +733,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                getCardForm('Year of Completion', ''),
+                getDateForm('Year of Award', DateFormat('dd EEEE, MMM, yyyy').format(selectedDate), () {}),
                 const SizedBox(
                   height: 15.0,
                 ),
@@ -777,12 +778,11 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                getCardForm('From', '', ctl: null),
+                getDateForm('From', DateFormat('dd EEEE, MMM, yyyy').format(selectedDate), () {}),
                 const SizedBox(
                   height: 15.0,
                 ),
-                
-                getCardForm('To', '', ctl: null),
+                getDateForm('To', DateFormat('dd EEEE, MMM, yyyy').format(selectedDate), () {}),
                 const SizedBox(
                   height: 15.0,
                 ),
@@ -840,7 +840,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                getCardForm('Year', ''),
+                getDateForm('To', DateFormat('dd EEEE, MMM, yyyy').format(selectedDate), () {}),
                 const SizedBox(
                   height: 10.0,
                 ),
@@ -1034,4 +1034,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
           ),
         ],
       );
+
+  //=======================================================
 }

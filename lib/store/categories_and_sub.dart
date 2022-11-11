@@ -63,28 +63,26 @@ class CategoriesAndSub extends StatelessWidget {
                   Flexible(
                       child: SingleChildScrollView(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        ...List.generate(
-                            7,
-                            (index) => Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 140.0,
-                                  margin: const EdgeInsets.only(bottom: 8.0),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(13.0),
-                                      image: DecorationImage(
-                                          image:
-                                              AssetImage('assets/imgs/4.png'),
-                                          fit: BoxFit.cover)),
-                                  child: Center(
-                                    child: Text(
-                                      'Antibiotics',
-                                      style: getCustomFont(
-                                          color: Colors.white,
-                                          weight: FontWeight.w500),
-                                    ),
+                        ...List.generate(7, (i) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 13.0),
+                          child: Column(
+                              children: [
+                                Image.asset('assets/imgs/female.png', width: 50.0, height: 50.0, fit: BoxFit.contain),
+                                const SizedBox(height: 5.0,),
+                                FittedBox(
+                                  child: Text(
+                                    'Antibiotics',
+                                    style: getCustomFont(
+                                        color: Colors.black54,
+                                        weight: FontWeight.w500),
                                   ),
-                                ))
+                                ),
+                              ],
+                            ),
+                        ),
+                        )
                       ],
                     ),
                   )),
@@ -92,15 +90,52 @@ class CategoriesAndSub extends StatelessWidget {
                     width: 13.0,
                   ),
                   Flexible(
-                      flex: 3,
+                      flex: 4,
                       child: Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height,
                           margin: const EdgeInsets.only(bottom: 8.0),
                           decoration: BoxDecoration(
-                              boxShadow: SHADOW,
-                              borderRadius: BorderRadius.circular(13.0),
-                              color: Colors.white))),
+                              borderRadius: BorderRadius.circular(9.0),
+                              color: Colors.transparent), child: GridView.builder(
+                                padding: const EdgeInsets.all(0.0),
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisExtent: 199.0,
+                                crossAxisCount: returnCrossAxis(MediaQuery.of(context).size.width),
+                                childAspectRatio: 2.0,
+                                crossAxisSpacing: 5.0,
+                                mainAxisSpacing: 5.0,
+                              ), itemBuilder: (ctx, i) => Container(
+                                margin: const EdgeInsets.all(5.0),
+                                 padding: const EdgeInsets.all(15.0),
+                                width: MediaQuery.of(ctx).size.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13.0),
+                                  color: Colors.white
+                                ),
+                                child: Column(children: [
+                                  const SizedBox(height: 7.0,),
+                                  Image.asset('assets/imgs/pills.png', width: 70.0, height: 70.0, fit: BoxFit.contain),
+                                   const SizedBox(height: 7.0,),
+                                   FittedBox(child: Text('Sport Nutrition', style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w600),)),
+                                   const SizedBox(height: 7.0,),
+                                   Row(
+                                     children: [
+                                       Text('\$ 25.00', style: getCustomFont(size: 13.0, color: Colors.black45, weight: FontWeight.w400),),
+                                       const SizedBox(width: 10.0,),
+                                       Flexible(child: Container(
+                                        decoration: BoxDecoration(color: Colors.redAccent),
+                                        padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 4.0),
+                                        child: FittedBox(child: Text('20% OFF', style: getCustomFont(size: 11.0, color: Colors.white))),
+                                       ),)
+                                     ],
+                                   ),
+                                    const SizedBox(height: 3.0,),
+                                   SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Text('\$ 30.0', style: getCustomFont(size: 14.0, color: Colors.black, weight: FontWeight.w600),)),
+                                ]),
+                              )),)),
                   const SizedBox(
                     width: 10.0,
                   ),
@@ -111,9 +146,7 @@ class CategoriesAndSub extends StatelessWidget {
 
   int returnCrossAxis(width) {
     return width < 500
-        ? 2
-        : width > 500 && width < 100
-            ? 2
-            : 3;
+        ? 2 : width > 500 && width < 100
+            ? 2 : 3;
   }
 }

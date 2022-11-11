@@ -171,7 +171,7 @@ class _DashboardState extends State<Dashboard> {
       return MyReminder();
     }
     if (page == 7) {
-      return Prescription(scaffold);
+      return Prescription();
     }
     if (page == 8) {
       return Container(); //my profile

@@ -85,12 +85,14 @@ class _RecentOrderState extends State<RecentOrder> {
                             color:
                                 past == 'Recent' ? BLUECOLOR : Colors.transparent,
                             boxShadow: past == 'Recent' ? SHADOW : null),
-                        child: Text(
-                          'Recent',
-                          style: getCustomFont(
-                              size: 15.0,
-                              color:
-                                  past == 'Recent' ? Colors.white : Colors.black),
+                        child: FittedBox(
+                          child: Text(
+                            'Recent',
+                            style: getCustomFont(
+                                size: 13.0,
+                                color:
+                                    past == 'Recent' ? Colors.white : Colors.black),
+                          ),
                         ),
                       ),
                     ),
@@ -109,13 +111,15 @@ class _RecentOrderState extends State<RecentOrder> {
                                 ? BLUECOLOR
                                 : Colors.transparent,
                             boxShadow: past == 'Past' ? SHADOW : null),
-                        child: Text(
-                          'Past',
-                          style: getCustomFont(
-                              size: 15.0,
-                              color: past == 'Past'
-                                  ? Colors.white
-                                  : Colors.black),
+                        child: FittedBox(
+                          child: Text(
+                            'Past',
+                            style: getCustomFont(
+                                size: 13.0,
+                                color: past == 'Past'
+                                    ? Colors.white
+                                    : Colors.black),
+                          ),
                         ),
                       ),
                     )

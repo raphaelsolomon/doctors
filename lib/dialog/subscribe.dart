@@ -1225,12 +1225,12 @@ Widget getPayButton(context, callBack, text) => GestureDetector(
         decoration: BoxDecoration(
             color: BLUECOLOR, borderRadius: BorderRadius.circular(6.0)),
         child: Padding(
-          padding: const EdgeInsets.all(13.0),
+          padding: const EdgeInsets.all(12.0),
           child: Center(
             child: Text(
               '$text',
               style: getCustomFont(
-                  size: 18.0, color: Colors.white, weight: FontWeight.normal),
+                  size: 15.0, color: Colors.white, weight: FontWeight.normal),
             ),
           ),
         ),

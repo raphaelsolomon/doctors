@@ -96,7 +96,11 @@ class _ProductListState extends State<ProductList> {
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(child: Container()),
+                                            Expanded(child: Center(
+                                              child: Image.asset(
+                                                'assets/imgs/pills.png'
+                                              ),
+                                            )),
                                             const SizedBox(
                                               height: 2.0,
                                             ),
