@@ -172,39 +172,69 @@ class _AuthLoginState extends State<AuthLogin> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   socialAccount(FontAwesome.facebook, Color(0xFF1777F2),
-                            callBack: () => FirebaseMethods.facebookLogin()),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
-                        socialAccount(FontAwesome.linkedin, Color(0xFF0078B5),
-                            callBack: () {
-                              Get.to(() => LinkedInUserWidget(
-                                redirectUrl: LINKEDIN_REDIRECT,
-                                clientId: LINKEDIN_CLIENTID,
-                                clientSecret: LINKEDIN_SECRET,
-                                projection: const [
-                                  ProjectionParameters.id,
-                                  ProjectionParameters.localizedFirstName,
-                                  ProjectionParameters.localizedLastName,
-                                  ProjectionParameters.firstName,
-                                  ProjectionParameters.lastName,
-                                  ProjectionParameters.profilePicture,
-                                ],
-                                onGetUserProfile: (user) {
-                                  print('${user.user.token.accessToken} - ${user.user.firstName!.localized!.label} - ${user.user.lastName!.localized!.label} - ${user.user.profilePicture!.displayImageContent!.elements!.first.identifiers!.first.identifier} - ${user.user.userId} - ${user.user.email!.elements!.first.handleDeep!.emailAddress}');
-                                  Get.offAll(() => Dashboard());
-                                },
-                                onError: (e) {
-                                  print('Error: ${e.toString()}');
-                                  print('Error: ${e.stackTrace.toString()}');
-                                },
-                              ));
-                            }),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
-                        socialAccount(FontAwesome.google, Colors.redAccent,
-                            callBack: () => FirebaseMethods.googleSignIn()),
+                      callBack: () => FirebaseMethods.facebookLogin()),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  socialAccount(FontAwesome.linkedin, Color(0xFF0078B5),
+                      callBack: () {
+                    Get.to(() => LinkedInUserWidget(
+                          redirectUrl: LINKEDIN_REDIRECT,
+                          clientId: LINKEDIN_CLIENTID,
+                          clientSecret: LINKEDIN_SECRET,
+                          projection: const [
+                            ProjectionParameters.id,
+                            ProjectionParameters.localizedFirstName,
+                            ProjectionParameters.localizedLastName,
+                            ProjectionParameters.firstName,
+                            ProjectionParameters.lastName,
+                            ProjectionParameters.profilePicture,
+                          ],
+                          onGetUserProfile: (user) {
+                            User person = User(
+                                uid: '${1134}',
+                                name:
+                                    '${user.user.firstName!.localized!.label} ${user.user.lastName!.localized!.label}',
+                                email: user.user.email!.elements!.first
+                                    .handleDeep!.emailAddress,
+                                phone: '+2349067618740',
+                                verified: '1' == '0' ? false : true,
+                                country: 'Nigeria',
+                                token: 'Bearer ${user.user.token.accessToken}',
+                                profilePhoto: user
+                                    .user
+                                    .profilePicture!
+                                    .displayImageContent!
+                                    .elements!
+                                    .first
+                                    .identifiers!
+                                    .first
+                                    .identifier,
+                                gender: 'Male',
+                                status: '1',
+                                dob: '2022-03-22',
+                                weight: '',
+                                height: '',
+                                age: '24',
+                                marital_status: 'Single',
+                                cat: '116');
+
+                            box.put(USERPATH, person).then((value) => {Get.offAll(() => Dashboard())});
+                            print(
+                                '${user.user.token.accessToken} - ${user.user.firstName!.localized!.label} - ${user.user.lastName!.localized!.label} - ${user.user.profilePicture!.displayImageContent!.elements!.first.identifiers!.first.identifier} - ${user.user.userId} - ${user.user.email!.elements!.first.handleDeep!.emailAddress}');
+                            Get.offAll(() => Dashboard());
+                          },
+                          onError: (e) {
+                            print('Error: ${e.toString()}');
+                            print('Error: ${e.stackTrace.toString()}');
+                          },
+                        ));
+                  }),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  socialAccount(FontAwesome.google, Colors.redAccent,
+                      callBack: () => FirebaseMethods.googleSignIn()),
                 ],
               ),
               const SizedBox(
@@ -333,7 +363,8 @@ class _AuthLoginState extends State<AuthLogin> {
                   'password': password.text.trim(),
                 }
               : {
-                  'phone': '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
+                  'phone':
+                      '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
                   'password': password.text.trim(),
                 });
       if (res.statusCode == 200) {
@@ -389,9 +420,7 @@ class _AuthLoginState extends State<AuthLogin> {
           marital_status: jsonDecode(res.body)['data']['marital_status'],
           cat: jsonDecode(res.body)['data']['cat']);
 
-      box.put(USERPATH, user).then((value) => {
-        Get.offAll(() => Dashboard())
-        });
+      box.put(USERPATH, user).then((value) => {Get.offAll(() => Dashboard())});
     }
   }
 }

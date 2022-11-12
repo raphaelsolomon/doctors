@@ -349,15 +349,13 @@ navDrawer(BuildContext context, scaffold) => Container(
                       ),
                       const SizedBox(width: 15.0),
                       Flexible(
-                          child: FittedBox(
-                        child: Text(
-                          e.title,
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.5,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87.withOpacity(.7)),
-                        ),
-                      ))
+                          child: Text(
+                            e.title,
+                            style: GoogleFonts.poppins(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black87.withOpacity(.7)),
+                          ))
                     ]),
                   ),
                 );
@@ -372,21 +370,19 @@ navDrawer(BuildContext context, scaffold) => Container(
                       size: 15.0,
                     ),
                   ),
-                  title: FittedBox(
-                    child: Text(
-                      e.title,
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.5,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black87.withOpacity(.7)),
-                    ),
+                  title: Text(
+                    e.title,
+                    style: GoogleFonts.poppins(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87.withOpacity(.7)),
                   ),
                   children: e.children.map((entries) {
                     return GestureDetector(
                       onTap: () => setChildrenClickListener(entries, context),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 50.0, vertical: 13.0),
+                            horizontal: 50.0, vertical: 12.0),
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: Text(entries['title'],
@@ -610,7 +606,7 @@ getCouponCode(context, {ctl}) {
               style: getCustomFont(size: 14.0, color: Colors.black45),
               maxLines: 1,
               decoration: InputDecoration(
-                  hintText: 'Coupon Code',
+                  hintText: 'Apply a Coupon Code',
                   contentPadding:
                       const EdgeInsets.only(left: 10.0, right: 10.0, top: 3.0),
                   hintStyle: getCustomFont(size: 14.0, color: Colors.black45),

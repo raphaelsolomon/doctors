@@ -399,7 +399,7 @@ class _MyCartState extends State<MyCart> {
                   const SizedBox(
                     height: 15.0,
                   ),
-                  isCoupon ? getCouponCode(context) : SizedBox(),
+                  isCoupon ? getCouponCode(context, ctl: null) : SizedBox(),
                   const SizedBox(
                     height: 15.0,
                   ),

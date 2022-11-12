@@ -2,6 +2,7 @@ import 'package:doctor/auth/otp.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
+import 'package:doctor/store/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -60,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                               widget.scaffold.currentState!.openDrawer(),
                           child: Icon(Icons.menu, color: Colors.black)),
                       CircleAvatar(
+                        backgroundColor: BLUECOLOR.withOpacity(.3),
                         backgroundImage: isImage
                             ? NetworkImage(user!.profilePhoto!)
                             : NetworkImage(
@@ -125,8 +127,11 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
                       children: [
-                        ...List.generate(homeItem1.length,
-                            (i) => horizontalItem(homeItem1[i]))
+                        ...List.generate(
+                            homeItem1.length,
+                            (i) => GestureDetector(
+                                onTap: () => onClickItem1(i),
+                                child: horizontalItem(homeItem1[i])))
                       ],
                     ),
                   ),
@@ -167,11 +172,16 @@ class _HomePageState extends State<HomePage> {
                 GestureDetector(
                   onTap: () => context.read<HomeController>().setPage(-23),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      'View All Specialization',
-                      style: getCustomFont(
-                          size: 14.0, color: BLUECOLOR, weight: FontWeight.w500),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        'View All Specialization',
+                        style: getCustomFont(
+                            size: 14.0,
+                            color: BLUECOLOR,
+                            weight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 ),
@@ -185,13 +195,18 @@ class _HomePageState extends State<HomePage> {
                   height: 20.0,
                 ),
                 GestureDetector(
-                  onTap: () => context.read<HomeController>().setPage(-0),
+                  onTap: () => context.read<HomeController>().setPage(-24),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      'View All Services',
-                      style: getCustomFont(
-                          size: 14.0, color: BLUECOLOR, weight: FontWeight.w500),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        'View All Services',
+                        style: getCustomFont(
+                            size: 14.0,
+                            color: BLUECOLOR,
+                            weight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 ),
@@ -201,9 +216,12 @@ class _HomePageState extends State<HomePage> {
                 viewAllSpecial(),
                 viewAllSpecial(),
                 viewAllSpecial(),
+                const SizedBox(
+                  height: 100.0,
+                )
               ]),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -212,12 +230,13 @@ class _HomePageState extends State<HomePage> {
   Widget viewAllSpecial() => Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(vertical: 5.0),
+        margin: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Row(children: [
           Flexible(
               fit: FlexFit.tight,
               child: Text(
                 'Addiction psychiatrists',
-                style: getCustomFont(size: 14.0, color: Colors.black87),
+                style: getCustomFont(size: 14.0, color: Colors.black45),
               )),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -227,45 +246,44 @@ class _HomePageState extends State<HomePage> {
         ]),
       );
 
-  Widget horizontalItem(homeItem1) => GestureDetector(
-        child: Container(
-          width: 160.0,
-          height: 230.0,
-          padding: const EdgeInsets.all(15.0),
-          margin: const EdgeInsets.only(right: 10.0),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
-          child: Column(
-            children: [
-              Image.asset(
-                'assets/imgs/1.png',
-                width: 80.0,
-                height: 80.0,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              Text(
-                '${homeItem1['title']}',
-                textAlign: TextAlign.center,
-                style: getCustomFont(
-                    size: 15.5, color: Colors.black, weight: FontWeight.w600),
-              ),
-              const SizedBox(
-                height: 9.0,
-              ),
-              Text(
-                '${homeItem1['desc']}',
-                textAlign: TextAlign.center,
-                style: getCustomFont(
-                    size: 13.0, color: Colors.black45, weight: FontWeight.w400),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-            ],
-          ),
+  Widget horizontalItem(homeItem1) => Container(
+        width: 160.0,
+        height: 230.0,
+        padding: const EdgeInsets.all(15.0),
+        margin: const EdgeInsets.only(right: 10.0),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/imgs/1.png',
+              width: 80.0,
+              height: 80.0,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              '${homeItem1['title']}',
+              textAlign: TextAlign.center,
+              style: getCustomFont(
+                  size: 15.5, color: Colors.black, weight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              '${homeItem1['desc']}',
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              style: getCustomFont(
+                  size: 12.0, color: Colors.black45, weight: FontWeight.w400),
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+          ],
         ),
       );
 
@@ -333,4 +351,47 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       );
+
+  onClickItem1(int i) {
+    if (i == 0) {
+      return;
+    }
+    if (i == 1) {
+      context.read<HomeController>().isEstore(true);
+      Get.to(() => StorePage(0));
+      return;
+    }
+    if (i == 2) {
+      return;
+    }
+    if (i == 3) {
+      return;
+    }
+    if (i == 4) {
+      return;
+    }
+  }
+
+  onClickItem2(int i) {
+    if (i == 0) {
+      context.read<HomeController>().setPage(-20);
+      return;
+    }
+    if (i == 1) {
+      context.read<HomeController>().setPage(7);
+      Get.to(() => StorePage(0));
+      return;
+    }
+    if (i == 2) {
+      context.read<HomeController>().setPage(2);
+      return;
+    }
+    if (i == 3) {
+      context.read<HomeController>().setPage(5);
+      return;
+    }
+    if (i == 4) {
+      return;
+    }
+  }
 }

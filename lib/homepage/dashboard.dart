@@ -26,6 +26,7 @@ import 'package:doctor/homepage/my_plan.dart';
 import 'package:doctor/homepage/prescription.dart';
 import 'package:doctor/homepage/reminder.dart';
 import 'package:doctor/homepage/schedule_timing.dart';
+import 'package:doctor/homepage/services.dart';
 import 'package:doctor/homepage/specialization.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/providers/msg_log.dart';
@@ -116,13 +117,16 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _pages(page, scaffold) {
-    if(page == -23) {
+    if (page == -24) {
+      return Services();
+    }
+     if (page == -23) {
       return Specialization();
     }
-    if(page == -22) {
+    if (page == -22) {
       return NotificationPage();
     }
-    if(page == -21) {
+    if (page == -21) {
       return InvoiceReceipt();
     }
     if (page == -20) {
@@ -176,7 +180,7 @@ class _DashboardState extends State<Dashboard> {
     if (page == 8) {
       return Container(); //my profile
     }
-    if(page == -6){
+    if (page == -6) {
       return AccountPage();
     }
     if (page == 5) {
@@ -188,8 +192,8 @@ class _DashboardState extends State<Dashboard> {
     if (page == 2) {
       return ScheduleTiming();
     }
-    if(page == 1){
-    return MyDashBoard(scaffold);
+    if (page == 1) {
+      return MyDashBoard(scaffold);
     }
     return HomePage(scaffold);
   }

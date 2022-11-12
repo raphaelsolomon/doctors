@@ -169,15 +169,11 @@ const BoxName = 'userBox';
 List homeItem1 = [{
   'icon': '',
   'title': 'Find a Medical Center',
-  'desc': 'Find hospitals, laboratories, pharmacies and clinics'
-}, {
-  'icon': '',
-  'title': 'Speak to a Doctor',
-  'desc': 'Discuss your health issues and book appointments'
+  'desc': 'Find hospitals, laboratories, pharmacies and clinics',
 },{
   'icon': '',
   'title': 'Visit the ePharamcy',
-  'desc': 'Order medications and get it delivered anywhere'
+  'desc': 'Order medications and get it delivered anywhere',
 },{
   'icon': '',
   'title': 'Symptoms Checker',

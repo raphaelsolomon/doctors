@@ -61,7 +61,6 @@ class _MyCalendarState extends State<MyCalendar> {
                             color: Colors.white,
                             size: 18.0,
                           )),
-                     
                       Text('My Calender',
                           style: getCustomFont(
                               size: 16.0, color: Colors.white)),

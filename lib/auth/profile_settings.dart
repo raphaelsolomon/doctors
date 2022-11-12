@@ -32,7 +32,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     'Awards & Memberships',
     'Registration'
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -87,11 +87,11 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                           ? clinicInfo()
                           : index == 'Contact Details'
                               ? addressInfo()
-                                  : index == 'Education & Experience'
-                                      ? educationExperience()
-                                      : index == 'Awards & Memberships'
-                                          ? awardAndMemberShip()
-                                          : registration())
+                              : index == 'Education & Experience'
+                                  ? educationExperience()
+                                  : index == 'Awards & Memberships'
+                                      ? awardAndMemberShip()
+                                      : registration())
         ]));
   }
 
@@ -113,7 +113,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             )),
       );
 
-  getCardForm(label, hint, {ctl, index, isList = false, items, max = 1, type = TextInputType.text}) {
+  getCardForm(label, hint,
+      {ctl, index, isList = false, items, max = 1, type = TextInputType.text}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -295,7 +296,16 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       style: getCustomFont(size: 13.0, color: Colors.black45)),
                 )),
                 GestureDetector(
-                  onTap: () => callBack(),
+                  onTap: () async {
+                    final DateTime? picked = await showDatePicker(
+                        context: context,
+                        initialDate: selectedDate,
+                        firstDate: DateTime(2015, 8),
+                        lastDate: DateTime(2101));
+                    if (picked != null && picked != selectedDate) {
+                        callBack(picked);
+                    }
+                  },
                   child: PhysicalModel(
                     elevation: 10.0,
                     color: Colors.white,
@@ -542,7 +552,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             const SizedBox(
               height: 15.0,
             ),
-            getCardForm('Hospital/Clinic Address', '', max: null, type: TextInputType.multiline),
+            getCardForm('Hospital/Clinic Address', '',
+                max: null, type: TextInputType.multiline),
             const SizedBox(
               height: 15.0,
             ),
@@ -603,11 +614,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             const SizedBox(
               height: 30.0,
             ),
-            getCardForm('Address 1', 'JohnDoe98', max: null, type: TextInputType.multiline),
+            getCardForm('Address 1', 'JohnDoe98',
+                max: null, type: TextInputType.multiline),
             const SizedBox(
               height: 15.0,
             ),
-            getCardForm('Address 2', 'John', max: null, type: TextInputType.multiline),
+            getCardForm('Address 2', 'John',
+                max: null, type: TextInputType.multiline),
             const SizedBox(
               height: 15.0,
             ),
@@ -733,7 +746,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                getDateForm('Year of Award', DateFormat('dd EEEE, MMM, yyyy').format(selectedDate), () {}),
+                getDateForm(
+                    'Year of Award',
+                    DateFormat('dd EEEE, MMM, yyyy').format(selectedDate),
+                    () {}),
                 const SizedBox(
                   height: 15.0,
                 ),
@@ -778,15 +794,22 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                getDateForm('From', DateFormat('dd EEEE, MMM, yyyy').format(selectedDate), () {}),
+                getDateForm(
+                    'From',
+                    DateFormat('dd EEEE, MMM, yyyy').format(selectedDate),
+                    () {}),
                 const SizedBox(
                   height: 15.0,
                 ),
-                getDateForm('To', DateFormat('dd EEEE, MMM, yyyy').format(selectedDate), () {}),
+                getDateForm(
+                    'To',
+                    DateFormat('dd EEEE, MMM, yyyy').format(selectedDate),
+                    () {}),
                 const SizedBox(
                   height: 15.0,
                 ),
-                getCardForm('Job Description', '', ctl: null, max: null, type: TextInputType.multiline),
+                getCardForm('Job Description', '',
+                    ctl: null, max: null, type: TextInputType.multiline),
                 const SizedBox(
                   height: 10.0,
                 ),
@@ -840,7 +863,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                getDateForm('To', DateFormat('dd EEEE, MMM, yyyy').format(selectedDate), () {}),
+                getDateForm(
+                    'To',
+                    DateFormat('dd EEEE, MMM, yyyy').format(selectedDate),
+                    () {}),
                 const SizedBox(
                   height: 10.0,
                 ),
