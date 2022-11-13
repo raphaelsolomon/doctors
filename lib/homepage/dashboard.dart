@@ -26,6 +26,7 @@ import 'package:doctor/homepage/my_plan.dart';
 import 'package:doctor/homepage/prescription.dart';
 import 'package:doctor/homepage/reminder.dart';
 import 'package:doctor/homepage/schedule_timing.dart';
+import 'package:doctor/homepage/specialization.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/providers/msg_log.dart';
 import 'package:doctor/providers/page_controller.dart';
@@ -115,7 +116,10 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _pages(page, scaffold) {
-     if(page == -22) {
+    if(page == -23) {
+      return Specialization();
+    }
+    if(page == -22) {
       return NotificationPage();
     }
     if(page == -21) {
@@ -125,14 +129,13 @@ class _DashboardState extends State<Dashboard> {
       return MyPatients();
     }
     if (page == -19) {
-      print('here');
       return NotificationSettingsPage();
     }
     if (page == -18) {
       return AuthChangePass();
     }
     if (page == -16) {
-      return ProfileSettings(scaffold);
+      return ProfileSettings();
     }
     if (page == -15) {
       return ShareApp();
@@ -147,7 +150,7 @@ class _DashboardState extends State<Dashboard> {
       return MyReferrals();
     }
     if (page == -10) {
-      return MyReviews(scaffold); //reviews
+      return MyReviews(); //reviews
     }
     if (page == -9) {
       return MyFavourite(scaffold);
@@ -168,7 +171,7 @@ class _DashboardState extends State<Dashboard> {
       return MyReminder();
     }
     if (page == 7) {
-      return Prescription(scaffold);
+      return Prescription();
     }
     if (page == 8) {
       return Container(); //my profile
@@ -188,7 +191,7 @@ class _DashboardState extends State<Dashboard> {
     if(page == 1){
     return MyDashBoard(scaffold);
     }
-    return HomePage();
+    return HomePage(scaffold);
   }
 }
 //

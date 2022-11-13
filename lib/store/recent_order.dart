@@ -74,29 +74,6 @@ class _RecentOrderState extends State<RecentOrder> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          past = 'Past';
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 8.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            color:
-                                past == 'Past' ? BLUECOLOR : Colors.transparent,
-                            boxShadow: past == 'Past' ? SHADOW : null),
-                        child: Text(
-                          'Past',
-                          style: getCustomFont(
-                              size: 15.0,
-                              color:
-                                  past == 'Past' ? Colors.white : Colors.black),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
                           past = 'Recent';
                         });
                       },
@@ -105,17 +82,44 @@ class _RecentOrderState extends State<RecentOrder> {
                             horizontal: 20.0, vertical: 8.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50.0),
-                            color: past == 'Recent'
+                            color:
+                                past == 'Recent' ? BLUECOLOR : Colors.transparent,
+                            boxShadow: past == 'Recent' ? SHADOW : null),
+                        child: FittedBox(
+                          child: Text(
+                            'Recent',
+                            style: getCustomFont(
+                                size: 13.0,
+                                color:
+                                    past == 'Recent' ? Colors.white : Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          past = 'Past';
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 8.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: past == 'Past'
                                 ? BLUECOLOR
                                 : Colors.transparent,
-                            boxShadow: past == 'Recent' ? SHADOW : null),
-                        child: Text(
-                          'Recent',
-                          style: getCustomFont(
-                              size: 15.0,
-                              color: past == 'Recent'
-                                  ? Colors.white
-                                  : Colors.black),
+                            boxShadow: past == 'Past' ? SHADOW : null),
+                        child: FittedBox(
+                          child: Text(
+                            'Past',
+                            style: getCustomFont(
+                                size: 13.0,
+                                color: past == 'Past'
+                                    ? Colors.white
+                                    : Colors.black),
+                          ),
                         ),
                       ),
                     )

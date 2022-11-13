@@ -175,9 +175,7 @@ class MyFavourite extends StatelessWidget {
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemCount: 5,
-                                itemSize: 15.0,
-                                itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 2.0),
+                                itemSize: 14.0,
                                 itemBuilder: (context, _) => Icon(
                                   Icons.star,
                                   color: Colors.amber,
@@ -211,7 +209,7 @@ class MyFavourite extends StatelessWidget {
                               'Florida, USA',
                               style: GoogleFonts.poppins(
                                   color: Colors.black,
-                                  fontSize: 14.0,
+                                  fontSize: 13.0,
                                   fontWeight: FontWeight.w400),
                             ),
                           ],
@@ -257,7 +255,7 @@ class MyFavourite extends StatelessWidget {
                         '98%',
                         style: GoogleFonts.poppins(
                             color: Colors.black,
-                            fontSize: 16.0,
+                            fontSize: 14.5,
                             fontWeight: FontWeight.w400),
                       ),
                     ],
@@ -287,7 +285,7 @@ class MyFavourite extends StatelessWidget {
                       '\$300 - \$1000',
                       style: GoogleFonts.poppins(
                           color: Colors.black,
-                          fontSize: 15.0,
+                          fontSize: 14.5,
                           fontWeight: FontWeight.w400),
                     ),
                   ],

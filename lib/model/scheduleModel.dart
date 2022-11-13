@@ -1,25 +1,34 @@
 class ScheduleModel {
-  final Map<DateTime, List<ScheduleTimingModel>> scheduleData;
-  bool isEdit;
+  final Map<String, ScheduleTimingModel> scheduleData;
 
-  ScheduleModel(this.scheduleData, {this.isEdit = false});
-
-  setIsEdit(bool b) {
-    this.isEdit = b;
-  }
+  ScheduleModel(this.scheduleData);
 }
 
 class ScheduleTimingModel {
-  DateTime timeStart = DateTime.now();
-  DateTime timeEnd = DateTime.now();
+  List<String> morningShift = [];
+  List<String> afternoonShift = [];
+  List<String> eveningShift = [];
+  List<String> midNightShift = [];
 
-  ScheduleTimingModel({required this.timeStart,  required this.timeEnd});
+  ScheduleTimingModel(
+      {required this.morningShift,
+      required this.afternoonShift,
+      required this.eveningShift,
+      required this.midNightShift});
 
-  void setStart(DateTime time){
-    this.timeStart = time;
+  void setMorning(String time) {
+    this.morningShift.add(time);
   }
 
-  void setEnd(DateTime time){
-    this.timeEnd = time;
+  void setAfternoon(String time) {
+    this.afternoonShift.add(time);
+  }
+
+  void setEvening(String time) {
+    this.eveningShift.add(time);
+  }
+
+  void setMidNight(String time) {
+    this.midNightShift.add(time);
   }
 }

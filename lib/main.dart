@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               primaryColor: Colors.black54),
           home: box.get('isFirst') == null
-              ? const OnBoardingScreen()
+              ? Scaffold(body: OnBoardingScreen())
               : user.get(USERPATH) == null
                   ? const AuthLogin()
                   : Dashboard(),

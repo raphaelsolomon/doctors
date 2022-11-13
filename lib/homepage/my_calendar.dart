@@ -138,10 +138,9 @@ class _MyCalendarState extends State<MyCalendar> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 20.0,),
-                                  Text('Records', style: getCustomFont(size: 18.0, color: Colors.black),),
+                                  Text('Records', style: getCustomFont(size: 16.0, color: Colors.black),),
                                   const SizedBox(height: 15.0,),
-                                  ...getEventFromDay(selectedDate)
-                                    .map((e) => Column(
+                                  ...getEventFromDay(selectedDate).map((e) => Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(e.title, style: getCustomFont(size: 14.0),),

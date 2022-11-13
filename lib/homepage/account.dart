@@ -121,15 +121,15 @@ class _AccountPageState extends State<AccountPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Credit card deposit(payment ID: 94943978743)', style: getCustomFont(color: BLUECOLOR, size: 13.0),)
-                                ,Text('20 Monday June, 08.48.00 GMT',style: getCustomFont(size: 12.0, color: Colors.black45),)
+                                Text('Credit card deposit(payment ID: 94943978743)', style: getCustomFont(color: BLUECOLOR, size: 12.0),)
+                                ,Text('20 Monday June, 08.48.00 GMT',style: getCustomFont(size: 11.0, color: Colors.black45),)
                               ],
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text('\$200.00',style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),),
+                          child: Text('\$200.00',style: getCustomFont(size: 12.0, color: Colors.black, weight: FontWeight.w500),),
                         )
                       ],
                     ),
@@ -237,7 +237,7 @@ class _AccountPageState extends State<AccountPage> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 7.0),
+                const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
             child: Row(
@@ -290,24 +290,11 @@ class _AccountPageState extends State<AccountPage> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8.0)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.wallet, color: Colors.lightBlue, size: 18.0,),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      Flexible(
-                        child: FittedBox(
-                          child: Text('Top Up ',
-                              style: getCustomFont(
-                                  color: Colors.black,
-                                  size: 15.0,
-                                  weight: FontWeight.w500)),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: Text('Top Up ',
+                      style: getCustomFont(
+                          color: Colors.black,
+                          size: 15.0,
+                          weight: FontWeight.w500)),
                 ),
               ),
             ),

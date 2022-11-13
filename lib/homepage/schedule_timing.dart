@@ -16,6 +16,20 @@ class ScheduleTiming extends StatefulWidget {
 
 class _ScheduleTimingState extends State<ScheduleTiming> {
   List<ScheduleModel> scheduleModel = [];
+  int index = 0;
+  DateTime current = new DateTime.now();
+
+  @override
+  void initState() {
+    scheduleModel.add(ScheduleModel({
+      DateFormat('yyyy-MM-dd').format(current): ScheduleTimingModel(
+          morningShift: [],
+          afternoonShift: [],
+          eveningShift: [],
+          midNightShift: [])
+    }));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +59,8 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                         color: Colors.white,
                         size: 18.0,
                       )),
-                 
                   Text('Schedule Timinig',
-                      style:
-                          getCustomFont(size: 16.0, color: Colors.white)),
+                      style: getCustomFont(size: 16.0, color: Colors.white)),
                   Icon(
                     Icons.notifications,
                     color: Colors.white,
@@ -68,10 +80,19 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                 monthTextStyle: getCustomFont(color: Colors.white, size: 10.0),
                 onDateChange: (date) {
                   setState(() {
-                    var index = scheduleModel.indexWhere(
-                        (element) => element.scheduleData.containsKey(date));
-                    if (index < 0) 
-                      scheduleModel.add(ScheduleModel({date: []}, isEdit: false));
+                    int i = scheduleModel.indexWhere((e) => e.scheduleData.containsKey(DateFormat('yyyy-MM-dd').format(date)));
+                    if (i < 0) {
+                      scheduleModel.add(ScheduleModel({
+                        DateFormat('yyyy-MM-dd').format(date): ScheduleTimingModel(
+                                morningShift: [],
+                                afternoonShift: [],
+                                eveningShift: [],
+                                midNightShift: [])
+                      }));
+                      index = scheduleModel.length - 1;
+                    } else {
+                      index = i;
+                    }
                   });
                 },
               ),
@@ -100,7 +121,7 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                         shadowColor: Colors.grey,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 15.0),
+                              horizontal: 13.0, vertical: 13.0),
                           child: Icon(
                             Icons.event,
                             size: 19.0,
@@ -119,7 +140,7 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                             Text(
                               'Schedule Timing',
                               style: getCustomFont(
-                                  size: 18.0,
+                                  size: 16.0,
                                   color: Colors.black,
                                   weight: FontWeight.w500),
                             ),
@@ -129,7 +150,7 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                             Text(
                               'Timing and Duration',
                               style: getCustomFont(
-                                  size: 13.0,
+                                  size: 12.0,
                                   color: Colors.black45,
                                   weight: FontWeight.w400),
                             ),
@@ -144,7 +165,7 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                             child: Text(
                           '30\nAppts',
                           textAlign: TextAlign.center,
-                          style: getCustomFont(size: 12.0, color: Colors.black),
+                          style: getCustomFont(size: 11.0, color: Colors.black),
                         )),
                         backgroundColor: Colors.grey.shade100,
                         progressColor: BLUECOLOR,
@@ -165,16 +186,57 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(30.0),
                                 topRight: Radius.circular(20.0))),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ...scheduleModel.map((e) => scheduleItem(e)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  newDesign(scheduleModel[index]),
+                                ],
+                              ),
+                            )),
+                            const SizedBox(
+                              height: 30.0,
+                            ),
+                            Row(children: [
+                              Flexible(
+                                  child: Container(
+                                width: double.infinity,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.redAccent,
+                                    borderRadius: BorderRadius.circular(7.0)),
+                                child: Center(
+                                  child: Text('Next Day',
+                                      style: getCustomFont(
+                                          size: 13.0, color: Colors.white)),
+                                ),
+                              )),
                               const SizedBox(
-                                height: 50.0,
-                              )
-                            ],
-                          ),
+                                width: 20.0,
+                              ),
+                              Flexible(
+                                  child: Container(
+                                width: double.infinity,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                decoration: BoxDecoration(
+                                    color: BLUECOLOR,
+                                    borderRadius: BorderRadius.circular(7.0)),
+                                child: Center(
+                                  child: Text('Save Schedule',
+                                      style: getCustomFont(
+                                          size: 13.0, color: Colors.white)),
+                                ),
+                              ))
+                            ]),
+                            const SizedBox(
+                              height: 5.0,
+                            )
+                          ],
                         )))
               ],
             ),
@@ -182,135 +244,224 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
         ]));
   }
 
-  Future<TimeOfDay?> _selectTime(BuildContext context) async {
-    TimeOfDay selectedTime = TimeOfDay.now();
-     return await showTimePicker(
-        context: context,
-        initialTime: selectedTime);
-  }
-
-  scheduleItem(ScheduleModel e) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-                child: FittedBox(
-                    child: Text(
-              'Time Slot - ${DateFormat('EEEE, dd MMM').format(e.scheduleData.keys.last)}',
-              style: getCustomFont(
-                  size: 15.0, color: Colors.black, weight: FontWeight.w500),
-            ))),
-            GestureDetector(
-              onTap: () => setState(() => e.setIsEdit(!e.isEdit)),
-              child: Row(
-                children: [
-                  Icon(
-                    e.isEdit ? Icons.check : Icons.edit,
-                    color: e.isEdit ? Colors.green : Colors.black,
-                    size: 18.0,
-                  ),
-                  const SizedBox(
-                    width: 2.0,
-                  ),
-                  Text(
-                    e.isEdit ? 'Done' : 'Edit',
+  Widget newDesign(ScheduleModel e) =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Container(
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    'Morning Time Slot',
                     style: getCustomFont(
-                        size: 15.0,
-                        color: Colors.black,
+                        size: 14.0,
+                        color: Colors.black87,
                         weight: FontWeight.w500),
                   ),
-                ],
+                ),
+                GestureDetector(
+                    onTap: () async {
+                      var time = await _selectTime(context);
+                      String newTime = formatTimeOfDay(time!);
+                     setState(() {
+                        e.scheduleData.values.last.morningShift.add(newTime);
+                     });
+                    },
+                    child: Icon(Icons.add_circle_outline,
+                        size: 18.0, color: Colors.green))
+              ],
+            ),
+            const SizedBox(
+              height: 15.0,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                children: e.scheduleData.values.last.morningShift
+                    .map((e) => Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87),)))
+                    .toList(),
               ),
+            ),
+            const SizedBox(
+              height: 15.0,
             )
-          ],
+          ]),
         ),
         const SizedBox(
-          height: 20.0,
+          height: 7.0,
         ),
-        GridView.builder(
-            padding: const EdgeInsets.all(0.0),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 15.0,
-                mainAxisExtent: 45.0,
-                crossAxisSpacing: 8.0),
-            itemCount: e.scheduleData.values.last.length,
-            itemBuilder: (ctx, i) => timeItem(e.scheduleData.values.last, i)),
-        SizedBox(height: e.isEdit ? 10.0 : 0.0,),
-        e.isEdit? GestureDetector(
-          onTap: () {
-            setState(() {
-              e.scheduleData.values.last.add(ScheduleTimingModel(timeStart: DateTime.now(), timeEnd: DateTime.now()));
-            });
-          },
-          child: Icon(Icons.add_circle_outline, color:BLUECOLOR,)):SizedBox(),
+        Container(
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    'Afternoon Time Slot',
+                    style: getCustomFont(
+                        size: 14.0,
+                        color: Colors.black87,
+                        weight: FontWeight.w500),
+                  ),
+                ),
+                GestureDetector(
+                    onTap: () async {
+                      var time = await _selectTime(context);
+                      String newTime = formatTimeOfDay(time!);
+                     setState(() {
+                        e.scheduleData.values.last.afternoonShift.add(newTime);
+                     });
+                    },
+                    child: Icon(Icons.add_circle_outline,
+                        size: 18.0, color: Colors.green))
+              ],
+            ),
+            const SizedBox(
+              height: 15.0,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                children: e.scheduleData.values.last.afternoonShift
+                    .map((e) => Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87),)))
+                    .toList(),
+              ),
+            ),
+            const SizedBox(
+              height: 15.0,
+            )
+          ]),
+        ),
         const SizedBox(
-          height: 30.0,
+          height: 7.0,
+        ),
+        Container(
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    'Evening Time Slot',
+                    style: getCustomFont(
+                        size: 14.0,
+                        color: Colors.black87,
+                        weight: FontWeight.w500),
+                  ),
+                ),
+                GestureDetector(
+                   onTap: () async {
+                      var time = await _selectTime(context);
+                      String newTime = formatTimeOfDay(time!);
+                     setState(() {
+                        e.scheduleData.values.last.eveningShift.add(newTime);
+                     });
+                    },
+                    child: Icon(Icons.add_circle_outline,
+                        size: 18.0, color: Colors.green))
+              ],
+            ),
+            const SizedBox(
+              height: 15.0,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                children: e.scheduleData.values.last.eveningShift
+                    .map((e) => Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87),)))
+                    .toList(),
+              ),
+            ),
+            const SizedBox(
+              height: 15.0,
+            )
+          ]),
+        ),
+        const SizedBox(
+          height: 7.0,
+        ),
+        Container(
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    'Mid Night Time Slot',
+                    style: getCustomFont(
+                        size: 14.0,
+                        color: Colors.black87,
+                        weight: FontWeight.w500),
+                  ),
+                ),
+                GestureDetector(
+                    onTap: () async {
+                      var time = await _selectTime(context);
+                      String newTime = formatTimeOfDay(time!);
+                     setState(() {
+                        e.scheduleData.values.last.midNightShift.add(newTime);
+                     });
+                    },
+                    child: Icon(Icons.add_circle_outline,
+                        size: 18.0, color: Colors.green))
+              ],
+            ),
+            const SizedBox(
+              height: 15.0,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                children: e.scheduleData.values.last.midNightShift
+                    .map((e) => Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87),)))
+                    .toList(),
+              ),
+            ),
+            const SizedBox(
+              height: 15.0,
+            )
+          ]),
         ),
       ]);
 
-  timeItem(List<ScheduleTimingModel> value, int i) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
-          border: Border.all(width: 1.3, color: BLUECOLOR),
-        ),
-        child: Row(children: [
-          GestureDetector(
-            onTap: () async{
-              _selectTime(context).then((t) {
-                   setState(() {
-                  final now = new DateTime.now();
-                  value[i].setStart(DateTime(now.year, now.month, now.day, t!.hour, t.minute));
-                });
-              });
-            },
-            child: Text(
-               '${DateFormat('hh:mm a').format(value[i].timeStart)}',
-              style: getCustomFont(
-                  size: 14.0, color: Colors.black, weight: FontWeight.w500),
-            ),
-          ),
-          Text(
-            ' - ',
-            style: getCustomFont(
-                size: 14.0, color: Colors.black, weight: FontWeight.w500),
-          ),
-          GestureDetector(
-            onTap: () async{
-              _selectTime(context).then((t) {
-                   setState(() {
-                  final now = new DateTime.now();
-                  value[i].setEnd(DateTime(now.year, now.month, now.day, t!.hour, t.minute));
-                });
-              });
-            },
-            child: Text(
-              '${DateFormat('hh:mm a').format(value[i].timeEnd)}',
-              style: getCustomFont(
-                  size: 14.0, color: Colors.black, weight: FontWeight.w500),
-            ),
-          ),
-          const SizedBox(
-            width: 20.0,
-          ),
-          GestureDetector(
-            onTap: () => setState(() => value.removeAt(i)),
-            child: Icon(
-              Icons.remove_circle_outline,
-              color: Colors.redAccent,
-              size: 19.0,
-            ),
-          )
-        ]),
-      );
+  Future<TimeOfDay?> _selectTime(BuildContext context) async {
+    TimeOfDay selectedTime = TimeOfDay.now();
+    return await showTimePicker(context: context, initialTime: selectedTime);
+  }
 
   String formatTimeOfDay(TimeOfDay tod) {
     final now = new DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
-    final format = DateFormat.jm();  //"6:00 AM"
+    final format = DateFormat.jm(); //"6:00 AM"
     return format.format(dt);
-}
+  }
 }

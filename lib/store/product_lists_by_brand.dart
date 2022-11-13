@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProductList extends StatefulWidget {
-  const ProductList({Key? key}) : super(key: key);
+class ProductListBrand extends StatefulWidget {
+  const ProductListBrand({Key? key}) : super(key: key);
 
   @override
-  State<ProductList> createState() => _ProductListState();
+  State<ProductListBrand> createState() => _ProductListBrandState();
 }
 
-class _ProductListState extends State<ProductList> {
+class _ProductListBrandState extends State<ProductListBrand> {
   @override
   void dispose() {
     super.dispose();
@@ -42,7 +42,7 @@ class _ProductListState extends State<ProductList> {
                       ),
                     ),
                     Text(
-                      'Product List',
+                      '',
                       style: GoogleFonts.poppins(
                           fontSize: 17.0,
                           color: Colors.white,
@@ -55,8 +55,39 @@ class _ProductListState extends State<ProductList> {
                   ],
                 ),
               ),
+              const SizedBox(height: 15.0,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 20.0),
+                  width: 70.0,
+                  height: 70.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(image: AssetImage('assets/imgs/pills.png'))
+                )),
+                const SizedBox(width: 17.0),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 10.0),
+                    Text('Well Life Store', style: getCustomFont(size: 19.0, color: Colors.white),),
+                    const SizedBox(height: 2.0,),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on, size: 14.0, color: Colors.white),
+                        const SizedBox(width: 10.0,),
+                        Flexible(child: Text('Willington Bridge', style: getCustomFont(size: 13.0, color: Colors.white60),)),
+                      ],
+                    )
+                  ]),
+                )
+              ],),
               const SizedBox(
-                height: 14.0,
+                height: 17.0,
               ),
               Expanded(
                   child: Container(

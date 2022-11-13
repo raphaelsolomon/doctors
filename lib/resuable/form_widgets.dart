@@ -340,7 +340,7 @@ navDrawer(BuildContext context, scaffold) => Container(
                     margin: const EdgeInsets.only(bottom: 15.0),
                     child: Row(children: [
                       CircleAvatar(
-                        radius: 18.0,
+                        radius: 17.0,
                         child: Icon(
                           e.icon,
                           color: Colors.white,
@@ -349,12 +349,14 @@ navDrawer(BuildContext context, scaffold) => Container(
                       ),
                       const SizedBox(width: 15.0),
                       Flexible(
-                          child: Text(
-                        e.title,
-                        style: GoogleFonts.poppins(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87.withOpacity(.7)),
+                          child: FittedBox(
+                        child: Text(
+                          e.title,
+                          style: GoogleFonts.poppins(
+                              fontSize: 14.5,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black87.withOpacity(.7)),
+                        ),
                       ))
                     ]),
                   ),
@@ -370,12 +372,14 @@ navDrawer(BuildContext context, scaffold) => Container(
                       size: 15.0,
                     ),
                   ),
-                  title: Text(
-                    e.title,
-                    style: GoogleFonts.poppins(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87.withOpacity(.7)),
+                  title: FittedBox(
+                    child: Text(
+                      e.title,
+                      style: GoogleFonts.poppins(
+                          fontSize: 14.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87.withOpacity(.7)),
+                    ),
                   ),
                   children: e.children.map((entries) {
                     return GestureDetector(
@@ -387,7 +391,7 @@ navDrawer(BuildContext context, scaffold) => Container(
                           width: MediaQuery.of(context).size.width,
                           child: Text(entries['title'],
                               style: getCustomFont(
-                                  size: 16.0,
+                                  size: 14.0,
                                   color: Colors.black87.withOpacity(.7))),
                         ),
                       ),
@@ -480,13 +484,13 @@ setClickListener(e, BuildContext context) {
       context.read<HomeController>().setPage(5);
       break;
     case 6:
-     context.read<HomeController>().setPage(6);
+      context.read<HomeController>().setPage(6);
       break;
     case 7:
       context.read<HomeController>().setPage(7);
       break;
     case 8:
-     context.read<HomeController>().setPage(8);
+      context.read<HomeController>().setPage(8);
       break;
     case 9:
       dialogMessage(context, logoutPop(context));
@@ -686,9 +690,14 @@ Widget firstScroll(e) => Container(
             style: getCustomFont(
                 size: 15.0, color: Colors.white, weight: FontWeight.bold),
           ),
-          Expanded(child: Align(
+          Expanded(
+              child: Align(
             alignment: Alignment.bottomRight,
-            child: Image.asset('${e['icon']}', width: 50.0, height: 55.0,),
+            child: Image.asset(
+              '${e['icon']}',
+              width: 50.0,
+              height: 55.0,
+            ),
           ))
         ],
       ),
@@ -707,9 +716,16 @@ Widget secondScroll(context, e) => Container(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flexible(
-            fit: FlexFit.tight,
-            child: Text(e['title'], style: getCustomFont(size: 17.0, color: Colors.white, weight: FontWeight.w500),)),
-          Image.asset('${e['icon']}', height: double.infinity,)
+              fit: FlexFit.tight,
+              child: Text(
+                e['title'],
+                style: getCustomFont(
+                    size: 17.0, color: Colors.white, weight: FontWeight.w500),
+              )),
+          Image.asset(
+            '${e['icon']}',
+            height: double.infinity,
+          )
         ],
       ),
     );
@@ -724,12 +740,14 @@ Widget thirdScroll(context, e) => GestureDetector(
             height: 50.0,
             width: 50.0,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: e['color']
-                ),
-                child: Center(
-                  child: Image.asset('${e['icon']}', width: 30.0, height: 30.0,),
-                ),
+                borderRadius: BorderRadius.circular(10.0), color: e['color']),
+            child: Center(
+              child: Image.asset(
+                '${e['icon']}',
+                width: 30.0,
+                height: 30.0,
+              ),
+            ),
           ),
           const SizedBox(
             width: 10.0,
@@ -812,296 +830,301 @@ Widget createPrescriptionNote(text) => Row(
       ],
     );
 
-    Widget dashHeader(context) => Positioned(
-          top: 80.0,
-          right: 0,
-          left: 0,
-          child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 6.0),
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black26,
-                        spreadRadius: 1.0,
-                        blurRadius: 10.0,
-                        offset: Offset(0.0, 1.0))
-                  ],
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0)),
-              child: Row(
-                children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: Image.asset(
-                        'assets/imgs/3.png',
-                        width: 70,
-                        height: 70,
-                        fit: BoxFit.contain,
-                      )),
-                  const SizedBox(
-                    width: 20.0,
-                  ),
-                  Flexible(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Dr. Darren Elder',
-                          style: getCustomFont(
-                              size: 18.0,
-                              color: Colors.black,
-                              weight: FontWeight.w400),
-                        ),
-                        FittedBox(
-                          child: Text(
-                            'BDS, MDS - Oral & Maxillofacial Surgery',
-                            style: getCustomFont(
-                                size: 12.0,
-                                color: Colors.black54,
-                                weight: FontWeight.w400),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 2.0,
-                        ),
-                        Row(
-                          children: [
-                            PhysicalModel(
-                              elevation: 10.0,
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(100.0),
-                              shadowColor: Colors.grey,
-                              child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 5.0),
-                                  child: Image.asset(
-                                    'assets/imgs/tooth.png',
-                                    width: 15.0,
-                                    height: 15.0,
-                                    fit: BoxFit.contain,
-                                  )),
-                            ),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(
-                              'Dentist',
-                              style: getCustomFont(
-                                  color: Colors.black54,
-                                  size: 13.0,
-                                  weight: FontWeight.w400),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: FittedBox(
-                                child: Text(
-                                  '+15 Years Exp.',
-                                  style: getCustomFont(
-                                      size: 13.0,
-                                      color: Colors.red,
-                                      weight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              '(Lagos, Nigeria)',
-                              style: getCustomFont(
-                                  size: 12.0,
-                                  color: Colors.black45,
-                                  weight: FontWeight.w400),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              )),
-        );
-
-dashWidget(context, {icon = FontAwesome5.calendar_day,
-      text = "Total patients",
-      progress = 0.8,
-      result = '1300+',
-      color = BLUECOLOR}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 14.0),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        boxShadow: SHADOW,
-          borderRadius: BorderRadius.circular(15.0), color: Colors.white),
-      child: Column(children: [
-        SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: CircularPercentIndicator(
-                            radius: 40.0,
-                            lineWidth: 8.0,
-                            percent: 0.5,
-                            center: Image.asset(
-                              'assets/imgs/patient.png',
-                              height: 35.0,
-                              width: 35.0,
-                              fit: BoxFit.contain,
-                            ),
-                            backgroundColor: Colors.grey.shade100,
-                            progressColor: Colors.lightBlueAccent.withOpacity(.7),
-                          ),
-                        ),
-        const SizedBox(
-          height: 7.0,
-        ),
-        Text(
-          '$text',
-          style: getCustomFont(size: 15.0, color: Colors.black, weight: FontWeight.w500),
-        ),
-        const SizedBox(
-          height: 3.0,
-        ),
-        Text(
-          '$result',
-          style: getCustomFont(
-              size: 19.0, color: Colors.black54, weight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 10.0,
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 7.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100.0), color: Colors.green.shade300),
-          child: FittedBox(
-            child: Text(
-              'March 18, 2022',
-              style: getCustomFont(size: 13.0, color: Colors.white),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 4.0,
-        ),
-      ]),
-    );
-  }
-
-appointmentButton(context, text) => Container(
-  width: MediaQuery.of(context).size.width,
-  margin: const EdgeInsets.symmetric(horizontal: 5.0),
-  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 18.0),
-  decoration: BoxDecoration(
-    color: BLUECOLOR,
-    borderRadius: BorderRadius.circular(9.0),
-  ),
-  child: Center(child: Text(text, textAlign: TextAlign.center, style: getCustomFont(size: 15.0, color: Colors.white),)),
-);
-
-Widget patientItem(context) => Container(
-      padding: const EdgeInsets.all(15.0),
-      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5.0),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          color: Colors.white,
-          boxShadow: SHADOW),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+Widget dashHeader(context) => Positioned(
+      top: 80.0,
+      right: 0,
+      left: 0,
+      child: Container(
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 6.0),
+          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+                color: Colors.black26,
+                spreadRadius: 1.0,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 1.0))
+          ], color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
+          child: Row(
             children: [
-              Flexible(
-                child: Text(
-                  'Patient ID - PT0025',
-                  style: getCustomFont(
-                      color: Colors.black54,
-                      size: 13.0,
-                      weight: FontWeight.w400),
-                ),
-              ),
-              Flexible(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(Icons.location_on, size: 15.0, color: Colors.black),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    Flexible(
-                      child: Text(
-                        'Florida, USA',
-                        textAlign: TextAlign.end,
-                        style: getCustomFont(
-                            color: Colors.black54,
-                            size: 13.0,
-                            weight: FontWeight.w400),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Divider(),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CircleAvatar(
-                radius: 27.0,
-                backgroundImage: AssetImage('assets/imgs/1.png'),
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(100.0),
+                  child: Image.asset(
+                    'assets/imgs/3.png',
+                    width: 70,
+                    height: 70,
+                    fit: BoxFit.contain,
+                  )),
               const SizedBox(
-                width: 15.0,
+                width: 20.0,
               ),
               Flexible(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Michelle Fairfax',
+                      'Dr. Darren Elder',
                       style: getCustomFont(
-                          color: Colors.black,
                           size: 17.0,
+                          color: Colors.black,
                           weight: FontWeight.w400),
+                    ),
+                    FittedBox(
+                      child: Text(
+                        'BDS, MDS - Oral & Maxillofacial Surgery',
+                        style: getCustomFont(
+                            size: 12.0,
+                            color: Colors.black54,
+                            weight: FontWeight.w400),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 2.0,
+                    ),
+                    Row(
+                      children: [
+                        PhysicalModel(
+                          elevation: 10.0,
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(100.0),
+                          shadowColor: Colors.grey,
+                          child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 5.0),
+                              child: Image.asset(
+                                'assets/imgs/tooth.png',
+                                width: 15.0,
+                                height: 15.0,
+                                fit: BoxFit.contain,
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 10.0,
+                        ),
+                        Text(
+                          'Dentist',
+                          style: getCustomFont(
+                              color: Colors.black54,
+                              size: 13.0,
+                              weight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
-                          child: Text(
-                            '25 Years, Female',
-                            style: getCustomFont(
-                                color: Colors.black54,
-                                size: 13.0,
-                                weight: FontWeight.w400),
+                          child: FittedBox(
+                            child: Text(
+                              '+15 Years Exp.',
+                              style: getCustomFont(
+                                  size: 13.0,
+                                  color: Colors.red,
+                                  weight: FontWeight.w400),
+                            ),
                           ),
                         ),
-                        Flexible(
+                        Text(
+                          '(Lagos, Nigeria)',
+                          style: getCustomFont(
+                              size: 12.0,
+                              color: Colors.black45,
+                              weight: FontWeight.w400),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          )),
+    );
+
+dashWidget(context,
+    {icon = FontAwesome5.calendar_day,
+    text = "Total patients",
+    progress = 0.8,
+    result = '1300+',
+    color = BLUECOLOR}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 14.0),
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+        boxShadow: SHADOW,
+        borderRadius: BorderRadius.circular(15.0),
+        color: Colors.white),
+    child: Column(children: [
+      SizedBox(
+        width: 100,
+        height: 100,
+        child: CircularPercentIndicator(
+          radius: 40.0,
+          lineWidth: 8.0,
+          percent: 0.5,
+          center: Image.asset(
+            'assets/imgs/patient.png',
+            height: 35.0,
+            width: 35.0,
+            fit: BoxFit.contain,
+          ),
+          backgroundColor: Colors.grey.shade100,
+          progressColor: Colors.lightBlueAccent.withOpacity(.7),
+        ),
+      ),
+      const SizedBox(
+        height: 7.0,
+      ),
+      Text(
+        '$text',
+        style: getCustomFont(
+            size: 14.0, color: Colors.black, weight: FontWeight.w500),
+      ),
+      const SizedBox(
+        height: 3.0,
+      ),
+      Text(
+        '$result',
+        style: getCustomFont(
+            size: 17.0, color: Colors.black54, weight: FontWeight.bold),
+      ),
+      const SizedBox(
+        height: 10.0,
+      ),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 9.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100.0),
+            color: Colors.green.shade300),
+        child: FittedBox(
+          child: Text(
+            'March 18, 2022',
+            style: getCustomFont(size: 13.0, color: Colors.white),
+          ),
+        ),
+      ),
+      const SizedBox(
+        height: 4.0,
+      ),
+    ]),
+  );
+}
+
+appointmentButton(context, text) => Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 18.0),
+      decoration: BoxDecoration(
+        color: BLUECOLOR,
+        borderRadius: BorderRadius.circular(9.0),
+      ),
+      child: Center(
+          child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: getCustomFont(size: 14.0, color: Colors.white),
+      )),
+    );
+
+Widget patientItem(context) => Container(
+    padding: const EdgeInsets.all(15.0),
+    margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5.0),
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        color: Colors.white,
+        boxShadow: SHADOW),
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                'Patient ID - PT0025',
+                style: getCustomFont(
+                    color: Colors.black54, size: 12.0, weight: FontWeight.w400),
+              ),
+            ),
+            Flexible(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.location_on, size: 14.0, color: Colors.black),
+                  const SizedBox(
+                    width: 5.0,
+                  ),
+                  Flexible(
+                    child: Text(
+                      'Florida, USA',
+                      textAlign: TextAlign.end,
+                      style: getCustomFont(
+                          color: Colors.black54,
+                          size: 12.0,
+                          weight: FontWeight.w400),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        Divider(),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              radius: 27.0,
+              backgroundImage: AssetImage('assets/imgs/1.png'),
+            ),
+            const SizedBox(
+              width: 15.0,
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Michelle Fairfax',
+                    style: getCustomFont(
+                        color: Colors.black,
+                        size: 17.0,
+                        weight: FontWeight.w400),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          '25 Years, Female',
+                          style: getCustomFont(
+                              color: Colors.black54,
+                              size: 13.0,
+                              weight: FontWeight.w400),
+                        ),
+                      ),
+                      Flexible(
+                        child: FittedBox(
                           child: Text(
                             'Blood Group - O+',
                             style: getCustomFont(
                                 color: Colors.black54,
-                                size: 13.0,
+                                size: 12.0,
                                 weight: FontWeight.w400),
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5.0,
-                    ),
-                    Row(
-                      children: [
-                       PhysicalModel(
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5.0,
+                  ),
+                  Row(
+                    children: [
+                      PhysicalModel(
                         elevation: 10.0,
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(100.0),
@@ -1116,29 +1139,29 @@ Widget patientItem(context) => Container(
                           ),
                         ),
                       ),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Flexible(
-                          child: FittedBox(
-                            child: Text(
-                              '+1 504 368 6874',
-                              style: getCustomFont(
-                                  color: Colors.black54,
-                                  size: 13.0,
-                                  weight: FontWeight.w400),
-                            ),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      Flexible(
+                        child: FittedBox(
+                          child: Text(
+                            '+1 504 368 6874',
+                            style: getCustomFont(
+                                color: Colors.black54,
+                                size: 13.0,
+                                weight: FontWeight.w400),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 8.0,
-          ),
-        ],
-      ));
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 8.0,
+        ),
+      ],
+    ));

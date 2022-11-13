@@ -106,7 +106,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15.0,),
+                   const SizedBox(height: 8.0,),
                   Container(
                     width: width,
                     color: Colors.white,
@@ -120,7 +120,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15.0,),
+                  const SizedBox(height: 8.0,),
                   Container(
                     width: width,
                     color: Colors.white,

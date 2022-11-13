@@ -539,50 +539,96 @@ Widget logoutPop(BuildContext context) {
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
         ),
-        padding: const EdgeInsets.only(
-            top: 15, left: 20, right: 20), // spacing inside the box
         child: Material(
           color: Colors.transparent,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Container(
+                padding: const EdgeInsets.all(7.0),
+                decoration: BoxDecoration(
+                  color: BLUECOLOR,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(15.0),
+                      topLeft: Radius.circular(15.0)),
+                ),
+                child: Center(
+                    child: Text(
+                  'Sign Out !',
+                  style: getCustomFont(size: 15.0, color: Colors.white),
+                )),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
               Text('Are you sure you want to logout?',
                   textAlign: TextAlign.center,
                   style: getCustomFont(
-                      size: 16.0,
-                      color: Colors.black,
+                      size: 14.0,
+                      color: Colors.black54,
                       weight: FontWeight.w500)),
               const SizedBox(
-                height: 10.0,
+                height: 15.0,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      'No',
-                      style: getCustomFont(size: 14.0, color: Colors.black),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: BLUECOLOR,
+                            borderRadius: BorderRadius.circular(50.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 5.0),
+                          child: Text(
+                            'No',
+                            maxLines: 1,
+                            style: getCustomFont(
+                                size: 12.0,
+                                color: Colors.white,
+                                weight: FontWeight.normal),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
                     width: 20.0,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.offAll(() => AuthLogin());
-                    },
-                    child: Text(
-                      'Yes',
-                      style: getCustomFont(size: 14.0, color: Colors.black),
+                  
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
+                         Get.offAll(() => AuthLogin());
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(50.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 5.0),
+                          child: Text(
+                            'Yes',
+                            maxLines: 1,
+                            style: getCustomFont(
+                                size: 12.0,
+                                color: Colors.white,
+                                weight: FontWeight.normal),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ]),
               ),
               const SizedBox(
-                height: 25.0,
+                height: 15.0,
               ),
             ],
           ),
@@ -1179,12 +1225,12 @@ Widget getPayButton(context, callBack, text) => GestureDetector(
         decoration: BoxDecoration(
             color: BLUECOLOR, borderRadius: BorderRadius.circular(6.0)),
         child: Padding(
-          padding: const EdgeInsets.all(13.0),
+          padding: const EdgeInsets.all(12.0),
           child: Center(
             child: Text(
               '$text',
               style: getCustomFont(
-                  size: 18.0, color: Colors.white, weight: FontWeight.normal),
+                  size: 15.0, color: Colors.white, weight: FontWeight.normal),
             ),
           ),
         ),
@@ -1315,4 +1361,3 @@ showRequestSheet(BuildContext c, Widget widget, {onClose}) {
         return widget;
       }).whenComplete(() => onClose == null ? null : onClose());
 }
-
