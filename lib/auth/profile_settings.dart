@@ -325,7 +325,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                   ),
                 )
               ],
-            ),
+            ), 
           ),
         ],
       );

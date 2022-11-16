@@ -17,8 +17,6 @@
 		<string>151341bd525ffc933ee40b8767912251</string>
 		<key>FacebookDisplayName</key>
 		<string>Patient</string>
-		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>io.flutter.embedded_views_preview</key>
@@ -75,5 +73,7 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+		<true/>
 	</dict>
 </plist>
