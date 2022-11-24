@@ -88,8 +88,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                 items(
                   NotificationSettingsModel(
                     title: 'Review Survey',
-                    description:
-                        'Share your payment experience for better experience user',
+                    description: 'Share your payment experience for better users experience',
                     isSelected: false,
                   ),
                 ),

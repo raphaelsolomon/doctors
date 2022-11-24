@@ -1,5 +1,6 @@
 
 import 'package:doctor/constant/strings.dart';
+import 'package:doctor/dialog/alert_item.dart';
 import 'package:doctor/dialog/edit_prescription.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/providers/page_controller.dart';
@@ -179,10 +180,12 @@ class _PrescriptionState extends State<Prescription> {
                           ),
                           Flexible(
                             child: getButton(context, () {
-                              dialogMessage(
+                              showRequestSheet(context, ConfirmationDialog(() {
+                                 dialogMessage(
                                   context,
-                                  serviceMessage(context, 'Invoice Deleted....',
+                                  serviceMessage(context, 'Prescription Deleted....',
                                       status: true));
+                              }));
                             },
                                 icon: Icons.delete_outline,
                                 text: 'Delete',

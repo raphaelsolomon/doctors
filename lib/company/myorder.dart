@@ -91,7 +91,9 @@ class MyFavourite extends StatelessWidget {
                     style: getCustomFont(size: 13.0, color: Colors.black)),
               ],
             ),
-            Flexible(child: Row(children: [
+            Flexible(child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
                 decoration: BoxDecoration(

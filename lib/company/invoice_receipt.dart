@@ -1,4 +1,5 @@
 import 'package:doctor/constant/strings.dart';
+import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,11 +27,14 @@ class InvoiceReceipt extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                      onTap: () =>context.read<HomeController>().onBackPress(),
-                      child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 18.0,)),
+                      onTap: () => context.read<HomeController>().onBackPress(),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 18.0,
+                      )),
                   Text('Invoice Receipt',
-                      style:
-                          getCustomFont(size: 16.0, color: Colors.white)),
+                      style: getCustomFont(size: 16.0, color: Colors.white)),
                   InkWell(
                     onTap: () {
                       context.read<HomeController>().setPage(-22);
@@ -42,9 +46,9 @@ class InvoiceReceipt extends StatelessWidget {
                   )
                 ],
               ),
-               const SizedBox(
-            height: 15.0,
-          ),
+              const SizedBox(
+                height: 15.0,
+              ),
             ]),
           ),
           Expanded(
@@ -412,4 +416,28 @@ class InvoiceReceipt extends StatelessWidget {
       ),
     );
   }
+
+  void getDropDialog(BuildContext context) => dialogMessage(
+      context,
+      Align(
+        alignment: Alignment.topRight,
+        child: Padding(
+          padding: EdgeInsets.all(15.0),
+          child: Material(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: 35.0,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ));
 }

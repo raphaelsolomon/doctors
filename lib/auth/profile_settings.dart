@@ -169,7 +169,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     );
   }
 
-  getRichTextForm(label, hint, {ctl}) {
+  getRichTextForm(label, hint, height, {ctl}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -182,7 +182,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
           height: 5.0,
         ),
         Container(
-          height: MediaQuery.of(context).size.width,
+          height: height,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               border: Border.all(color: Colors.grey.shade200),
@@ -374,7 +374,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                           width: 28.0,
                           height: 28.0,
                           child: Icon(
-                            Icons.photo,
+                            Icons.camera_alt,
                             color: Colors.white,
                             size: 16,
                           ),
@@ -503,30 +503,33 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
-        child: SingleChildScrollView(
-          child: Column(children: [
-            SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  'About Me',
-                  style: getCustomFont(size: 17.0, color: Colors.black),
-                )),
-            const SizedBox(
-              height: 20.0,
-            ),
-            getRichTextForm(
-              'Biography',
-              'Within 400 character',
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            getButton(context, () {}),
-            const SizedBox(
-              height: 10.0,
-            ),
-          ]),
-        ),
+        child: Column(children: [
+          Expanded(
+            child: Column(children: [
+              SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    'About Me',
+                    style: getCustomFont(size: 17.0, color: Colors.black),
+                  )),
+              const SizedBox(
+                height: 20.0,
+              ),
+              getRichTextForm(
+                'Biography',
+                'Within 400 character',
+                MediaQuery.of(context).size.height,
+              ),
+            ],),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          getButton(context, () {}),
+          const SizedBox(
+            height: 20.0,
+          ),
+        ]),
       );
 
   Widget clinicInfo() => Container(

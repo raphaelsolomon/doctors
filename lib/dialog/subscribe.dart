@@ -19,8 +19,7 @@ Widget serviceMessage(BuildContext context, m, {status = false, cB}) {
     children: <Widget>[
       Container(
         width: 400.0,
-        margin:
-            const EdgeInsets.all(40), // to push the box half way below circle
+        margin: const EdgeInsets.all(40), //
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),

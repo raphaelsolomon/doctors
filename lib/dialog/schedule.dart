@@ -42,7 +42,7 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
             children: [
               Flexible(
                   child: Text(
-                'Add New Schedule',
+                'Add New Event',
                 style: getCustomFont(
                     size: 14.0, color: Colors.black, weight: FontWeight.w500),
               )),
@@ -64,7 +64,7 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
-                    'Title',
+                    'Event Title',
                     style: getCustomFont(
                         size: 15.0,
                         color: Colors.black,
@@ -74,14 +74,14 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
                 const SizedBox(
                   height: 8.0,
                 ),
-                getCardForm('Schedule Title', ctl: eventTitle),
+                getCardForm('Event Title', ctl: eventTitle),
                 const SizedBox(
                   height: 20.0,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
-                    'Schedule Description',
+                    'Event Description',
                     style: getCustomFont(
                         size: 15.0,
                         color: Colors.black,
@@ -91,7 +91,7 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
                 const SizedBox(
                   height: 8.0,
                 ),
-                getRichCardForm('Schedule Description', ctl: eventDesc),
+                getRichCardForm('Event Description', ctl: eventDesc),
                 const SizedBox(
                   height: 30.0,
                 ),
@@ -150,6 +150,7 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(
+        height: 140.0,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
             color: BLUECOLOR.withOpacity(.05)),

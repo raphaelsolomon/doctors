@@ -8,10 +8,12 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const String CALL_COLLECTION = "call";
-const LINKEDIN_CLIENTID= '772wa1uu6cvroc';
+const LINKEDIN_CLIENTID = '772wa1uu6cvroc';
 const LINKEDIN_SECRET = 'aQF6dRF0wmkPm366';
-const LINKEDIN_REDIRECT = 'https://www.linkedin.com/developers/tools/oauth/redirect';
-const LINKEDIN_ACCESS = 'AQUQv9Hzq_OEB82jAgynLLVp8PADGaUcE2bBug-WWAg100hOYKIWBAH1Vt8fXS-y20jB5YSYbr5yLq0Itv7H-s72JHxVfochrVOf-WSneoxOhMiriw16WwGlabu1PwbtvFTaAoyVYYL943stj_Qb7bj76GKqQPTOlTQlGwYfqB8NS1_YLzNdsx9M3rZrnMKAoOH6IiQW-T8YfTUyfYeRj0tLn2MMqDbr1kh2h5yMY8uEm-tmsP451X5L_UBNcrPf_GKkODH-kyZvO6PofJOP3rSKoZ41O1hLjPcYkKV8-lLdDHLgTXylWdQQ_3yIeJb5vVeMYTX7FhtX32EfMXObS3deTYinzw';
+const LINKEDIN_REDIRECT =
+    'https://www.linkedin.com/developers/tools/oauth/redirect';
+const LINKEDIN_ACCESS =
+    'AQUQv9Hzq_OEB82jAgynLLVp8PADGaUcE2bBug-WWAg100hOYKIWBAH1Vt8fXS-y20jB5YSYbr5yLq0Itv7H-s72JHxVfochrVOf-WSneoxOhMiriw16WwGlabu1PwbtvFTaAoyVYYL943stj_Qb7bj76GKqQPTOlTQlGwYfqB8NS1_YLzNdsx9M3rZrnMKAoOH6IiQW-T8YfTUyfYeRj0tLn2MMqDbr1kh2h5yMY8uEm-tmsP451X5L_UBNcrPf_GKkODH-kyZvO6PofJOP3rSKoZ41O1hLjPcYkKV8-lLdDHLgTXylWdQQ_3yIeJb5vVeMYTX7FhtX32EfMXObS3deTYinzw';
 const String APP_ID = "696c822eb6044bdda1120f3a7ae97fc2";
 const String FIREBASE_WEB_TOKEN =
     "AAAAqF03j5w:APA91bFWo0NcDfGQSWBlMOXw5S7_PoxTzn8ysxuB2CVVUEJXYujYJxxxw6Yl_qTI4bUgICzdTtx66o1QhKfJAcCd_wsqqrcEyItKJRXhIo5xAsV8mVGrmq07QiBorF-J4_HEIic7aR8W";
@@ -20,6 +22,7 @@ const String CALL_STATUS_DIALLED = "dialled";
 const String CALL_STATUS_RECEIVED = "received";
 const String CALL_STATUS_MISSED = "missed";
 const USERPATH = 'details';
+const registerSubcategory = ['Consultant', 'Dentist', 'Surgeon'];
 
 List<User> users = [
   // User(
@@ -166,53 +169,73 @@ const DUMMYREVIEW =
 
 const BoxName = 'userBox';
 
-List homeItem1 = [{
-  'icon': '',
-  'title': 'Find a Medical Center',
-  'desc': 'Find hospitals, laboratories, pharmacies and clinics',
-},{
-  'icon': '',
-  'title': 'Visit the ePharamcy',
-  'desc': 'Order medications and get it delivered anywhere',
-},{
-  'icon': '',
-  'title': 'Symptoms Checker',
-  'desc': 'Input symptoms and get instant diagnosis advice'
-},{
-  'icon': '',
-  'title': 'Book an Ambulance',
-  'desc': 'Find land, sea and air ambulance providers and book for their services.'
-},{
-  'icon': '',
-  'title': 'Cementeries Center',
-  'desc': 'Find the best cemetery center at your neighborhood to lay your love one to rest.'
-}];
+List homeItem1 = [
+  {
+    'icon': '',
+    'title': 'Find a Medical Center',
+    'desc': 'Find hospitals, laboratories, pharmacies and clinics',
+  },
+  {
+    'icon': '',
+    'title': 'Visit the ePharamcy',
+    'desc': 'Order medications and get it delivered anywhere',
+  },
+  {
+    'icon': '',
+    'title': 'Symptoms Checker',
+    'desc': 'Input symptoms and get instant diagnosis advice'
+  },
+  {
+    'icon': '',
+    'title': 'Book an Ambulance',
+    'desc':
+        'Find land, sea and air ambulance providers and book for their services.'
+  },
+  {
+    'icon': '',
+    'title': 'Cementeries Center',
+    'desc':
+        'Find the best cemetery center at your neighborhood to lay your love one to rest.'
+  }
+];
 
-List homeItem2 = [{
-  'icon': '',
-  'title': 'My Patient',
-  'desc': 'Manage All your patient medical records and billing with just a click.'
-}, {
-  'icon': '',
-  'title': 'E-Prescription',
-  'desc': 'Create, edit and delect prescription for all your patients with just a click.'
-},{
-  'icon': '',
-  'title': 'Timing',
-  'desc': 'Create, Set , edit, delete and block your practice timing at your own convinience'
-},{
-  'icon': '',
-  'title': 'Availability',
-  'desc': 'Let your patient and colleges know your availabilty'
-},{
-  'icon': '',
-  'title': 'Appointments',
-  'desc': 'See all incoming and past appointments, you can also reschedule and accept or reject appoinments'
-},{
-  'icon': '',
-  'title': 'Book A Test',
-  'desc': 'Conviniently Book Diagnosis test from any of our Partner Center closer to you.'
-}];
+List homeItem2 = [
+  {
+    'icon': '',
+    'title': 'My Patient',
+    'desc':
+        'Manage All your patient medical records and billing with just a click.'
+  },
+  {
+    'icon': '',
+    'title': 'E-Prescription',
+    'desc':
+        'Create, edit and delect prescription for all your patients with just a click.'
+  },
+  {
+    'icon': '',
+    'title': 'Timing',
+    'desc':
+        'Create, Set , edit, delete and block your practice timing at your own convinience'
+  },
+  {
+    'icon': '',
+    'title': 'Availability',
+    'desc': 'Let your patient and colleges know your availabilty'
+  },
+  {
+    'icon': '',
+    'title': 'Appointments',
+    'desc':
+        'See all incoming and past appointments, you can also reschedule and accept or reject appoinments'
+  },
+  {
+    'icon': '',
+    'title': 'Book A Test',
+    'desc':
+        'Conviniently Book Diagnosis test from any of our Partner Center closer to you.'
+  }
+];
 
 List ONBOARDING = [
   {
@@ -274,6 +297,16 @@ List<String> month = [
   'December'
 ];
 
+List<String> constDays = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+];
+
 List Advert = [
   {'title': 'Upto\n10%', 'desc': '10% cashback\neveryhour'},
   {'title': 'Upto\n15%', 'desc': '15% cashback\neveryhour'}
@@ -303,20 +336,101 @@ getNavdraweritem(BuildContext context) {
   ];
 }
 
-List removeBottom = [2, 3, -2,-3, -5, -9, -10, -12, -13, -14, -15, -16, -17, -18, -19];
-List removeBottom1 = [3, -2, -3, -5, -9, -10, -12, -13, -14, -15, -16, -17, -18, -19];
+List removeBottom = [
+  2,
+  3,
+  -2,
+  -3,
+  -5,
+  -9,
+  -10,
+  -12,
+  -13,
+  -14,
+  -15,
+  -16,
+  -17,
+  -18,
+  -19,
+  6,
+  5
+];
+List removeBottom1 = [
+  3,
+  -2,
+  -3,
+  -5,
+  -9,
+  -10,
+  -12,
+  -13,
+  -14,
+  -15,
+  -16,
+  -17,
+  -18,
+  -19,
+  6,
+  5
+];
 
-List shop_by_categgory = [{'title': 'OTC MEDICINES', 'color': Colors.blueGrey, 'icon': 'assets/estore/estore5.png'}, 
-{'title': 'DIABETIC MEDICINES', 'color': Colors.lightBlueAccent, 'icon': 'assets/estore/estore6.png'},
-{'title': 'BABY & MOTHER', 'color': Colors.orangeAccent, 'icon': 'assets/estore/estore7.png'},];
+List shop_by_categgory = [
+  {
+    'title': 'OTC MEDICINES',
+    'color': Colors.blueGrey,
+    'icon': 'assets/estore/estore5.png'
+  },
+  {
+    'title': 'DIABETIC MEDICINES',
+    'color': Colors.lightBlueAccent,
+    'icon': 'assets/estore/estore6.png'
+  },
+  {
+    'title': 'BABY & MOTHER',
+    'color': Colors.orangeAccent,
+    'icon': 'assets/estore/estore7.png'
+  },
+];
 
-List shop_by_offer = [{'title': 'STAY HOME GET DISCOUNT', 'color': Colors.purpleAccent, 'icon': 'assets/estore/bro.png'}, 
-{'title': 'GET 50% OFF ON FIRST ORDER', 'color': Colors.amber, 'icon': 'assets/estore/bro.png'},];
+List shop_by_offer = [
+  {
+    'title': 'STAY HOME GET DISCOUNT',
+    'color': Colors.purpleAccent,
+    'icon': 'assets/estore/bro.png'
+  },
+  {
+    'title': 'GET 50% OFF ON FIRST ORDER',
+    'color': Colors.amber,
+    'icon': 'assets/estore/bro.png'
+  },
+];
 
-List allStores = [{'title': 'Wild Life Store', 'desc': 'Willington Bridge', 'color': Colors.lightGreen, 'icon': 'assets/estore/estore4.png'}, 
-{'title': 'Healthyfy', 'desc': 'New Park Maryland', 'color': Colors.lightBlueAccent, 'icon': 'assets/estore/estore2.png'},
-{'title': 'Success Store', 'desc': 'Shoprite Aluasa', 'color': Colors.amber, 'icon': 'assets/estore/estore1.png'},
-{'title': 'Healthy Family', 'desc': 'Manchester New Park', 'color': Colors.lightGreenAccent, 'icon': 'assets/estore/estore3.png'}];
+List allStores = [
+  {
+    'title': 'Wild Life Store',
+    'desc': 'Willington Bridge',
+    'color': Colors.lightGreen,
+    'icon': 'assets/estore/estore4.png'
+  },
+  {
+    'title': 'Healthyfy',
+    'desc': 'New Park Maryland',
+    'color': Colors.lightBlueAccent,
+    'icon': 'assets/estore/estore2.png'
+  },
+  {
+    'title': 'Success Store',
+    'desc': 'Shoprite Aluasa',
+    'color': Colors.amber,
+    'icon': 'assets/estore/estore1.png'
+  },
+  {
+    'title': 'Healthy Family',
+    'desc': 'Manchester New Park',
+    'color': Colors.lightGreenAccent,
+    'icon': 'assets/estore/estore3.png'
+  }
+];
 
 List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
   return [
@@ -345,7 +459,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         isOpen: false,
         index: 3),
     NavDrawerItem(
-        title: 'E-store',
+        title: 'E-stores',
         icon: FontAwesome5.store,
         children: [],
         isOpen: false,
@@ -368,6 +482,18 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         children: [],
         isOpen: false,
         index: 7), //done
+    NavDrawerItem(
+        title: 'My Appointment',
+        icon: Icons.family_restroom,
+        children: [],
+        isOpen: false,
+        index: 0), //done
+    NavDrawerItem(
+        title: 'My Patients',
+        icon: Icons.family_restroom,
+        children: [],
+        isOpen: false,
+        index: -20), //done
     // NavDrawerItem(
     //     title: 'My Profile',
     //     icon: FontAwesome.home,
@@ -380,6 +506,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         children: [
           {'index': -1, 'title': 'Chat Messages'}, //done
           {'index': -2, 'title': 'Social Media'}, //done
+          {'index': -29, 'title': 'My Blog'}
         ],
         isOpen: false,
         index: -0),
@@ -1458,11 +1585,7 @@ List<String> HospitalClinic = [
   'El-Dunamis Medical Center'
 ];
 
-List<String> Frquency = [
-  'Seconds',
-  'Minutes',
-  'Hours'
-];
+List<String> Frquency = ['Seconds', 'Minutes', 'Hours'];
 
 List<String> doctorServices = ['None', 'None', 'None', 'None'];
 

@@ -66,7 +66,7 @@ class _ProductListBrandState extends State<ProductListBrand> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
-                  image: DecorationImage(image: AssetImage('assets/imgs/pills.png'))
+                  image: DecorationImage(image: NetworkImage('https://media.istockphoto.com/id/1179324818/photo/hospital-building-with-glass-wall-and-mirrored-building.jpg?s=612x612&w=0&k=20&c=6QyyKqIhzhRzwuAKR2rNqIy4G1bETLObbIihtD_xRPk='), fit: BoxFit.cover)
                 )),
                 const SizedBox(width: 17.0),
                 Flexible(
@@ -102,14 +102,14 @@ class _ProductListBrandState extends State<ProductListBrand> {
                         Expanded(
                           child: GridView.builder(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 10.0),
+                                  horizontal: 15.0, vertical: 10.0),
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: returnCrossAxis(width),
-                                  mainAxisSpacing: 15.0,
+                                  mainAxisSpacing: 10.0,
                                   mainAxisExtent: 210.0,
-                                  crossAxisSpacing: 15.0),
+                                  crossAxisSpacing: 10.0),
                               itemCount: 10,
                               itemBuilder: (ctx, i) => GestureDetector(
                                 onTap: () => Get.to(() => ProductDetails()),

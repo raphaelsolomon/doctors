@@ -29,6 +29,7 @@ class _AuthRegisterState extends State<AuthRegister> {
   bool isEmail = true;
   String country = 'Nigeria';
   String country_id = '161';
+  String subcategory = 'Category';
   bool isLoading = false;
   final fullname = TextEditingController();
   final email = TextEditingController();
@@ -125,6 +126,13 @@ class _AuthRegisterState extends State<AuthRegister> {
                     GestureDetector(
                       onTap: () => showBottomSheet(),
                       child: getCountryForm(text: country),
+                    ),
+                     const SizedBox(
+                      height: 10.0,
+                    ),
+                    GestureDetector(
+                      onTap: () => showBottomMerchantTypeSheet(),
+                      child: getNewDropDown(subcategory),
                     ),
                     const SizedBox(
                       height: 10.0,
@@ -258,6 +266,44 @@ class _AuthRegisterState extends State<AuthRegister> {
             )));
   }
 
+  Widget getNewDropDown(text) => Container(
+        height: 54.0,
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.0),
+          border: Border.all(color: const Color(0xFFE8E8E8), width: 1.0),
+          color: Colors.white,
+        ),
+        child: Row(
+          children: [
+            Flexible(
+                fit: FlexFit.tight,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    '$text',
+                    style: getCustomFont(size: 14.0, color: Colors.black45),
+                  ),
+                )),
+            PhysicalModel(
+              elevation: 10.0,
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(100.0),
+              shadowColor: Colors.grey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0, vertical: 10.0),
+                child: Icon(
+                  Icons.account_box,
+                  size: 18.0,
+                  color: Color(0xFF838383),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+
   void validDate() async {
     if (fullname.text.trim().isEmpty) {
       popupMessage.dialogMessage(
@@ -315,6 +361,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                   'name': fullname.text.trim(),
                   'category_id': '1',
                   'password': password.text.trim(),
+                  'category': subcategory,
                   'country_id': '$country_id'
                 }
               : {
@@ -323,6 +370,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                   'name': fullname.text.trim(),
                   'category_id': '1',
                   'password': password.text.trim(),
+                  'category': subcategory,
                   'country_id': '$country_id'
                 });
       if (res.statusCode == 200) {
@@ -468,4 +516,60 @@ class _AuthRegisterState extends State<AuthRegister> {
           ),
         ],
       );
+
+   void showBottomMerchantTypeSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 12.0,
+            ),
+            Text(
+              'Select Doctor Catergory',
+              style: GoogleFonts.poppins(
+                  fontSize: 20.0,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 30.0,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                      children: List.generate(
+                          registerSubcategory.length,
+                          (i) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        subcategory = '${registerSubcategory[i]}';
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(9.0),
+                                      child: Text(
+                                        '${registerSubcategory[i]}',
+                                        style: getCustomFont(size: 16.0, color: Colors.black),
+                                      ),
+                                    ),
+                                  ),
+                                  Divider(),
+                                ],
+                              ))),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }

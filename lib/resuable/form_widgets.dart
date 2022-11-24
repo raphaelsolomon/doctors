@@ -1,8 +1,10 @@
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/curreency.dart';
 import 'package:doctor/dialog/subscribe.dart';
+import 'package:doctor/homepage/blog.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/store/index.dart';
+import 'package:doctor/store/product_details.dart';
 import 'package:doctor/store/product_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -350,12 +352,12 @@ navDrawer(BuildContext context, scaffold) => Container(
                       const SizedBox(width: 15.0),
                       Flexible(
                           child: Text(
-                            e.title,
-                            style: GoogleFonts.poppins(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87.withOpacity(.7)),
-                          ))
+                        e.title,
+                        style: GoogleFonts.poppins(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87.withOpacity(.7)),
+                      ))
                     ]),
                   ),
                 );
@@ -408,6 +410,10 @@ setChildrenClickListener(e, BuildContext context) {
     case -2:
       context.read<HomeController>().setPage(-2);
       break;
+    case -29:
+      Get.to(() => MyBlogPage());
+      break;
+
     //===========END OF SOCIAL MEDIA=============
     //=================TRANSACTION=================
     case -3:
@@ -490,6 +496,9 @@ setClickListener(e, BuildContext context) {
       break;
     case 9:
       dialogMessage(context, logoutPop(context));
+      break;
+    case -20:
+      context.read<HomeController>().setPage(-20);
       break;
     default:
       context.read<HomeController>().jumpToHome();
@@ -1161,3 +1170,67 @@ Widget patientItem(context) => Container(
         ),
       ],
     ));
+
+Widget productItem(BuildContext context) => GestureDetector(
+      onTap: () => Get.to(() => ProductDetails()),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            boxShadow: SHADOW,
+            color: Colors.white),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Center(
+                    child: Image.asset('assets/imgs/pills.png'),
+                  )),
+                  const SizedBox(
+                    height: 2.0,
+                  ),
+                  Text(
+                    'Salospir 200mg Tablet',
+                    textAlign: TextAlign.start,
+                    style: getCustomFont(size: 14.0, color: Colors.black45),
+                  ),
+                  const SizedBox(
+                    height: 3.0,
+                  ),
+                  Text(
+                    '\$5.50',
+                    style: getCustomFont(
+                        size: 15.0,
+                        color: Colors.black,
+                        weight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                width: 30.0,
+                height: 35.0,
+                decoration: BoxDecoration(
+                    color: BLUECOLOR,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        bottomRight: Radius.circular(15.0))),
+                child: Center(
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 19.0,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );

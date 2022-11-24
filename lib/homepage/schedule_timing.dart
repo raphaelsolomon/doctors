@@ -17,12 +17,14 @@ class ScheduleTiming extends StatefulWidget {
 class _ScheduleTimingState extends State<ScheduleTiming> {
   List<ScheduleModel> scheduleModel = [];
   int index = 0;
+  final controller = DatePickerController();
   DateTime current = new DateTime.now();
 
   @override
   void initState() {
     scheduleModel.add(ScheduleModel({
       DateFormat('yyyy-MM-dd').format(current): ScheduleTimingModel(
+          earlyMorningShift: [],
           morningShift: [],
           afternoonShift: [],
           eveningShift: [],
@@ -72,6 +74,7 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
               ),
               DatePicker(
                 DateTime.now(),
+                controller: controller,
                 initialSelectedDate: DateTime.now(),
                 selectionColor: Colors.white,
                 selectedTextColor: Colors.black,
@@ -80,10 +83,14 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                 monthTextStyle: getCustomFont(color: Colors.white, size: 10.0),
                 onDateChange: (date) {
                   setState(() {
-                    int i = scheduleModel.indexWhere((e) => e.scheduleData.containsKey(DateFormat('yyyy-MM-dd').format(date)));
+                    current = date;
+                    int i = scheduleModel.indexWhere((e) => e.scheduleData
+                        .containsKey(DateFormat('yyyy-MM-dd').format(date)));
                     if (i < 0) {
                       scheduleModel.add(ScheduleModel({
-                        DateFormat('yyyy-MM-dd').format(date): ScheduleTimingModel(
+                        DateFormat('yyyy-MM-dd').format(date):
+                            ScheduleTimingModel(
+                                earlyMorningShift: [],
                                 morningShift: [],
                                 afternoonShift: [],
                                 eveningShift: [],
@@ -202,17 +209,27 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                             ),
                             Row(children: [
                               Flexible(
-                                  child: Container(
-                                width: double.infinity,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                decoration: BoxDecoration(
-                                    color: Colors.redAccent,
-                                    borderRadius: BorderRadius.circular(7.0)),
-                                child: Center(
-                                  child: Text('Next Day',
-                                      style: getCustomFont(
-                                          size: 13.0, color: Colors.white)),
+                                  child: InkWell(
+                                onTap: () {
+                                  controller.animateToDate(
+                                      DateTime(current.year, current.month,
+                                          current.day + 1),
+                                      duration: Duration(seconds: 1),
+                                      curve: Curves.linear);
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.redAccent,
+                                      borderRadius: BorderRadius.circular(7.0)),
+                                  child: Center(
+                                    child: Text('Next Day',
+                                        style: getCustomFont(
+                                            size: 13.0, color: Colors.white)),
+                                  ),
                                 ),
                               )),
                               const SizedBox(
@@ -253,6 +270,65 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
               children: [
                 Flexible(
                   child: Text(
+                    'Early Morning Time Slot',
+                    style: getCustomFont(
+                        size: 14.0,
+                        color: Colors.black87,
+                        weight: FontWeight.w500),
+                  ),
+                ),
+                GestureDetector(
+                    onTap: () async {
+                      var time = await _selectTime(context);
+                      String newTime = formatTimeOfDay(time!);
+                      setState(() {
+                        e.scheduleData.values.last.earlyMorningShift
+                            .add(newTime);
+                      });
+                    },
+                    child: Icon(Icons.add_circle_outline,
+                        size: 18.0, color: Colors.green))
+              ],
+            ),
+            const SizedBox(
+              height: 15.0,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                children: e.scheduleData.values.last.earlyMorningShift
+                    .map((e) => Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 7.0, vertical: 7.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9.0, vertical: 7.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Text(
+                          e,
+                          style:
+                              getCustomFont(size: 12.5, color: Colors.black87),
+                        )))
+                    .toList(),
+              ),
+            ),
+            const SizedBox(
+              height: 15.0,
+            )
+          ]),
+        ),
+        const SizedBox(
+          height: 7.0,
+        ),
+        Container(
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
                     'Morning Time Slot',
                     style: getCustomFont(
                         size: 14.0,
@@ -264,9 +340,9 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                     onTap: () async {
                       var time = await _selectTime(context);
                       String newTime = formatTimeOfDay(time!);
-                     setState(() {
+                      setState(() {
                         e.scheduleData.values.last.morningShift.add(newTime);
-                     });
+                      });
                     },
                     child: Icon(Icons.add_circle_outline,
                         size: 18.0, color: Colors.green))
@@ -280,13 +356,19 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
               child: Wrap(
                 children: e.scheduleData.values.last.morningShift
                     .map((e) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
-                      padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87),)))
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 7.0, vertical: 7.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9.0, vertical: 7.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Text(
+                          e,
+                          style:
+                              getCustomFont(size: 12.5, color: Colors.black87),
+                        )))
                     .toList(),
               ),
             ),
@@ -316,9 +398,9 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                     onTap: () async {
                       var time = await _selectTime(context);
                       String newTime = formatTimeOfDay(time!);
-                     setState(() {
+                      setState(() {
                         e.scheduleData.values.last.afternoonShift.add(newTime);
-                     });
+                      });
                     },
                     child: Icon(Icons.add_circle_outline,
                         size: 18.0, color: Colors.green))
@@ -332,13 +414,19 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
               child: Wrap(
                 children: e.scheduleData.values.last.afternoonShift
                     .map((e) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
-                      padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87),)))
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 7.0, vertical: 7.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9.0, vertical: 7.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Text(
+                          e,
+                          style:
+                              getCustomFont(size: 12.5, color: Colors.black87),
+                        )))
                     .toList(),
               ),
             ),
@@ -365,12 +453,12 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                   ),
                 ),
                 GestureDetector(
-                   onTap: () async {
+                    onTap: () async {
                       var time = await _selectTime(context);
                       String newTime = formatTimeOfDay(time!);
-                     setState(() {
+                      setState(() {
                         e.scheduleData.values.last.eveningShift.add(newTime);
-                     });
+                      });
                     },
                     child: Icon(Icons.add_circle_outline,
                         size: 18.0, color: Colors.green))
@@ -384,13 +472,19 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
               child: Wrap(
                 children: e.scheduleData.values.last.eveningShift
                     .map((e) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
-                      padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87),)))
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 7.0, vertical: 7.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9.0, vertical: 7.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Text(
+                          e,
+                          style:
+                              getCustomFont(size: 12.5, color: Colors.black87),
+                        )))
                     .toList(),
               ),
             ),
@@ -420,9 +514,9 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                     onTap: () async {
                       var time = await _selectTime(context);
                       String newTime = formatTimeOfDay(time!);
-                     setState(() {
+                      setState(() {
                         e.scheduleData.values.last.midNightShift.add(newTime);
-                     });
+                      });
                     },
                     child: Icon(Icons.add_circle_outline,
                         size: 18.0, color: Colors.green))
@@ -436,13 +530,19 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
               child: Wrap(
                 children: e.scheduleData.values.last.midNightShift
                     .map((e) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
-                      padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87),)))
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 7.0, vertical: 7.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9.0, vertical: 7.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Text(
+                          e,
+                          style:
+                              getCustomFont(size: 12.5, color: Colors.black87),
+                        )))
                     .toList(),
               ),
             ),

@@ -1,4 +1,6 @@
 import 'package:doctor/constant/strings.dart';
+import 'package:doctor/dialog/alert_item.dart';
+import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -174,7 +176,12 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                           ),
                           Flexible(
                             child: getButton(context, () {
-                              context.read<HomeController>().setPage(-21);
+                                showRequestSheet(context, ConfirmationDialog(() {
+                                 dialogMessage(
+                                  context,
+                                  serviceMessage(context, 'Invoice Deleted....',
+                                      status: true));
+                              }));
                             },
                                 icon: Icons.delete_outline,
                                 text: 'Delete',
@@ -213,22 +220,21 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Icon(
                   icon,
-                  size: 14.0,
+                  size: 12.0,
                   color: Colors.white,
                 ),
                 const SizedBox(
-                  width: 2.0,
+                  width: 1.0,
                 ),
                 Flexible(
                   child: Text(
                     '$text',
                     maxLines: 1,
                     style: getCustomFont(
-                        size: 12.0,
+                        size: 10.0,
                         color: Colors.white,
                         weight: FontWeight.normal),
                   ),
