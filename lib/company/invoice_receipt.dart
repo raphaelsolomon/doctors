@@ -33,9 +33,12 @@ class InvoiceReceipt extends StatelessWidget {
                       )),
                   Text('Invoice Receipt',
                       style: getCustomFont(size: 16.0, color: Colors.white)),
-                  Icon(
-                    null,
-                    color: Colors.white,
+                  GestureDetector(
+                    onTap: () => getDropDialog(context),
+                    child: Icon(
+                      Icons.more_vert,
+                      color: Colors.white,
+                    ),
                   )
                 ],
               ),
