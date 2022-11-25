@@ -18,6 +18,7 @@ import 'package:doctor/company/support.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:doctor/homepage/account.dart';
+import 'package:doctor/homepage/appointment.dart';
 import 'package:doctor/homepage/invoice.dart';
 import 'package:doctor/homepage/my_calendar.dart';
 import 'package:doctor/homepage/my_dashboard.dart';
@@ -171,6 +172,9 @@ class _DashboardState extends State<Dashboard> {
     }
     if (page == 6) {
       return MyReminder();
+    }
+    if (page == 10) {
+      return MyAppointment();
     }
     if (page == 7) {
       return Prescription();

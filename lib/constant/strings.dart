@@ -344,6 +344,7 @@ List removeBottom = [
   -5,
   -9,
   -10,
+  10,
   -12,
   -13,
   -14,
@@ -364,6 +365,7 @@ List removeBottom1 = [
   -5,
   -9,
   -10,
+  10,
   -12,
   -13,
   -14,
@@ -491,7 +493,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         icon: Icons.family_restroom,
         children: [],
         isOpen: false,
-        index: 0), //done
+        index: 10), //done
     NavDrawerItem(
         title: 'My Patients',
         icon: Icons.family_restroom,
