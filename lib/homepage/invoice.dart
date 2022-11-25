@@ -1,3 +1,4 @@
+import 'package:doctor/company/invoice_receipt.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/alert_item.dart';
 import 'package:doctor/dialog/subscribe.dart';
@@ -166,9 +167,9 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                             width: 10.0,
                           ),
                           Flexible(
-                            child: getButton(context, () => null,
+                            child: getButton(context, () => showRequestSheet(context, InvoiceReceipt()),
                                 icon: Icons.share,
-                                text: 'Share',
+                                text: 'view',
                                 color: Colors.lightBlue),
                           ),
                           const SizedBox(
@@ -220,6 +221,7 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   icon,
@@ -227,14 +229,14 @@ class _MyInvoicePageState extends State<MyInvoicePage> {
                   color: Colors.white,
                 ),
                 const SizedBox(
-                  width: 1.0,
+                  width: 5.0,
                 ),
                 Flexible(
                   child: Text(
                     '$text',
                     maxLines: 1,
                     style: getCustomFont(
-                        size: 10.0,
+                        size: 12.0,
                         color: Colors.white,
                         weight: FontWeight.normal),
                   ),

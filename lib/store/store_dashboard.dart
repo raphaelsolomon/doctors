@@ -351,14 +351,16 @@ Widget getHospital(context, Function brand, {onBack}) => Padding(
                                     size: 14.0, color: Colors.black45),
                               ),
                             ),
-                            Padding(
+                            GestureDetector(
+                              onTap: () => Get.to(() => SearchStores((){}, 'Pharmacy Stores')),
+                              child: Padding(
                               padding: const EdgeInsets.only(right: 20.0),
                               child: Text(
                                 'view all',
-                                style:
-                                    getCustomFont(size: 14.0, color: BLUECOLOR),
+                                style: getCustomFont(size: 14.0, color: BLUECOLOR),
                               ),
                             ),
+                            )
                           ]),
                     ),
                     const SizedBox(

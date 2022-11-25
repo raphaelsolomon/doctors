@@ -47,7 +47,7 @@ class SupportPage extends StatelessWidget {
           Expanded(
               child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 children: [
                   const SizedBox(
@@ -100,7 +100,7 @@ class SupportPage extends StatelessWidget {
                   const SizedBox(
                     height: 15.0,
                   ),
-                  getFormBox('Message', 'Your Message', max: null, type: TextInputType.multiline, h: 100),
+                  getFormBox('Message', 'Your Message', max: null, type: TextInputType.multiline, h: 100.0),
                   const SizedBox(
                     height: 40.0,
                   ),

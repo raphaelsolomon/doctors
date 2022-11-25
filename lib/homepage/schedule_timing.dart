@@ -298,19 +298,13 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
               child: Wrap(
                 children: e.scheduleData.values.last.earlyMorningShift
                     .map((e) => Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 7.0, vertical: 7.0),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9.0, vertical: 7.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 7.0),
                         decoration: BoxDecoration(
                           color: Colors.grey.shade300,
                           borderRadius: BorderRadius.circular(5.0),
                         ),
-                        child: Text(
-                          e,
-                          style:
-                              getCustomFont(size: 12.5, color: Colors.black87),
-                        )))
+                        child: Text(e, style: getCustomFont(size: 12.5, color: Colors.black87))))
                     .toList(),
               ),
             ),

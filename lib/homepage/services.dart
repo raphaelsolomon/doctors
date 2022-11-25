@@ -1,10 +1,27 @@
 import 'package:doctor/constant/strings.dart';
+import 'package:doctor/model/specialization.model.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Services extends StatelessWidget {
-  const Services({Key? key}) : super(key: key);
+class Services extends StatefulWidget {
+  Services({Key? key}) : super(key: key);
+
+  @override
+  State<Services> createState() => _ServicesState();
+}
+
+class _ServicesState extends State<Services> {
+
+  List<SpecializationModel> specialization = [
+    SpecializationModel(title: 'Addiction Psychiatrist', isSelected: true),
+    SpecializationModel(title: 'Gynaecologist', isSelected: false),
+    SpecializationModel(title: 'Dentist', isSelected: true),
+    SpecializationModel(title: 'Dermatologist', isSelected: false),
+    SpecializationModel(title: 'Optician', isSelected: false),
+    SpecializationModel(title: 'Neurologist', isSelected: false),
+    SpecializationModel(title: 'Cardiologist', isSelected: true),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,33 +56,25 @@ class Services extends StatelessWidget {
                         Text('Search Services',
                             style:
                                 getCustomFont(color: Colors.white, size: 16.0)),
-                        InkWell(
-                          onTap: () {
-                            context.read<HomeController>().setPage(-23);
-                          },
-                          child: Icon(
-                            Icons.notifications_active,
-                            color: Colors.white,
-                          ),
+                        Icon(
+                          null,
+                          color: Colors.white,
                         )
                       ],
                     ),
                   ),
                   Divider(),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
                 ]),
               ),
               Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       height: 15.0,
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.only(right: 60.0),
+                      width: (MediaQuery.of(context).size.width / 2) * 1.3,
                       padding: const EdgeInsets.only(
                           left: 15.0, top: 30.0, bottom: 30.0, right: 30.0),
                       decoration: BoxDecoration(
@@ -94,7 +103,8 @@ class Services extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             child: Column(
                               children: [
-                                ...List.generate(7, (i) => viewAllSpecial(context))
+                                ...List.generate(
+                                    specialization.length, (i) => viewAllSpecial(context, specialization[i]))
                               ],
                             )),
                       ),
@@ -106,15 +116,16 @@ class Services extends StatelessWidget {
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            child: FloatingActionButton(
-              tooltip: 'Save',
-              child: Icon(
-                Icons.check_sharp,
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            child: FloatingActionButton.extended(
+              label: Text('Save'),
+              icon: Icon(
+                Icons.add,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                
+              },
               backgroundColor: BLUECOLOR,
             ),
           ),
@@ -123,7 +134,7 @@ class Services extends StatelessWidget {
     );
   }
 
-  Widget viewAllSpecial(BuildContext context) => Container(
+  Widget viewAllSpecial(BuildContext context, SpecializationModel specialization) => Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(vertical: 9.0),
         child: Column(
@@ -132,13 +143,18 @@ class Services extends StatelessWidget {
               Flexible(
                   fit: FlexFit.tight,
                   child: Text(
-                    'Addiction psychiatrists',
+                    '${specialization.title}',
                     style: getCustomFont(size: 14.0, color: Colors.black87),
                   )),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child:
-                    Icon(Icons.check_circle, size: 18.0, color: Colors.green),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      specialization.setIsSelected(!specialization.isSelected);
+                    });
+                  },
+                  child: Icon(specialization.isSelected? Icons.check_circle : Icons.circle_outlined, size: 18.0, color: specialization.isSelected? Colors.green : Colors.grey)),
               )
             ]),
             const SizedBox(

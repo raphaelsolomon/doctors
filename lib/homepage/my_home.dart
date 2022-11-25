@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15.0,
+                  height: 10.0,
                 ),
                 viewAllSpecial(),
                 viewAllSpecial(),
@@ -247,13 +247,14 @@ class _HomePageState extends State<HomePage> {
       );
 
   Widget horizontalItem(homeItem1) => Container(
-        width: 160.0,
-        height: 230.0,
+        width: 150.0,
+        height: 200.0,
         padding: const EdgeInsets.all(15.0),
         margin: const EdgeInsets.only(right: 10.0),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
               'assets/imgs/1.png',
@@ -276,7 +277,8 @@ class _HomePageState extends State<HomePage> {
             Text(
               '${homeItem1['desc']}',
               textAlign: TextAlign.center,
-              maxLines: 3,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: getCustomFont(
                   size: 12.0, color: Colors.black45, weight: FontWeight.w400),
             ),

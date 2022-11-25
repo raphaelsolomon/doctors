@@ -102,10 +102,10 @@ class _MyDashBoardState extends State<MyDashBoard> {
                       ),
                     ),
                     const SizedBox(
-                      height: 20.0,
+                      height: 15.0,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: Row(
                         children: [
                           Flexible(
@@ -122,7 +122,7 @@ class _MyDashBoardState extends State<MyDashBoard> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10.0, vertical: 4.0),
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 10.0,
+                        horizontal: 20.0,
                       ),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
@@ -170,7 +170,7 @@ class _MyDashBoardState extends State<MyDashBoard> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 10.0),
                         margin: const EdgeInsets.symmetric(
-                          horizontal: 10.0,
+                          horizontal: 20.0,
                         ),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
@@ -242,7 +242,7 @@ class _MyDashBoardState extends State<MyDashBoard> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10.0, vertical: 10.0),
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 10.0,
+                        horizontal: 20.0,
                       ),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
@@ -316,7 +316,7 @@ class _MyDashBoardState extends State<MyDashBoard> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 10.0),
                         margin: const EdgeInsets.symmetric(
-                          horizontal: 10.0,
+                          horizontal: 20.0,
                         ),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(

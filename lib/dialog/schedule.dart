@@ -1,6 +1,7 @@
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ScheduleCalender extends StatefulWidget {
   final Function callBack;
@@ -13,6 +14,7 @@ class ScheduleCalender extends StatefulWidget {
 class _ScheduleCalenderState extends State<ScheduleCalender> {
   final eventTitle = TextEditingController();
   final eventDesc = TextEditingController();
+  TimeOfDay? current = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 
   @override
   void dispose() {
@@ -93,6 +95,26 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
                 ),
                 getRichCardForm('Event Description', ctl: eventDesc),
                 const SizedBox(
+                  height: 20.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    'Event Time',
+                    style: getCustomFont(
+                        size: 15.0,
+                        color: Colors.black,
+                        weight: FontWeight.w500),
+                  ),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                getTimeForm('${ formatTimeOfDay(current!)}', () async {
+                    current = await _selectTime(context);
+                    setState(() {});
+                }),
+                const SizedBox(
                   height: 30.0,
                 ),
                 Divider(),
@@ -110,7 +132,7 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
                         context, serviceMessage(context, 'Description is required'));
                     return;
                   }
-                  widget.callBack(eventTitle.text, eventDesc.text);
+                  widget.callBack(eventTitle.text, eventDesc.text, formatTimeOfDay(current!));
                   Navigator.pop(context);
                 }),
                 const SizedBox(
@@ -128,7 +150,7 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(
-        height: 48.0,
+        height: 45.0,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
             color: BLUECOLOR.withOpacity(.05)),
@@ -167,6 +189,34 @@ class _ScheduleCalenderState extends State<ScheduleCalender> {
         ),
       ),
     );
+  }
+
+  getTimeForm(text, callBack) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: GestureDetector(
+        onTap: () => callBack(),
+        child: Container(
+          height: 45.0,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              color: BLUECOLOR.withOpacity(.05)),
+          child: Text('${text}', style: getCustomFont(size: 14.0, color: Colors.black45))
+        ),
+      ),
+    );
+  }
+
+  Future<TimeOfDay?> _selectTime(BuildContext context) async {
+    TimeOfDay selectedTime = TimeOfDay.now();
+    return await showTimePicker(context: context, initialTime: selectedTime);
+  }
+
+  String formatTimeOfDay(TimeOfDay tod) {
+    final now = new DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
+    final format = DateFormat.jm(); //"6:00 AM"
+    return format.format(dt);
   }
 
   Widget getButton(context, callBack) => GestureDetector(

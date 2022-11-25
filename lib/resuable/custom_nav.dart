@@ -69,7 +69,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
               readExec.isEstore(true);
              Get.to(() => StorePage(2));
             }, readExec.isEstoreClicked && readExec.storeIndex == 2),
-            getNavItems(Icons.more, 'More', () {
+            getNavItems(Icons.more_horiz, 'More', () {
               dialogMessage(
                   context,
                   Align(

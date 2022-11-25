@@ -415,7 +415,7 @@ class _MyFavouriteState extends State<MyFavourite> {
                 ),
                 Flexible(
                   child: getAppointment(context, () {
-                    context.read<HomeController>().setPage(-1);
+                    
                   }, text: 'Book Appointment'),
                 )
               ],
