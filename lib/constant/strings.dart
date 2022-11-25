@@ -454,7 +454,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         index: 1),
     NavDrawerItem(
         title: 'Schedule Timing',
-        icon: FontAwesome.heart,
+        icon: FontAwesome.clock,
         children: [],
         isOpen: false,
         index: 2),
@@ -472,7 +472,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         index: 4), //done
     NavDrawerItem(
         title: 'My Calender',
-        icon: FontAwesome5.user_nurse,
+        icon: FontAwesome5.calendar,
         children: [],
         isOpen: false,
         index: 5), //done
@@ -484,7 +484,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         index: 6), //done
     NavDrawerItem(
         title: 'My Prescriptions',
-        icon: Icons.family_restroom,
+        icon: FontAwesome5.pills,
         children: [],
         isOpen: false,
         index: 7), //done
@@ -496,7 +496,7 @@ List<NavDrawerItem> getNavdraweritem_(BuildContext context) {
         index: 10), //done
     NavDrawerItem(
         title: 'My Patients',
-        icon: Icons.family_restroom,
+        icon: Icons.person,
         children: [],
         isOpen: false,
         index: -20), //done
