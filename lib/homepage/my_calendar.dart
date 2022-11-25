@@ -148,33 +148,39 @@ class _MyCalendarState extends State<MyCalendar> {
                             const SizedBox(
                               height: 15.0,
                             ),
-                            ...getEventFromDay(selectedDate)
-                                .map((e) => Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          e.title,
-                                          style: getCustomFont(size: 14.0),
-                                        ),
-                                        const SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Text(
-                                          e.description,
-                                          maxLines: 3,
-                                          style: getCustomFont(
-                                              size: 12.0,
-                                              color: Colors.black45),
-                                        ),
-                                        const SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Divider(),
-                                        const SizedBox(
-                                          height: 5.0,
-                                        ),
-                                      ],
-                                    ))
+                            ...getEventFromDay(selectedDate).map((e) => Row(
+                              children: [
+                                Text(e.time, style: getCustomFont(size: 12.0, color: Colors.black45)),
+                                Flexible(
+                                  child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                e.title,
+                                                style: getCustomFont(size: 14.0),
+                                              ),
+                                              const SizedBox(
+                                                height: 5.0,
+                                              ),
+                                              Text(
+                                                e.description,
+                                                maxLines: 3,
+                                                style: getCustomFont(
+                                                    size: 12.0,
+                                                    color: Colors.black45),
+                                              ),
+                                              const SizedBox(
+                                                height: 5.0,
+                                              ),
+                                              Divider(),
+                                              const SizedBox(
+                                                height: 5.0,
+                                              ),
+                                            ],
+                                          ),
+                                ),
+                              ],
+                            ))
                                 .toList(),
                             const SizedBox(height: 80.0),
                           ]),

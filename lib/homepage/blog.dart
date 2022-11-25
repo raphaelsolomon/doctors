@@ -64,7 +64,7 @@ class _MyBlogPageState extends State<MyBlogPage> {
               height: 15.0,
             ),
             Expanded(child: WebView(
-              initialUrl: 'https://google.com'
+              initialUrl: 'https://doccure-html.dreamguystech.com/template/doctor-blog.html'
             ))
           ])),
     );

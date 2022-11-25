@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:doctor/resuable/form_widgets.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,7 +17,13 @@ class HospitalDetails extends StatefulWidget {
 class _HospitalDetailsState extends State<HospitalDetails> {
   int counter = 0;
 
-  List<String> tabs = ['Overviews', 'Locations', 'Reviews', 'Business Hours', 'Service'];
+  List<String> tabs = [
+    'Overviews',
+    'Locations',
+    'Reviews',
+    'Business Hours',
+    'Service'
+  ];
   String selectedTab = 'Overviews';
   int totalFacility = 6;
   Completer<GoogleMapController> _controller = Completer();
@@ -165,9 +172,11 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             ? SingleChildScrollView(
                                 child: Column(
                                     children: List.generate(
-                                        4, (index) => getReviews())),
+                                        4, (index) => getReviews(context))),
                               )
-                            : selectedTab == 'Service' ? getServices() : hours()),
+                            : selectedTab == 'Service'
+                                ? getServices()
+                                : hours()),
             Row(
               children: [
                 Flexible(
@@ -340,196 +349,6 @@ class _HospitalDetailsState extends State<HospitalDetails> {
             ))
           ],
         ),
-      );
-
-  Widget getReviews() => Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(15.0),
-        margin: const EdgeInsets.only(bottom: 7.0, left: 10.0, right: 10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-          boxShadow: SHADOW,
-        ),
-        child: Column(children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CircleAvatar(
-                radius: 30.0,
-                backgroundColor: Colors.grey,
-                backgroundImage: AssetImage('assets/imgs/1.png'),
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Richard Wilson',
-                        style: getCustomFont(
-                          size: 17.0,
-                          color: Colors.black,
-                          weight: FontWeight.w500,
-                        )),
-                    Text('Reviewed 2 days ago',
-                        style: getCustomFont(
-                          size: 13.0,
-                          color: Colors.black54,
-                          weight: FontWeight.normal,
-                        )),
-                    const SizedBox(
-                      height: 3.0,
-                    ),
-                    RatingBar.builder(
-                      initialRating: 3,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemSize: 15.0,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                        size: 15.0,
-                      ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
-                    ),
-                    const SizedBox(height: 7.0),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.thumb_up_outlined,
-                          color: Color(0xFF00CC80),
-                          size: 16.0,
-                        ),
-                        const SizedBox(
-                          width: 5.0,
-                        ),
-                        Flexible(
-                          child: Text('I recommend the doctor',
-                              style: getCustomFont(
-                                size: 13.0,
-                                color: Color(0xFF00CC80),
-                                weight: FontWeight.normal,
-                              )),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 7.0),
-                    Text('$DUMMYREVIEW',
-                        style: getCustomFont(
-                          size: 13.0,
-                          color: Colors.black,
-                          weight: FontWeight.normal,
-                        )),
-                    const SizedBox(height: 10.0),
-                    DottedBorder(
-                        color: Colors.black45,
-                        padding: const EdgeInsets.symmetric(horizontal: 1),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                        )),
-                    const SizedBox(height: 10.0),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.reply,
-                          color: Colors.lightBlueAccent,
-                          size: 16.0,
-                        ),
-                        const SizedBox(
-                          width: 5.0,
-                        ),
-                        Flexible(
-                          child: Text('Reply',
-                              style: getCustomFont(
-                                size: 13.0,
-                                color: Colors.lightBlueAccent,
-                                weight: FontWeight.normal,
-                              )),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0),
-                    Row(
-                      children: [
-                        Text('Recommend?',
-                            style: getCustomFont(
-                              size: 13.0,
-                              color: Colors.black,
-                              weight: FontWeight.normal,
-                            )),
-                        const SizedBox(
-                          width: 15.0,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 3.0),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 1.0, color: Colors.black45),
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.thumb_up_outlined,
-                                color: Colors.black,
-                                size: 16.0,
-                              ),
-                              const SizedBox(
-                                width: 5.0,
-                              ),
-                              Text('Yes',
-                                  style: getCustomFont(
-                                    size: 13.0,
-                                    color: Colors.black,
-                                    weight: FontWeight.normal,
-                                  )),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 10.0),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 3.0),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 1.0, color: Colors.black45),
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.thumb_down_outlined,
-                                color: Colors.black,
-                                size: 16.0,
-                              ),
-                              const SizedBox(
-                                width: 5.0,
-                              ),
-                              Text('No',
-                                  style: getCustomFont(
-                                    size: 13.0,
-                                    color: Colors.black,
-                                    weight: FontWeight.normal,
-                                  )),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )
-        ]),
       );
 
   Widget locationItem() => Container(
@@ -795,7 +614,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                   (i) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row( 
+                          Row(
                             children: [
                               Icon(
                                 Icons.check_circle_outline,
@@ -846,6 +665,6 @@ class _HospitalDetailsState extends State<HospitalDetails> {
       ],
     );
   }
-  
+
   Widget getServices() => Container();
 }

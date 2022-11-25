@@ -12,7 +12,6 @@ class Specialization extends StatefulWidget {
 }
 
 class _SpecializationState extends State<Specialization> {
-
   List<SpecializationModel> specialization = [
     SpecializationModel(title: 'Addiction Psychiatrist', isSelected: true),
     SpecializationModel(title: 'Gynaecologist', isSelected: false),
@@ -53,7 +52,7 @@ class _SpecializationState extends State<Specialization> {
                               color: Colors.white,
                               size: 18.0,
                             )),
-                        Text('Search Speciality',
+                        Text('Search Specialization',
                             style:
                                 getCustomFont(color: Colors.white, size: 16.0)),
                         Icon(
@@ -70,6 +69,13 @@ class _SpecializationState extends State<Specialization> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0, left: 15.0),
+                      child: getCardForm('Search Speciality Here'),
+                    ),
                     const SizedBox(
                       height: 15.0,
                     ),
@@ -104,7 +110,9 @@ class _SpecializationState extends State<Specialization> {
                             child: Column(
                               children: [
                                 ...List.generate(
-                                    specialization.length, (i) => viewAllSpecial(context, specialization[i]))
+                                    specialization.length,
+                                    (i) => viewAllSpecial(
+                                        context, specialization[i]))
                               ],
                             )),
                       ),
@@ -116,16 +124,15 @@ class _SpecializationState extends State<Specialization> {
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: FloatingActionButton.extended(
               label: Text('Save'),
               icon: Icon(
-                Icons.add,
+                Icons.check_outlined,
                 color: Colors.white,
               ),
-              onPressed: () {
-                
-              },
+              onPressed: () {},
               backgroundColor: BLUECOLOR,
             ),
           ),
@@ -134,7 +141,46 @@ class _SpecializationState extends State<Specialization> {
     );
   }
 
-  Widget viewAllSpecial(BuildContext context, SpecializationModel specialization) => Container(
+  Widget getCardForm(hint, {ctl}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 0.0),
+    child: Container(
+      height: 48.0,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: Colors.grey.shade200),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 10.0,
+          ),
+          Icon(
+            Icons.search,
+            color: Colors.black87,
+          ),
+          const SizedBox(
+            width: 5.0,
+          ),
+          Flexible(
+            child: TextField(
+              style: getCustomFont(size: 14.0, color: Colors.black45),
+              maxLines: 1,
+              decoration: InputDecoration(
+                  hintText: hint,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  hintStyle: getCustomFont(size: 14.0, color: Colors.black45),
+                  border: OutlineInputBorder(borderSide: BorderSide.none)),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+  Widget viewAllSpecial(
+          BuildContext context, SpecializationModel specialization) =>
+      Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(vertical: 9.0),
         child: Column(
@@ -149,12 +195,20 @@ class _SpecializationState extends State<Specialization> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      specialization.setIsSelected(!specialization.isSelected);
-                    });
-                  },
-                  child: Icon(specialization.isSelected? Icons.check_circle : Icons.circle_outlined, size: 18.0, color: specialization.isSelected? Colors.green : Colors.grey)),
+                    onTap: () {
+                      setState(() {
+                        specialization
+                            .setIsSelected(!specialization.isSelected);
+                      });
+                    },
+                    child: Icon(
+                        specialization.isSelected
+                            ? Icons.check_circle
+                            : Icons.circle_outlined,
+                        size: 18.0,
+                        color: specialization.isSelected
+                            ? Colors.green
+                            : Colors.grey)),
               )
             ]),
             const SizedBox(
