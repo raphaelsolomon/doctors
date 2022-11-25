@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:doctor/auth/forgotpass.dart';
 import 'package:doctor/auth/register.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
@@ -120,7 +119,8 @@ class _AuthLoginState extends State<AuthLogin> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: InkWell(
-                      onTap: () => Get.to(() => AuthForgotPass()),
+                      //onTap: () => Get.to(() => AuthForgotPass()),
+                      onTap: () => Get.to(() => Dashboard()),
                       child: Text(
                         'Forgotten Password?',
                         style: GoogleFonts.poppins(

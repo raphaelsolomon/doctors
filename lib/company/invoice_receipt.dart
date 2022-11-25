@@ -1,8 +1,6 @@
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
-import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class InvoiceReceipt extends StatelessWidget {
   const InvoiceReceipt({Key? key}) : super(key: key);
@@ -27,7 +25,7 @@ class InvoiceReceipt extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                      onTap: () => context.read<HomeController>().onBackPress(),
+                      onTap: () => Navigator.pop(context),
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: Colors.white,
@@ -35,14 +33,9 @@ class InvoiceReceipt extends StatelessWidget {
                       )),
                   Text('Invoice Receipt',
                       style: getCustomFont(size: 16.0, color: Colors.white)),
-                  InkWell(
-                    onTap: () {
-                      context.read<HomeController>().setPage(-22);
-                    },
-                    child: Icon(
-                      Icons.notifications_active,
-                      color: Colors.white,
-                    ),
+                  Icon(
+                    null,
+                    color: Colors.white,
                   )
                 ],
               ),

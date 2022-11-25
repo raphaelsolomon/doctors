@@ -307,7 +307,6 @@ navDrawer(BuildContext context, scaffold) => Container(
                       children: [
                         InkWell(
                           onTap: () {
-                            context.read<HomeController>().setPage(-2);
                           },
                           child: CircleAvatar(
                             backgroundImage: AssetImage('assets/imgs/2.png'),

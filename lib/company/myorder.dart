@@ -3,9 +3,8 @@ import 'package:doctor/providers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MyFavourite extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffold;
-  const MyFavourite(this.scaffold, {Key? key}) : super(key: key);
+class MyOrdersPage extends StatelessWidget {
+  const MyOrdersPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +15,8 @@ class MyFavourite extends StatelessWidget {
         child: Column(children: [
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 16.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
             width: MediaQuery.of(context).size.width,
-            height: 86.0,
             color: BLUECOLOR,
             child: Column(children: [
               const SizedBox(
@@ -31,21 +29,19 @@ class MyFavourite extends StatelessWidget {
                       onTap: () => context.read<HomeController>().onBackPress(),
                       child: Icon(Icons.arrow_back_ios,
                           size: 18.0, color: Colors.white)),
-           
-                  Text('My Orders',
-                      style:
-                          getCustomFont(size: 16.0, color: Colors.white)),
-                  InkWell(
-                    onTap: () {
-                      context.read<HomeController>().setPage(-22);
-                    },
-                    child: Icon(
-                      Icons.notifications_active,
-                      color: Colors.white,
-                    ),
+                  Flexible(
+                    child: Text('My Orders',
+                        style: getCustomFont(size: 16.0, color: Colors.white)),
+                  ),
+                  Icon(
+                    null,
+                    color: Colors.white,
                   )
                 ],
-              )
+              ),
+              const SizedBox(
+                height: 15.0,
+              ),
             ]),
           ),
           const SizedBox(
@@ -64,16 +60,16 @@ class MyFavourite extends StatelessWidget {
   Widget orderItem(context) => Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(15.0),
-      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5.0),
       decoration: BoxDecoration(
-          border: Border.all(width: 1.0, color: Colors.black),
+          border: Border.all(width: 1.0, color: Colors.black38),
           color: Colors.white,
           borderRadius: BorderRadius.circular(13.0)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('Orrder ID : ',
+            Text('Order ID : ',
                 style: getCustomFont(size: 15.0, color: Colors.black)),
             Text('9', style: getCustomFont(size: 15.0, color: Colors.black)),
           ],
@@ -84,6 +80,7 @@ class MyFavourite extends StatelessWidget {
         Row(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Pending',
                     style: getCustomFont(size: 13.0, color: Colors.amber)),

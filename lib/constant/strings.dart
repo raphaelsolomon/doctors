@@ -353,7 +353,9 @@ List removeBottom = [
   -18,
   -19,
   6,
-  5
+  5,
+  7,
+  -23
 ];
 List removeBottom1 = [
   3,
@@ -371,7 +373,9 @@ List removeBottom1 = [
   -18,
   -19,
   6,
-  5
+  5,
+  7,
+  -23
 ];
 
 List shop_by_categgory = [

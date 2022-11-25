@@ -54,7 +54,7 @@ class _MyCalendarState extends State<MyCalendar> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                              context.read<HomeController>().onBackPress();
+                            context.read<HomeController>().onBackPress();
                           },
                           child: Icon(
                             Icons.arrow_back_ios,
@@ -62,8 +62,8 @@ class _MyCalendarState extends State<MyCalendar> {
                             size: 18.0,
                           )),
                       Text('My Calender',
-                          style: getCustomFont(
-                              size: 16.0, color: Colors.white)),
+                          style:
+                              getCustomFont(size: 16.0, color: Colors.white)),
                       Icon(
                         null,
                         color: Colors.white,
@@ -93,71 +93,95 @@ class _MyCalendarState extends State<MyCalendar> {
               ),
               Expanded(
                   child: Column(
+                children: [
+                  TableCalendar(
+                      focusedDay: focusDate,
+                      firstDay: DateTime(1998),
+                      lastDay: DateTime(2200),
+                      startingDayOfWeek: StartingDayOfWeek.sunday,
+                      daysOfWeekVisible: true,
+                      calendarFormat: format,
+                      eventLoader: getEventFromDay,
+                      selectedDayPredicate: (day) =>
+                          isSameDay(selectedDate, day),
+                      calendarStyle: CalendarStyle(
+                          isTodayHighlighted: true,
+                          todayDecoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: BLUECOLOR.withOpacity(.5)),
+                          selectedTextStyle: getCustomFont(
+                              color: Colors.white, weight: FontWeight.w500),
+                          selectedDecoration: BoxDecoration(
+                              color: BLUECOLOR, shape: BoxShape.circle),
+                          defaultDecoration:
+                              BoxDecoration(shape: BoxShape.circle),
+                          weekendDecoration:
+                              BoxDecoration(shape: BoxShape.circle)),
+                      onDaySelected: ((selectedDay, focusedDay) => setState(() {
+                            selectedDate = selectedDay;
+                            focusDate = focusedDay;
+                          })),
+                      headerStyle: HeaderStyle(
+                          formatButtonVisible: true,
+                          formatButtonShowsNext: true,
+                          titleCentered: false),
+                      onFormatChanged: (format) => setState(() {
+                            this.format = format;
+                          })),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TableCalendar(
-                                focusedDay: focusDate,
-                                firstDay: DateTime(1998),
-                                lastDay: DateTime(2200),
-                                startingDayOfWeek: StartingDayOfWeek.sunday,
-                                daysOfWeekVisible: true,
-                                calendarFormat: format,
-                                eventLoader: getEventFromDay,
-                                selectedDayPredicate: (day) =>
-                                    isSameDay(selectedDate, day),
-                                calendarStyle: CalendarStyle(
-                                    isTodayHighlighted: true,
-                                    todayDecoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: BLUECOLOR.withOpacity(.5)),
-                                    selectedTextStyle: getCustomFont(
-                                        color: Colors.white,
-                                        weight: FontWeight.w500),
-                                    selectedDecoration: BoxDecoration(
-                                        color: BLUECOLOR,
-                                        shape: BoxShape.circle),
-                                    defaultDecoration:
-                                        BoxDecoration(shape: BoxShape.circle),
-                                    weekendDecoration:
-                                        BoxDecoration(shape: BoxShape.circle)),
-                                onDaySelected: ((selectedDay, focusedDay) =>
-                                    setState(() {
-                                      selectedDate = selectedDay;
-                                      focusDate = focusedDay;
-                                    })),
-                                headerStyle: HeaderStyle(
-                                    formatButtonVisible: true,
-                                    formatButtonShowsNext: true,
-                                    titleCentered: false),
-                                onFormatChanged: (format) => setState(() {
-                                      this.format = format;
-                                    })),
-                                    const SizedBox(height: 20.0,),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 20.0,),
-                                  Text('Records', style: getCustomFont(size: 16.0, color: Colors.black),),
-                                  const SizedBox(height: 15.0,),
-                                  ...getEventFromDay(selectedDate).map((e) => Column(
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              'Records',
+                              style: getCustomFont(
+                                  size: 16.0, color: Colors.black),
+                            ),
+                            const SizedBox(
+                              height: 15.0,
+                            ),
+                            ...getEventFromDay(selectedDate)
+                                .map((e) => Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(e.title, style: getCustomFont(size: 14.0),),
-                                        const SizedBox(height: 10.0,),
-                                        Text(e.description, style: getCustomFont(size: 12.0, color: Colors.black45),),
-                                        const SizedBox(height: 5.0,),
+                                        Text(
+                                          e.title,
+                                          style: getCustomFont(size: 14.0),
+                                        ),
+                                        const SizedBox(
+                                          height: 5.0,
+                                        ),
+                                        Text(
+                                          e.description,
+                                          maxLines: 3,
+                                          style: getCustomFont(
+                                              size: 12.0,
+                                              color: Colors.black45),
+                                        ),
+                                        const SizedBox(
+                                          height: 5.0,
+                                        ),
                                         Divider(),
-                                        const SizedBox(height: 5.0,),
+                                        const SizedBox(
+                                          height: 5.0,
+                                        ),
                                       ],
                                     ))
-                                    .toList(),
-                                  const SizedBox(height: 80.0),
-                                ]
-                              ),
-                            )
-                          ],
-                        )
-              ),
+                                .toList(),
+                            const SizedBox(height: 80.0),
+                          ]),
+                    ),
+                  )
+                ],
+              )),
             ])),
         Align(
           alignment: Alignment.bottomRight,
@@ -171,15 +195,13 @@ class _MyCalendarState extends State<MyCalendar> {
                 color: Colors.white,
               ),
               onPressed: () {
-                showRequestSheet(context,
-                    ScheduleCalender(callBack: (title, desc) {
+                showRequestSheet(context, ScheduleCalender(callBack: (title, desc, time) {
                   setState(() {
                     if (selectedEvent[selectedDate] != null) {
-                      selectedEvent[selectedDate]!
-                          .add(Event(title: title, description: desc));
+                      selectedEvent[selectedDate]!.add(Event(title: title, description: desc, time: time));
                     } else {
                       selectedEvent[selectedDate] = [
-                        Event(title: title, description: desc)
+                        Event(title: title, description: desc, time: time)
                       ];
                     }
                   });

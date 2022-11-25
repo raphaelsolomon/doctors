@@ -66,27 +66,20 @@ class _MyPlanState extends State<MyPlan> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            context.read<HomeController>().onBackPress();
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
-                            size: 18.0,
-                          )),
-                      const SizedBox(
-                        width: 20.0,
-                      ),
-                      Text('My Plans',
-                          style:
-                              getCustomFont(size: 16.0, color: Colors.white)),
-                    ],
-                  ),
+                  GestureDetector(
+                      onTap: () {
+                        context.read<HomeController>().onBackPress();
+                      },
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 18.0,
+                      )),
+                  Text('My Plans',
+                      style:
+                          getCustomFont(size: 16.0, color: Colors.white)),
                   Icon(
-                    Icons.notifications,
+                    null,
                     color: Colors.white,
                   )
                 ],
@@ -467,16 +460,17 @@ class _MyPlanState extends State<MyPlan> {
       );
 
   Widget itemContainer(List<String> item, e) => Container(
-        width: 130.0,
         margin: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           color: BLUECOLOR,
           borderRadius: BorderRadius.circular(50.0),
         ),
-        padding: const EdgeInsets.all(8.0),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        padding: const EdgeInsets.all(6.0),
+        child:Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Flexible(
+            fit: FlexFit.loose,
               child: Text(
             '$e',
             maxLines: 1,

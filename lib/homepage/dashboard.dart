@@ -3,6 +3,7 @@ import 'package:doctor/auth/change_password.dart';
 import 'package:doctor/auth/profile_settings.dart';
 import 'package:doctor/callscreens/pickup/pick_layout.dart';
 import 'package:doctor/chat/chat_list.dart';
+import 'package:doctor/company/favourite.dart';
 import 'package:doctor/company/invoice_receipt.dart';
 import 'package:doctor/company/myoffer.dart';
 import 'package:doctor/company/myorder.dart';
@@ -126,9 +127,6 @@ class _DashboardState extends State<Dashboard> {
     if (page == -22) {
       return NotificationPage();
     }
-    if (page == -21) {
-      return InvoiceReceipt();
-    }
     if (page == -20) {
       return MyPatients();
     }
@@ -157,7 +155,7 @@ class _DashboardState extends State<Dashboard> {
       return MyReviews(); //reviews
     }
     if (page == -9) {
-      return MyFavourite(scaffold);
+      return MyFavourite();
     }
     if (page == -5) {
       return MyInvoicePage();
