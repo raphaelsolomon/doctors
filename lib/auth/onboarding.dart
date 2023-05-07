@@ -52,13 +52,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(ONBOARDING[index]['image']),
-                              fit: BoxFit.cover,
-                              repeat: ImageRepeat.noRepeat),
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              bottomRight: Radius.circular(20.0)),
+                          image: DecorationImage(image: AssetImage(ONBOARDING[index]['image']), repeat: ImageRepeat.noRepeat),
+                          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20.0), bottomRight: Radius.circular(20.0)),
                         ),
                       ),
                     ),
@@ -68,11 +63,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     Expanded(
                         child: Container(
                             margin: const EdgeInsets.all(30.0),
-                            padding: const EdgeInsets.only(
-                                left: 18.0,
-                                right: 18.0,
-                                top: 20.0,
-                                bottom: 10.0),
+                            padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 20.0, bottom: 10.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               color: Colors.white,
@@ -81,10 +72,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               Spacer(),
                               Text(
                                 '${ONBOARDING[index]['title']}',
-                                style: GoogleFonts.poppins(
-                                    color: BLUECOLOR,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w600),
+                                style: GoogleFonts.poppins(color: BLUECOLOR, fontSize: 15.0, fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(
@@ -92,10 +80,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               ),
                               Text(
                                 '${ONBOARDING[index]['description']}',
-                                style: GoogleFonts.poppins(
-                                    color: BODYTEXT,
-                                    fontSize: 13.0,
-                                    fontWeight: FontWeight.w600),
+                                style: GoogleFonts.poppins(color: BODYTEXT, fontSize: 13.0, fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(
@@ -110,9 +95,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     Get.to(() => AuthLogin());
                                   } else {
                                     counter = counter + 1;
-                                    _pageController!.animateToPage(counter,
-                                        duration: Duration(seconds: 1),
-                                        curve: Curves.linearToEaseOut);
+                                    _pageController!.animateToPage(counter, duration: Duration(seconds: 1), curve: Curves.linearToEaseOut);
                                   }
                                 },
                                 child: Container(
@@ -125,10 +108,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     child: Center(
                                         child: Text(
                                       counter == 4 ? 'Continue' : 'Next',
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.w600),
+                                      style: GoogleFonts.poppins(color: Colors.white, fontSize: 17.0, fontWeight: FontWeight.w600),
                                     ))),
                               ),
                               counter == 4 ? const SizedBox() : const Spacer(),
@@ -141,10 +121,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                   },
                                   child: Text(
                                     'Skip for now',
-                                    style: GoogleFonts.poppins(
-                                        color: GREYTEXT,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400),
+                                    style: GoogleFonts.poppins(color: GREYTEXT, fontSize: 16.0, fontWeight: FontWeight.w400),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),

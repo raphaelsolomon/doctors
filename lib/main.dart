@@ -18,8 +18,6 @@ import 'package:phone_form_field/l10n/generated/phone_field_localization.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
-
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   print('A bg message just showed up : ${message.messageId}');
@@ -42,9 +40,7 @@ Future<void> main() async {
   await Hive.openBox<User>(BoxName);
   await Hive.openBox('Initialization');
   runApp(const MyApp());
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   ErrorWidget.builder = ((details) => Material(
         child: Container(
           color: Colors.green,
@@ -53,10 +49,7 @@ Future<void> main() async {
             children: [
               Text(
                 details.exceptionAsString(),
-                style: const TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white),
+                style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.white),
                 textAlign: TextAlign.center,
               )
             ],
@@ -79,30 +72,22 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
       ],
       child: GetMaterialApp(
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            PhoneFieldLocalization.delegate
-          ],
-          locale: Locale('en', ''),
-          supportedLocales: const [
-            Locale('en', ''),
-            Locale('ar', ''),
-          ],
-          title: 'Doctor',
-          defaultTransition: Transition.zoom,
-          debugShowCheckedModeBanner: true,
-          theme: ThemeData(
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              primarySwatch: Colors.blue,
-              primaryColor: Colors.black54),
-          home: box.get('isFirst') == null
-              ? Scaffold(body: OnBoardingScreen())
-              : user.get(USERPATH) == null
-                  ? const AuthLogin()
-                  : Dashboard(),
-        ),
+        localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate, PhoneFieldLocalization.delegate],
+        locale: Locale('en', ''),
+        supportedLocales: const [
+          Locale('en', ''),
+          Locale('ar', ''),
+        ],
+        title: 'Doctor',
+        defaultTransition: Transition.zoom,
+        debugShowCheckedModeBanner: true,
+        theme: ThemeData(visualDensity: VisualDensity.adaptivePlatformDensity, primarySwatch: Colors.blue, primaryColor: Colors.black54),
+        home: box.get('isFirst') == null
+            ? Scaffold(body: OnBoardingScreen())
+            : user.get(USERPATH) == null
+                ? const AuthLogin()
+                : Dashboard(),
+      ),
     );
   }
 }

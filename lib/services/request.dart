@@ -4,12 +4,10 @@ import 'package:doctor/constant/strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-
 const String ROOTAPI = 'https://api.gettheskydoctors.com';
-
+const String ROOTNEWURL = 'https://docapi.gettheskydoctors.com';
 
 class RequestApiServices {
-  
   String GOOGLEAPI = 'https://fcm.googleapis.com/fcm/send';
 
   void sendNotification(token) async {
@@ -29,10 +27,7 @@ class RequestApiServices {
 
   static Future<Map<String, dynamic>> loadCurrencies() async {
     String uri = "https://api.apilayer.com/exchangerates_data/latest";
-    var response = await http.get(Uri.parse(uri), headers: {
-      "Accept": "application/json",
-      "apikey": "p4qW5VLnHaRmgJd84qqszBU3j81sXRu8"
-    });
+    var response = await http.get(Uri.parse(uri), headers: {"Accept": "application/json", "apikey": "p4qW5VLnHaRmgJd84qqszBU3j81sXRu8"});
     return json.decode(response.body);
   }
 

@@ -55,13 +55,12 @@ class _MyPlanState extends State<MyPlan> {
         color: Color(0xFFf6f6f6),
         child: Column(children: [
           Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
             width: MediaQuery.of(context).size.width,
             color: BLUECOLOR,
             child: Column(children: [
               const SizedBox(
-                height: 45.0,
+                height: 40.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,9 +74,7 @@ class _MyPlanState extends State<MyPlan> {
                         color: Colors.white,
                         size: 18.0,
                       )),
-                  Text('My Plans',
-                      style:
-                          getCustomFont(size: 16.0, color: Colors.white)),
+                  Text('My Plans', style: getCustomFont(size: 16.0, color: Colors.white)),
                   Icon(
                     null,
                     color: Colors.white,
@@ -99,13 +96,10 @@ class _MyPlanState extends State<MyPlan> {
 
   Widget pricingServices() => Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-        padding:
-            EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0, right: 10.0),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+        padding: EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0, right: 10.0),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
         child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
@@ -164,8 +158,7 @@ class _MyPlanState extends State<MyPlan> {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
                 'Select Consultation Type',
-                style: getCustomFont(
-                    size: 13.0, color: Colors.black, weight: FontWeight.w500),
+                style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),
               ),
             ),
             Padding(
@@ -173,9 +166,7 @@ class _MyPlanState extends State<MyPlan> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    ...CONSULT_TYPE.map((e) => _dashTypeList(e)).toList()
-                  ],
+                  children: [...CONSULT_TYPE.map((e) => _dashTypeList(e)).toList()],
                 ),
               ),
             ),
@@ -186,8 +177,7 @@ class _MyPlanState extends State<MyPlan> {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
                 'Select Frquency',
-                style: getCustomFont(
-                    size: 13.0, color: Colors.black, weight: FontWeight.w500),
+                style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),
               ),
             ),
             SingleChildScrollView(
@@ -202,25 +192,14 @@ class _MyPlanState extends State<MyPlan> {
                         },
                         child: Container(
                           width: 120.0,
-                          margin:
-                              const EdgeInsets.only(right: 15.0, left: 10.0),
-                          decoration: BoxDecoration(
-                              color: frequency == e ? BLUECOLOR : Colors.white,
-                              border: Border.all(
-                                  color:
-                                      frequency == e ? BLUECOLOR : Colors.black,
-                                  width: 1.0),
-                              borderRadius: BorderRadius.circular(50.0)),
+                          margin: const EdgeInsets.only(right: 15.0, left: 10.0),
+                          decoration: BoxDecoration(color: frequency == e ? BLUECOLOR : Colors.white, border: Border.all(color: frequency == e ? BLUECOLOR : Colors.black, width: 1.0), borderRadius: BorderRadius.circular(50.0)),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Center(
                               child: Text(
                                 '$e',
-                                style: getCustomFont(
-                                    size: 13.0,
-                                    color: frequency == e
-                                        ? Colors.white
-                                        : BLUECOLOR),
+                                style: getCustomFont(size: 13.0, color: frequency == e ? Colors.white : BLUECOLOR),
                               ),
                             ),
                           ),
@@ -236,8 +215,7 @@ class _MyPlanState extends State<MyPlan> {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
                 'Select Booking Class',
-                style: getCustomFont(
-                    size: 13.0, color: Colors.black, weight: FontWeight.w500),
+                style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),
               ),
             ),
             SingleChildScrollView(
@@ -252,27 +230,14 @@ class _MyPlanState extends State<MyPlan> {
                         },
                         child: Container(
                           width: 120.0,
-                          margin:
-                              const EdgeInsets.only(right: 15.0, left: 10.0),
-                          decoration: BoxDecoration(
-                              color:
-                                  bookingClass == e ? BLUECOLOR : Colors.white,
-                              border: Border.all(
-                                  color: bookingClass == e
-                                      ? BLUECOLOR
-                                      : Colors.black,
-                                  width: 1.0),
-                              borderRadius: BorderRadius.circular(50.0)),
+                          margin: const EdgeInsets.only(right: 15.0, left: 10.0),
+                          decoration: BoxDecoration(color: bookingClass == e ? BLUECOLOR : Colors.white, border: Border.all(color: bookingClass == e ? BLUECOLOR : Colors.black, width: 1.0), borderRadius: BorderRadius.circular(50.0)),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Center(
                               child: Text(
                                 '$e',
-                                style: getCustomFont(
-                                    size: 13.0,
-                                    color: bookingClass == e
-                                        ? Colors.white
-                                        : BLUECOLOR),
+                                style: getCustomFont(size: 13.0, color: bookingClass == e ? Colors.white : BLUECOLOR),
                               ),
                             ),
                           ),
@@ -284,9 +249,7 @@ class _MyPlanState extends State<MyPlan> {
             const SizedBox(
               height: 20.0,
             ),
-            dropDown(
-                label: 'Booking Shift',
-                text: 'Select Booking Shift'),
+            dropDown(label: 'Booking Shift', text: 'Select Booking Shift'),
             const SizedBox(
               height: 20.0,
             ),
@@ -294,8 +257,7 @@ class _MyPlanState extends State<MyPlan> {
               padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Text(
                 'Select Currency',
-                style: getCustomFont(
-                    size: 13.0, color: Colors.black, weight: FontWeight.w500),
+                style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),
               ),
             ),
             const SizedBox(
@@ -309,8 +271,7 @@ class _MyPlanState extends State<MyPlan> {
             }),
             const SizedBox(height: 15.0),
             _buildConvert(toCurrency, callBack: (s) {
-              var total = double.parse('${curMap[s]}') *
-                  int.parse(currency.text.isEmpty ? '0' : currency.text);
+              var total = double.parse('${curMap[s]}') * int.parse(currency.text.isEmpty ? '0' : currency.text);
               setState(() {
                 converted.text = '${total}';
               });
@@ -331,10 +292,7 @@ class _MyPlanState extends State<MyPlan> {
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
                     child: Text(
                       'Add Services and Specialization',
-                      style: getCustomFont(
-                          size: 13.0,
-                          color: Colors.black,
-                          weight: FontWeight.w500),
+                      style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(
@@ -344,10 +302,7 @@ class _MyPlanState extends State<MyPlan> {
                     padding: const EdgeInsets.symmetric(horizontal: 0.0),
                     child: Text(
                       'Services',
-                      style: getCustomFont(
-                          size: 13.0,
-                          color: Colors.black54,
-                          weight: FontWeight.w500),
+                      style: getCustomFont(size: 13.0, color: Colors.black54, weight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(
@@ -364,10 +319,7 @@ class _MyPlanState extends State<MyPlan> {
                       children: [
                         Flexible(
                           fit: FlexFit.tight,
-                          child: Wrap(
-                              children: services
-                                  .map((e) => itemContainer(services, e))
-                                  .toList()),
+                          child: Wrap(children: services.map((e) => itemContainer(services, e)).toList()),
                         ),
                         GestureDetector(
                             onTap: () => showServicesDropDown(),
@@ -386,10 +338,7 @@ class _MyPlanState extends State<MyPlan> {
                   ),
                   Text(
                     'Note: press the add button to add new specialization',
-                    style: getCustomFont(
-                        size: 12.0,
-                        color: Colors.black45,
-                        weight: FontWeight.w500),
+                    style: getCustomFont(size: 12.0, color: Colors.black45, weight: FontWeight.w500),
                   ),
                   const SizedBox(
                     height: 35.0,
@@ -398,10 +347,7 @@ class _MyPlanState extends State<MyPlan> {
                     padding: const EdgeInsets.symmetric(horizontal: 0.0),
                     child: Text(
                       'Specialization',
-                      style: getCustomFont(
-                          size: 13.0,
-                          color: Colors.black54,
-                          weight: FontWeight.w500),
+                      style: getCustomFont(size: 13.0, color: Colors.black54, weight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(
@@ -418,10 +364,7 @@ class _MyPlanState extends State<MyPlan> {
                       children: [
                         Flexible(
                           fit: FlexFit.tight,
-                          child: Wrap(
-                              children: Specialization.map(
-                                      (e) => itemContainer(Specialization, e))
-                                  .toList()),
+                          child: Wrap(children: Specialization.map((e) => itemContainer(Specialization, e)).toList()),
                         ),
                         GestureDetector(
                             onTap: () => showBottomSheet(),
@@ -440,10 +383,7 @@ class _MyPlanState extends State<MyPlan> {
                   ),
                   Text(
                     'Note: press the add button to add new services',
-                    style: getCustomFont(
-                        size: 12.0,
-                        color: Colors.black45,
-                        weight: FontWeight.w500),
+                    style: getCustomFont(size: 12.0, color: Colors.black45, weight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -466,16 +406,14 @@ class _MyPlanState extends State<MyPlan> {
           borderRadius: BorderRadius.circular(50.0),
         ),
         padding: const EdgeInsets.all(6.0),
-        child:Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        child: Row(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Flexible(
-            fit: FlexFit.loose,
+              fit: FlexFit.loose,
               child: Text(
-            '$e',
-            maxLines: 1,
-            style: getCustomFont(size: 12.0, color: Colors.white),
-          )),
+                '$e',
+                maxLines: 1,
+                style: getCustomFont(size: 12.0, color: Colors.white),
+              )),
           GestureDetector(
             onTap: () {
               setState(() {
@@ -501,11 +439,8 @@ class _MyPlanState extends State<MyPlan> {
         onTap: () => setState(() => type = e['title']),
         child: Container(
             margin: const EdgeInsets.only(right: 5.0),
-            padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-            decoration: BoxDecoration(
-                color: type == e['title'] ? BLUECOLOR : Colors.transparent,
-                borderRadius: BorderRadius.circular(50.0)),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+            decoration: BoxDecoration(color: type == e['title'] ? BLUECOLOR : Colors.transparent, borderRadius: BorderRadius.circular(50.0)),
             child: Row(
               children: [
                 Icon(
@@ -516,10 +451,7 @@ class _MyPlanState extends State<MyPlan> {
                 const SizedBox(width: 10),
                 Text(
                   '${e['title']}',
-                  style: getCustomFont(
-                      size: 14.0,
-                      color: type == e['title'] ? Colors.white : Colors.black,
-                      weight: FontWeight.normal),
+                  style: getCustomFont(size: 14.0, color: type == e['title'] ? Colors.white : Colors.black, weight: FontWeight.normal),
                 ),
               ],
             )),
@@ -542,9 +474,7 @@ class _MyPlanState extends State<MyPlan> {
       width: MediaQuery.of(context).size.width,
       height: 48.0,
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          color: BLUECOLOR.withOpacity(.05)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0), color: BLUECOLOR.withOpacity(.05)),
       child: Row(
         children: [
           DropdownButton(
@@ -557,8 +487,7 @@ class _MyPlanState extends State<MyPlan> {
                         children: <Widget>[
                           Text(
                             value,
-                            style: getCustomFont(
-                                size: 13.0, color: Colors.black45),
+                            style: getCustomFont(size: 13.0, color: Colors.black45),
                           ),
                         ],
                       ),
@@ -581,11 +510,7 @@ class _MyPlanState extends State<MyPlan> {
             style: getCustomFont(size: 13.0, color: Colors.black45),
             controller: currency,
             onChanged: (s) => callBack(s),
-            decoration: InputDecoration(
-                hintText: 'Enter price',
-                helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
-                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                border: OutlineInputBorder(borderSide: BorderSide.none)),
+            decoration: InputDecoration(hintText: 'Enter price', helperStyle: getCustomFont(size: 13.0, color: Colors.black45), contentPadding: const EdgeInsets.symmetric(vertical: 0.0), border: OutlineInputBorder(borderSide: BorderSide.none)),
           ))
         ],
       ),
@@ -597,9 +522,7 @@ class _MyPlanState extends State<MyPlan> {
       width: MediaQuery.of(context).size.width,
       height: 48.0,
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          color: BLUECOLOR.withOpacity(.05)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0), color: BLUECOLOR.withOpacity(.05)),
       child: Row(
         children: [
           DropdownButton(
@@ -612,8 +535,7 @@ class _MyPlanState extends State<MyPlan> {
                         children: <Widget>[
                           Text(
                             value,
-                            style: getCustomFont(
-                                size: 13.0, color: Colors.black45),
+                            style: getCustomFont(size: 13.0, color: Colors.black45),
                           ),
                         ],
                       ),
@@ -638,11 +560,7 @@ class _MyPlanState extends State<MyPlan> {
             enabled: false,
             controller: converted,
             style: getCustomFont(size: 13.0, color: Colors.black45),
-            decoration: InputDecoration(
-                hintText: '0.00',
-                helperStyle: getCustomFont(size: 13.0, color: Colors.black45),
-                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                border: OutlineInputBorder(borderSide: BorderSide.none)),
+            decoration: InputDecoration(hintText: '0.00', helperStyle: getCustomFont(size: 13.0, color: Colors.black45), contentPadding: const EdgeInsets.symmetric(vertical: 0.0), border: OutlineInputBorder(borderSide: BorderSide.none)),
           ))
         ],
       ),
@@ -656,8 +574,7 @@ class _MyPlanState extends State<MyPlan> {
           children: [
             Text(
               '$text',
-              style: getCustomFont(
-                  size: 13.0, color: Colors.black, weight: FontWeight.w500),
+              style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),
             ),
             const SizedBox(
               height: 7.0,
@@ -679,7 +596,6 @@ class _MyPlanState extends State<MyPlan> {
                         color: Colors.black54,
                       ),
                       decoration: InputDecoration(
-                        
                         labelStyle: getCustomFont(size: 13.0, color: Colors.black45),
                         contentPadding: const EdgeInsets.symmetric(horizontal: 9.9, vertical: 5.0),
                         border: OutlineInputBorder(
@@ -717,8 +633,7 @@ class _MyPlanState extends State<MyPlan> {
             ),
             Text(
               'Select Specialization',
-              style: getCustomFont(
-                  size: 28.0, color: Colors.black, weight: FontWeight.w700),
+              style: getCustomFont(size: 28.0, color: Colors.black, weight: FontWeight.w700),
             ),
             const SizedBox(
               height: 20.0,
@@ -736,10 +651,8 @@ class _MyPlanState extends State<MyPlan> {
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        if (!Specialization.contains(
-                                            SpecialitiesFilter[i])) {
-                                          Specialization.add(
-                                              SpecialitiesFilter[i]);
+                                        if (!Specialization.contains(SpecialitiesFilter[i])) {
+                                          Specialization.add(SpecialitiesFilter[i]);
                                         }
                                       });
                                       Navigator.pop(context);
@@ -748,8 +661,7 @@ class _MyPlanState extends State<MyPlan> {
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
                                         '${SpecialitiesFilter[i]}',
-                                        style: getCustomFont(
-                                            size: 16.0, color: Colors.black),
+                                        style: getCustomFont(size: 16.0, color: Colors.black),
                                       ),
                                     ),
                                   ),
@@ -776,8 +688,7 @@ class _MyPlanState extends State<MyPlan> {
             ),
             Text(
               'Select Services',
-              style: getCustomFont(
-                  size: 28.0, color: Colors.black, weight: FontWeight.w700),
+              style: getCustomFont(size: 28.0, color: Colors.black, weight: FontWeight.w700),
             ),
             const SizedBox(
               height: 20.0,
@@ -795,8 +706,7 @@ class _MyPlanState extends State<MyPlan> {
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        if (!services
-                                            .contains(ServicesList[i])) {
+                                        if (!services.contains(ServicesList[i])) {
                                           services.add(ServicesList[i]);
                                         }
                                       });
@@ -805,9 +715,8 @@ class _MyPlanState extends State<MyPlan> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
-                                        '${SpecialitiesFilter[i]}',
-                                        style: getCustomFont(
-                                            size: 16.0, color: Colors.black),
+                                        '${ServicesList[i]}',
+                                        style: getCustomFont(size: 16.0, color: Colors.black),
                                       ),
                                     ),
                                   ),

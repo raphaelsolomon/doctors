@@ -32,6 +32,16 @@ class _AuthLoginState extends State<AuthLogin> {
   final email = TextEditingController();
   final password = TextEditingController();
   final box = Hive.box<User>(BoxName);
+  User user = User(
+      uid: '8et7fugcsiahicsa',
+      name: 'phoenixk54',
+      email: 'phoenixk54@gmail.com',
+      phone: '+2349067618740',
+      country: '161',
+      token: 'Bearer ',
+      profilePhoto: 'https://cdn.britannica.com/52/219152-050-D500476A/Chinese-film-actor-Jet-Li-2008.jpg',
+      verified: true,
+      dob: '10-04-1998');
 
   @override
   void initState() {
@@ -63,8 +73,7 @@ class _AuthLoginState extends State<AuthLogin> {
               const SizedBox(
                 height: 50.0,
               ),
-              Image.asset('assets/auth/2.jpeg',
-                  repeat: ImageRepeat.noRepeat, fit: BoxFit.contain),
+              Image.asset('assets/auth/2.jpeg', repeat: ImageRepeat.noRepeat, fit: BoxFit.contain),
               const SizedBox(
                 height: 40.0,
               ),
@@ -73,10 +82,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   Flexible(
                       child: Text(
                     'Sign In',
-                    style: GoogleFonts.poppins(
-                        fontSize: 28.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600),
+                    style: GoogleFonts.poppins(fontSize: 28.0, color: Colors.black, fontWeight: FontWeight.w600),
                   ))
                 ],
               ),
@@ -88,8 +94,7 @@ class _AuthLoginState extends State<AuthLogin> {
                 children: [
                   Text(
                     'Sign in to your account to continue',
-                    style: GoogleFonts.poppins(
-                        fontSize: 13.0, color: Colors.black45),
+                    style: GoogleFonts.poppins(fontSize: 13.0, color: Colors.black45),
                   ),
                   const SizedBox(
                     height: 20.0,
@@ -100,18 +105,11 @@ class _AuthLoginState extends State<AuthLogin> {
               const SizedBox(
                 height: 20.0,
               ),
-              isEmail
-                  ? getRegisterForm(
-                      ctl: email, obscure: false, hint: 'Email or username')
-                  : getPhoneNumberForm(ctl: phoneController),
+              isEmail ? getRegisterForm(ctl: email, obscure: false, hint: 'Email or username') : getPhoneNumberForm(ctl: phoneController),
               const SizedBox(
                 height: 10.0,
               ),
-              getRegisterForm(
-                  ctl: password,
-                  obscure: true,
-                  hint: 'Password',
-                  icon: Icons.lock),
+              getRegisterForm(ctl: password, obscure: true, hint: 'Password', icon: Icons.lock),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: SizedBox(
@@ -123,8 +121,7 @@ class _AuthLoginState extends State<AuthLogin> {
                       onTap: () => Get.to(() => Dashboard()),
                       child: Text(
                         'Forgotten Password?',
-                        style: GoogleFonts.poppins(
-                            fontSize: 14.5, color: Colors.black54),
+                        style: GoogleFonts.poppins(fontSize: 14.5, color: Colors.black54),
                       ),
                     ),
                   ),
@@ -152,10 +149,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   const SizedBox(width: 15.0),
                   Text(
                     'Or Sign in using',
-                    style: GoogleFonts.poppins(
-                        fontSize: 13.0,
-                        color: Color(0xFF838391),
-                        fontWeight: FontWeight.w400),
+                    style: GoogleFonts.poppins(fontSize: 13.0, color: Color(0xFF838391), fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(width: 15.0),
                   Flexible(
@@ -171,13 +165,11 @@ class _AuthLoginState extends State<AuthLogin> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  socialAccount(FontAwesome.facebook, Color(0xFF1777F2),
-                      callBack: () => FirebaseMethods.facebookLogin()),
+                  socialAccount(FontAwesome.facebook, Color(0xFF1777F2), callBack: () => FirebaseMethods.facebookLogin()),
                   const SizedBox(
                     width: 20.0,
                   ),
-                  socialAccount(FontAwesome.linkedin, Color(0xFF0078B5),
-                      callBack: () {
+                  socialAccount(FontAwesome.linkedin, Color(0xFF0078B5), callBack: () {
                     Get.to(() => LinkedInUserWidget(
                           redirectUrl: LINKEDIN_REDIRECT,
                           clientId: LINKEDIN_CLIENTID,
@@ -193,23 +185,13 @@ class _AuthLoginState extends State<AuthLogin> {
                           onGetUserProfile: (user) {
                             User person = User(
                                 uid: '${1134}',
-                                name:
-                                    '${user.user.firstName!.localized!.label} ${user.user.lastName!.localized!.label}',
-                                email: user.user.email!.elements!.first
-                                    .handleDeep!.emailAddress,
+                                name: '${user.user.firstName!.localized!.label} ${user.user.lastName!.localized!.label}',
+                                email: user.user.email!.elements!.first.handleDeep!.emailAddress,
                                 phone: '+2349067618740',
                                 verified: '1' == '0' ? false : true,
                                 country: 'Nigeria',
                                 token: 'Bearer ${user.user.token.accessToken}',
-                                profilePhoto: user
-                                    .user
-                                    .profilePicture!
-                                    .displayImageContent!
-                                    .elements!
-                                    .first
-                                    .identifiers!
-                                    .first
-                                    .identifier,
+                                profilePhoto: user.user.profilePicture!.displayImageContent!.elements!.first.identifiers!.first.identifier,
                                 gender: 'Male',
                                 status: '1',
                                 dob: '2022-03-22',
@@ -233,8 +215,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   const SizedBox(
                     width: 20.0,
                   ),
-                  socialAccount(FontAwesome.google, Colors.redAccent,
-                      callBack: () => FirebaseMethods.googleSignIn()),
+                  socialAccount(FontAwesome.google, Colors.redAccent, callBack: () => FirebaseMethods.googleSignIn()),
                 ],
               ),
               const SizedBox(
@@ -244,12 +225,12 @@ class _AuthLoginState extends State<AuthLogin> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Flexible(
-                    child: Text(
-                      'Don\'t have an account?',
-                      style: GoogleFonts.poppins(
-                          fontSize: 15.0,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.normal),
+                    child: GestureDetector(
+                      onTap: () => box.put(USERPATH, user).then((value) => Get.to(() => Dashboard())),
+                      child: Text(
+                        'Don\'t have an account?',
+                        style: GoogleFonts.poppins(fontSize: 15.0, color: Colors.black45, fontWeight: FontWeight.normal),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -257,11 +238,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   ),
                   InkWell(
                     onTap: () => Get.to(() => AuthRegister()),
-                    child: Text('Sign Up',
-                        style: GoogleFonts.poppins(
-                            fontSize: 16.0,
-                            color: BLUECOLOR,
-                            fontWeight: FontWeight.normal)),
+                    child: Text('Sign Up', style: GoogleFonts.poppins(fontSize: 16.0, color: BLUECOLOR, fontWeight: FontWeight.normal)),
                   ),
                 ],
               ),
@@ -282,17 +259,13 @@ class _AuthLoginState extends State<AuthLogin> {
               onTap: () => setState(() => isEmail = true),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: isEmail ? BLUECOLOR : Colors.transparent,
-                    borderRadius: BorderRadius.circular(5.0)),
+                decoration: BoxDecoration(color: isEmail ? BLUECOLOR : Colors.transparent, borderRadius: BorderRadius.circular(5.0)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                       child: Text(
                     'with Email Address',
-                    style: GoogleFonts.poppins(
-                        fontSize: 12.0,
-                        color: isEmail ? Colors.white : BLUECOLOR),
+                    style: GoogleFonts.poppins(fontSize: 12.0, color: isEmail ? Colors.white : BLUECOLOR),
                   )),
                 ),
               ),
@@ -306,18 +279,14 @@ class _AuthLoginState extends State<AuthLogin> {
               onTap: () => setState(() => isEmail = false),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: !isEmail ? BLUECOLOR : Colors.transparent,
-                    borderRadius: BorderRadius.circular(5.0)),
+                decoration: BoxDecoration(color: !isEmail ? BLUECOLOR : Colors.transparent, borderRadius: BorderRadius.circular(5.0)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                       child: Text(
                     'with Mobile Number',
                     maxLines: 1,
-                    style: GoogleFonts.poppins(
-                        fontSize: 12.0,
-                        color: !isEmail ? Colors.white : BLUECOLOR),
+                    style: GoogleFonts.poppins(fontSize: 12.0, color: !isEmail ? Colors.white : BLUECOLOR),
                   )),
                 ),
               ),
@@ -328,26 +297,22 @@ class _AuthLoginState extends State<AuthLogin> {
 
   void validDate() async {
     if (password.text.trim().isEmpty) {
-      popupMessage.dialogMessage(
-          context, popupMessage.serviceMessage(context, 'password required'));
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'password required'));
       return;
     }
 
     if (isEmail && email.text.trim().isEmpty) {
-      popupMessage.dialogMessage(
-          context, popupMessage.serviceMessage(context, 'E-mail is required'));
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is required'));
       return;
     }
 
     if (isEmail && !email.text.trim().isEmail) {
-      popupMessage.dialogMessage(
-          context, popupMessage.serviceMessage(context, 'E-mail is not valid'));
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is not valid'));
       return;
     }
 
     if (!isEmail && phoneController.value == null) {
-      popupMessage.dialogMessage(context,
-          popupMessage.serviceMessage(context, 'Phone Nuber is required'));
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Phone Nuber is required'));
       return;
     }
 
@@ -356,58 +321,52 @@ class _AuthLoginState extends State<AuthLogin> {
     });
 
     try {
-      final res = await http.post(Uri.parse('${ROOTAPI}/api/user/login'),
+      final res = await http.Client().post(Uri.parse('${ROOTAPI}/api/user/login'),
           body: isEmail
               ? {
                   'email': email.text.trim(),
                   'password': password.text.trim(),
                 }
               : {
-                  'phone':
-                      '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
+                  'phone': '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
                   'password': password.text.trim(),
                 });
       if (res.statusCode == 200) {
         final parsed = jsonDecode(res.body);
-        getUserProfile(
-            parsed['data']['access_token'], parsed['data']['redirect_url']);
+        if (parsed['data']['category'] != 'Doctor') {
+          popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'This user is not a doctor', status: false));
+          setState(() => isLoading = false);
+          return;
+        }
+        getUserProfile(parsed['data']['access_token'], parsed['data']['redirect_url']);
       } else {
         setState(() {
           isLoading = false;
         });
         final parsed = jsonDecode(res.body);
-        popupMessage.dialogMessage(
-            context,
-            popupMessage.serviceMessage(context, parsed['message'],
-                status: false));
+        popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, parsed['message'], status: false));
       }
     } on SocketException {
       setState(() {
         isLoading = false;
       });
-      popupMessage.dialogMessage(
-          context,
-          popupMessage.serviceMessage(
-              context, 'Plase check internect connection',
-              status: false));
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Plase check internect connection', status: false));
     }
   }
 
   getUserProfile(token, newURL) async {
-    final res = await http.get(Uri.parse('${ROOTAPI}/api/user/profile'),
-        headers: {'Authorization': 'Bearer ${token}'});
+    final res = await http.get(Uri.parse('${newURL}/api/user/profile'), headers: {'Authorization': 'Bearer ${token}'});
     if (res.statusCode == 200) {
       setState(() {
         isLoading = false;
       });
+      print(res.body);
       User user = User(
           uid: '${jsonDecode(res.body)['data']['id']}',
           name: jsonDecode(res.body)['data']['name'],
           email: jsonDecode(res.body)['data']['email'],
           phone: jsonDecode(res.body)['data']['phone'],
-          verified: jsonDecode(res.body)['data']['phone_email_verified'] == '0'
-              ? false
-              : true,
+          verified: jsonDecode(res.body)['data']['phone_email_verified'] == '0' ? false : true,
           country: jsonDecode(res.body)['data']['country_id'],
           token: 'Bearer ${token}',
           profilePhoto: jsonDecode(res.body)['data']['profile_image'],

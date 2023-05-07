@@ -213,7 +213,7 @@ class _EditPrescriptionState extends State<EditPrescription> {
   showPickerArray(BuildContext context) {
     Picker(
       adapter: PickerDataAdapter<String>(
-          pickerdata: JsonDecoder().convert(PickerData2), isArray: true),
+          pickerData: JsonDecoder().convert(PickerData2), isArray: true),
       hideHeader: false,
       title: new Text(
         "Select Days",

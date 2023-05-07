@@ -1,11 +1,16 @@
+import 'dart:convert';
 
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/alert_item.dart';
 import 'package:doctor/dialog/edit_prescription.dart';
 import 'package:doctor/dialog/subscribe.dart';
+import 'package:doctor/model/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
+import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class Prescription extends StatefulWidget {
   const Prescription({Key? key}) : super(key: key);
@@ -15,7 +20,29 @@ class Prescription extends StatefulWidget {
 }
 
 class _PrescriptionState extends State<Prescription> {
+  final box = Hive.box<User>(BoxName);
+  Map<String, dynamic> resultMap = {};
+  bool isPageLoading = true;
 
+  @override
+  void initState() {
+    getMyPrescription().then((value) {
+      setState(() {
+        isPageLoading = false;
+        resultMap = value;
+      });
+    });
+    super.initState();
+  }
+
+  Future<Map<String, dynamic>> getMyPrescription() async {
+    final response = await http.Client().get(Uri.parse('${ROOTNEWURL}/api/dashboard/prescriptions'), headers: {'Authorization': 'Bearer ${box.get(USERPATH)!.token}'});
+    print(response.body);
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    }
+    return {};
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +54,7 @@ class _PrescriptionState extends State<Prescription> {
             color: Color(0xFFf6f6f6),
             child: Column(children: [
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
                 width: MediaQuery.of(context).size.width,
                 color: BLUECOLOR,
                 child: Column(children: [
@@ -38,20 +64,14 @@ class _PrescriptionState extends State<Prescription> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                          onTap: () =>
-                              context.read<HomeController>().onBackPress(),
-                          child: Icon(Icons.arrow_back_ios,
-                              size: 18.0, color: Colors.white)),
-                      Text('My Prescriptions',
-                          style:
-                              getCustomFont(size: 16.0, color: Colors.white)),
+                      GestureDetector(onTap: () => context.read<HomeController>().onBackPress(), child: Icon(Icons.arrow_back_ios, size: 18.0, color: Colors.white)),
+                      Text('My Prescriptions', style: getCustomFont(size: 16.0, color: Colors.white)),
                       InkWell(
                         onTap: () {
                           context.read<HomeController>().setPage(-22);
                         },
                         child: Icon(
-                          Icons.notifications_active,
+                          null,
                           color: Colors.white,
                         ),
                       )
@@ -65,20 +85,12 @@ class _PrescriptionState extends State<Prescription> {
               const SizedBox(
                 height: 10.0,
               ),
-              Expanded(
-                  child: ListView.builder(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 0.0, vertical: 0.0),
-                          itemCount: 10,
-                          shrinkWrap: true,
-                          itemBuilder: ((context, index) =>
-                              prescriptionItem(context))))
+              Expanded(child: ListView.builder(padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0), itemCount: 10, shrinkWrap: true, itemBuilder: ((context, index) => prescriptionItem(context))))
             ])),
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: FloatingActionButton(
               tooltip: 'Add',
               child: Icon(
@@ -94,17 +106,12 @@ class _PrescriptionState extends State<Prescription> {
     );
   }
 
-  
-
   Widget prescriptionItem(context) {
     return Container(
         padding: const EdgeInsets.all(15.0),
-        margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            color: Colors.white,
-            boxShadow: SHADOW),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0), color: Colors.white, boxShadow: SHADOW),
         child: Column(
           children: [
             Row(
@@ -113,15 +120,11 @@ class _PrescriptionState extends State<Prescription> {
                 Flexible(
                     child: Text(
                   'Prescription 1',
-                  style: getCustomFont(
-                      size: 13.0, color: Colors.black, weight: FontWeight.w400),
+                  style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w400),
                 )),
                 Text(
                   '14 Mar 2022',
-                  style: getCustomFont(
-                      size: 13.0,
-                      color: Colors.black45,
-                      weight: FontWeight.w400),
+                  style: getCustomFont(size: 13.0, color: Colors.black45, weight: FontWeight.w400),
                 )
               ],
             ),
@@ -141,17 +144,11 @@ class _PrescriptionState extends State<Prescription> {
                     children: [
                       Text(
                         'Dr. Ruby Perrln',
-                        style: getCustomFont(
-                            color: Colors.black,
-                            size: 15.0,
-                            weight: FontWeight.w400),
+                        style: getCustomFont(color: Colors.black, size: 15.0, weight: FontWeight.w400),
                       ),
                       Text(
                         'Dental',
-                        style: getCustomFont(
-                            color: Colors.black54,
-                            size: 12.0,
-                            weight: FontWeight.w400),
+                        style: getCustomFont(color: Colors.black54, size: 12.0, weight: FontWeight.w400),
                       ),
                       const SizedBox(
                         height: 5.0,
@@ -159,21 +156,13 @@ class _PrescriptionState extends State<Prescription> {
                       Row(
                         children: [
                           Flexible(
-                            child: getButton(context, () => null,
-                                icon: Icons.download,
-                                text: 'Download',
-                                color: Colors.amberAccent),
+                            child: getButton(context, () => null, icon: Icons.download, text: 'Download', color: Colors.amberAccent),
                           ),
                           const SizedBox(
                             width: 10.0,
                           ),
                           Flexible(
-                            child: getButton(
-                                context,
-                                () => showRequestSheet(context, EditPrescription(true)),
-                                icon: Icons.edit_outlined,
-                                text: 'Edit',
-                                color: Colors.amberAccent),
+                            child: getButton(context, () => showRequestSheet(context, EditPrescription(true)), icon: Icons.edit_outlined, text: 'Edit', color: Colors.amberAccent),
                           ),
                           const SizedBox(
                             width: 10.0,
@@ -181,15 +170,9 @@ class _PrescriptionState extends State<Prescription> {
                           Flexible(
                             child: getButton(context, () {
                               showRequestSheet(context, ConfirmationDialog(() {
-                                 dialogMessage(
-                                  context,
-                                  serviceMessage(context, 'Prescription Deleted....',
-                                      status: true));
+                                dialogMessage(context, serviceMessage(context, 'Prescription Deleted....', status: true));
                               }));
-                            },
-                                icon: Icons.delete_outline,
-                                text: 'Delete',
-                                color: Colors.redAccent),
+                            }, icon: Icons.delete_outline, text: 'Delete', color: Colors.redAccent),
                           ),
                         ],
                       )
@@ -202,18 +185,12 @@ class _PrescriptionState extends State<Prescription> {
         ));
   }
 
-  Widget getButton(context, callBack,
-          {text = 'View',
-          icon = Icons.remove_red_eye,
-          color = Colors.lightBlueAccent}) =>
-      GestureDetector(
+  Widget getButton(context, callBack, {text = 'View', icon = Icons.remove_red_eye, color = Colors.lightBlueAccent}) => GestureDetector(
         onTap: () => callBack(),
         child: Container(
-          decoration: BoxDecoration(
-              color: color, borderRadius: BorderRadius.circular(50.0)),
+          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(50.0)),
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 14.0, vertical: 7.0),
+            padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 7.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -230,10 +207,7 @@ class _PrescriptionState extends State<Prescription> {
                     child: Text(
                       '$text',
                       maxLines: 1,
-                      style: getCustomFont(
-                          size: 11.0,
-                          color: Colors.white,
-                          weight: FontWeight.normal),
+                      style: getCustomFont(size: 11.0, color: Colors.white, weight: FontWeight.normal),
                     ),
                   ),
                 ),

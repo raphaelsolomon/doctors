@@ -34,7 +34,7 @@ class _MyReminderState extends State<MyReminder> {
                 color: BLUECOLOR,
                 child: Column(children: [
                   const SizedBox(
-                    height: 45.0,
+                    height: 40.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,16 +54,16 @@ class _MyReminderState extends State<MyReminder> {
                             color: Colors.white,
                             size: 18.0,
                           )),
-                      Text(counter == 0 ? 'Reminders' : 'Create Reminder',
-                          style:
-                              getCustomFont(size: 16.0, color: Colors.white)),
+                      Text(counter == 0 ? 'Reminders' : 'Create Reminder', style: getCustomFont(size: 16.0, color: Colors.white)),
                       Icon(
                         null,
                         color: Colors.white,
                       )
                     ],
                   ),
-                  const SizedBox(height: 15.0,)
+                  const SizedBox(
+                    height: 15.0,
+                  )
                 ]),
               ),
               Expanded(
@@ -74,14 +74,9 @@ class _MyReminderState extends State<MyReminder> {
                           itemBuilder: (ctx, i) {
                             return Container(
                               width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 4.0),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15.0, vertical: 10.0),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(2.0),
-                                  boxShadow: SHADOW),
+                              margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 4.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(2.0), boxShadow: SHADOW),
                               child: Row(
                                 children: [
                                   CircleAvatar(
@@ -99,28 +94,15 @@ class _MyReminderState extends State<MyReminder> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('Diabetes Pills',
-                                            style: getCustomFont(
-                                                size: 15.0,
-                                                weight: FontWeight.w500,
-                                                color: Colors.black)),
+                                        Text('Diabetes Pills', style: getCustomFont(size: 15.0, weight: FontWeight.w500, color: Colors.black)),
                                         const SizedBox(
                                           height: 4.0,
                                         ),
-                                        Text('Mon, Tue, Wed, Thurs, Sat, Sun',
-                                            style: getCustomFont(
-                                                size: 13.0,
-                                                weight: FontWeight.normal,
-                                                color: Colors.black45)),
-                                                const SizedBox(
+                                        Text('Mon, Tue, Wed, Thurs, Sat, Sun', style: getCustomFont(size: 13.0, weight: FontWeight.normal, color: Colors.black45)),
+                                        const SizedBox(
                                           height: 3.0,
                                         ),
-                                        Text(
-                                            '08: 00 am, 12:00 pm, 03:30 pm, 06:00 pm',
-                                            style: getCustomFont(
-                                                size: 12.0,
-                                                weight: FontWeight.w500,
-                                                color: Colors.black54))
+                                        Text('08: 00 am, 12:00 pm, 03:30 pm, 06:00 pm', style: getCustomFont(size: 12.0, weight: FontWeight.w500, color: Colors.black54))
                                       ],
                                     ),
                                   )
@@ -139,14 +121,10 @@ class _MyReminderState extends State<MyReminder> {
                               height: 20.0,
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
                               child: Text(
                                 'Select Days',
-                                style: getCustomFont(
-                                    size: 14.0,
-                                    color: Colors.black45,
-                                    weight: FontWeight.w500),
+                                style: getCustomFont(size: 14.0, color: Colors.black45, weight: FontWeight.w500),
                               ),
                             ),
                             const SizedBox(
@@ -157,14 +135,10 @@ class _MyReminderState extends State<MyReminder> {
                               height: 20.0,
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
                               child: Text(
                                 'Frequency',
-                                style: getCustomFont(
-                                    size: 14.0,
-                                    color: Colors.black45,
-                                    weight: FontWeight.w500),
+                                style: getCustomFont(size: 14.0, color: Colors.black45, weight: FontWeight.w500),
                               ),
                             ),
                             const SizedBox(
@@ -175,14 +149,10 @@ class _MyReminderState extends State<MyReminder> {
                               height: 20.0,
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
                               child: Text(
                                 'Select Times',
-                                style: getCustomFont(
-                                    size: 14.0,
-                                    color: Colors.black45,
-                                    weight: FontWeight.w500),
+                                style: getCustomFont(size: 14.0, color: Colors.black45, weight: FontWeight.w500),
                               ),
                             ),
                             const SizedBox(
@@ -193,20 +163,14 @@ class _MyReminderState extends State<MyReminder> {
                                 Flexible(child: getTimeForm()),
                                 GestureDetector(
                                   onTap: () async {
-                                    TimeOfDay? picked = await showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay.now());
+                                    TimeOfDay? picked = await showTimePicker(context: context, initialTime: TimeOfDay.now());
                                     print(formatTimeOfDay(picked!));
                                   },
                                   child: Container(
                                     height: 48.0,
                                     margin: const EdgeInsets.only(right: 15.0),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 13.0),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        color: BLUECOLOR.withOpacity(.3)),
+                                    padding: const EdgeInsets.symmetric(horizontal: 13.0),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0), color: BLUECOLOR.withOpacity(.3)),
                                     child: Icon(
                                       Icons.add,
                                       color: Colors.white,
@@ -215,11 +179,11 @@ class _MyReminderState extends State<MyReminder> {
                                 )
                               ],
                             ),
-                             const SizedBox(
+                            const SizedBox(
                               height: 40.0,
                             ),
                             getPayButton(context, () {}),
-                             const SizedBox(
+                            const SizedBox(
                               height: 20.0,
                             ),
                           ],
@@ -228,8 +192,7 @@ class _MyReminderState extends State<MyReminder> {
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: FloatingActionButton(
               tooltip: 'Add note',
               child: Icon(
@@ -254,9 +217,7 @@ class _MyReminderState extends State<MyReminder> {
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(horizontal: 15.0),
       height: 49.0,
-      decoration: BoxDecoration(
-          color: BLUECOLOR.withOpacity(.1),
-          borderRadius: BorderRadius.circular(5.0)),
+      decoration: BoxDecoration(color: BLUECOLOR.withOpacity(.1), borderRadius: BorderRadius.circular(5.0)),
       child: FormBuilderDropdown(
         name: 'skill',
         icon: const Icon(
@@ -264,23 +225,11 @@ class _MyReminderState extends State<MyReminder> {
           color: Colors.black,
         ),
         decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 9.9, vertical: 5.0),
-          border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide.none),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 9.9, vertical: 5.0),
+          border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(5.0)), borderSide: BorderSide.none),
         ),
         initialValue: 'Daily',
-        items: [
-          'Daily',
-          'Bi-Weekly',
-          'Weekly',
-          'Bi-Monthly',
-          'Monthly',
-          'Quarterly',
-          'Bi-Yearly',
-          'Yearly'
-        ]
+        items: ['Daily', 'Bi-Weekly', 'Weekly', 'Bi-Monthly', 'Monthly', 'Quarterly', 'Bi-Yearly', 'Yearly']
             .map((gender) => DropdownMenuItem(
                   value: gender,
                   child: Text(
@@ -301,23 +250,16 @@ class _MyReminderState extends State<MyReminder> {
         children: [
           Text(
             '$label',
-            style: getCustomFont(
-                size: 14.0, color: Colors.black45, weight: FontWeight.w500),
+            style: getCustomFont(size: 14.0, color: Colors.black45, weight: FontWeight.w500),
           ),
           const SizedBox(height: 10.0),
           Container(
             height: 48.0,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                color: BLUECOLOR.withOpacity(.1)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: BLUECOLOR.withOpacity(.1)),
             child: TextField(
               style: getCustomFont(size: 14.0, color: Colors.black45),
               maxLines: 1,
-              decoration: InputDecoration(
-                  hintText: hint,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  hintStyle: getCustomFont(size: 14.0, color: Colors.black45),
-                  border: OutlineInputBorder(borderSide: BorderSide.none)),
+              decoration: InputDecoration(hintText: hint, contentPadding: const EdgeInsets.symmetric(horizontal: 10.0), hintStyle: getCustomFont(size: 14.0, color: Colors.black45), border: OutlineInputBorder(borderSide: BorderSide.none)),
             ),
           )
         ],
@@ -327,8 +269,7 @@ class _MyReminderState extends State<MyReminder> {
 
   showPickerArray(BuildContext context) {
     Picker(
-      adapter: PickerDataAdapter<String>(
-          pickerdata: JsonDecoder().convert(PickerData2), isArray: true),
+      adapter: PickerDataAdapter<String>(pickerData: JsonDecoder().convert(PickerData2), isArray: true),
       hideHeader: false,
       title: new Text(
         "Select Days",
@@ -358,9 +299,7 @@ class _MyReminderState extends State<MyReminder> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Container(
           height: 48.0,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
-              color: BLUECOLOR.withOpacity(.1)),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: BLUECOLOR.withOpacity(.1)),
           child: Row(
             children: [
               const SizedBox(
@@ -376,8 +315,7 @@ class _MyReminderState extends State<MyReminder> {
               Flexible(
                   child: Text(
                 days.join(', '),
-                style: getCustomFont(
-                    size: 13.0, color: Colors.black, weight: FontWeight.w500),
+                style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),
               )),
             ],
           ),
@@ -391,9 +329,7 @@ class _MyReminderState extends State<MyReminder> {
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(
         height: 48.0,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0),
-            color: BLUECOLOR.withOpacity(.1)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: BLUECOLOR.withOpacity(.1)),
         child: Row(
           children: [
             const SizedBox(
@@ -409,8 +345,7 @@ class _MyReminderState extends State<MyReminder> {
             Flexible(
                 child: Text(
               days.join(', '),
-              style: getCustomFont(
-                  size: 13.0, color: Colors.black, weight: FontWeight.w500),
+              style: getCustomFont(size: 13.0, color: Colors.black, weight: FontWeight.w500),
             )),
           ],
         ),
@@ -431,13 +366,11 @@ class _MyReminderState extends State<MyReminder> {
           height: 45.0,
           margin: const EdgeInsets.symmetric(horizontal: 15.0),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              color: BLUECOLOR, borderRadius: BorderRadius.circular(50.0)),
+          decoration: BoxDecoration(color: BLUECOLOR, borderRadius: BorderRadius.circular(50.0)),
           child: Center(
             child: Text(
               'Submit',
-              style: getCustomFont(
-                  size: 15.0, color: Colors.white, weight: FontWeight.normal),
+              style: getCustomFont(size: 15.0, color: Colors.white, weight: FontWeight.normal),
             ),
           ),
         ),

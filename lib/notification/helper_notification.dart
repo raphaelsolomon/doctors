@@ -9,15 +9,13 @@ class HelperNotification {
 
   static Future<void> initialize() async {
     var androidInitializer = AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iosInitializer = IOSInitializationSettings();
-    var initializationSettings = InitializationSettings(
-        android: androidInitializer, iOS: iosInitializer);
+    var iosInitializer = DarwinInitializationSettings();
+    var initializationSettings = InitializationSettings(android: androidInitializer, iOS: iosInitializer);
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (payload) async {
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, onDidReceiveNotificationResponse: (payload) async {
       try {
-        if (payload != null && payload.isNotEmpty) {
-          onNotification.add(payload);
+        if (payload.payload != null) {
+          onNotification.add(payload.payload);
         }
       } catch (e) {
         print(e);
@@ -40,15 +38,12 @@ class HelperNotification {
           importance: Importance.max,
           enableVibration: true,
         ),
-        iOS: IOSNotificationDetails());
+        iOS: DarwinNotificationDetails());
   }
 
   static Future showNotification(FlutterLocalNotificationsPlugin plugin, {int id = 0, title, body, payload}) async {
     final largeIcon = await RequestApiServices.downloadFile('url', DateTime.now().toString());
-    final styleInformation = BigPictureStyleInformation(
-        FilePathAndroidBitmap(''),
-        largeIcon: FilePathAndroidBitmap(largeIcon));
-    plugin.show(id, title, body, await _notificationDetails(),
-        payload: payload);
+    final styleInformation = BigPictureStyleInformation(FilePathAndroidBitmap(''), largeIcon: FilePathAndroidBitmap(largeIcon));
+    plugin.show(id, title, body, await _notificationDetails(), payload: payload);
   }
 }

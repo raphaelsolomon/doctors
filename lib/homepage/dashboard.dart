@@ -4,9 +4,7 @@ import 'package:doctor/auth/profile_settings.dart';
 import 'package:doctor/callscreens/pickup/pick_layout.dart';
 import 'package:doctor/chat/chat_list.dart';
 import 'package:doctor/company/favourite.dart';
-import 'package:doctor/company/invoice_receipt.dart';
 import 'package:doctor/company/myoffer.dart';
-import 'package:doctor/company/myorder.dart';
 import 'package:doctor/company/myreferral.dart';
 import 'package:doctor/company/notification.dart';
 import 'package:doctor/company/notificationsetting.dart';
@@ -36,7 +34,6 @@ import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/resuable/custom_nav.dart';
 import 'package:doctor/resuable/form_widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -61,7 +58,6 @@ class _DashboardState extends State<Dashboard> {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       FirebaseMessaging.instance.getToken().then((value) => print(value));
       dialogMessage(context, subscribe(context));
-      createClient();
     });
     super.initState();
   }
@@ -74,6 +70,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    print(box.get(USERPATH)!.email);
     final page = context.watch<HomeController>().getPage;
     return KeyboardVisibilityBuilder(
         builder: (context, isVisible) => WillPopScope(
@@ -82,9 +79,7 @@ class _DashboardState extends State<Dashboard> {
                 user: box.get('details'),
                 scaffold: Scaffold(
                     key: scaffold,
-                    drawer: !removeBottom.contains(page)
-                        ? navDrawer(context, scaffold)
-                        : null,
+                    drawer: !removeBottom.contains(page) ? navDrawer(context, scaffold) : null,
                     backgroundColor: Colors.white,
                     body: Stack(children: [
                       _pages(page, scaffold),
@@ -99,30 +94,11 @@ class _DashboardState extends State<Dashboard> {
                     ])))));
   }
 
-  void createClient() async {
-    _client = await AgoraRtmClient.createInstance(APP_ID);
-    _client!.login(null, box.get(USERPATH)!.uid!);
-    _client!.onMessageReceived = (AgoraRtmMessage message, String peerId) {
-      logController.addLog("Private Message from $peerId: ${message.text}");
-    };
-    _client!.onConnectionStateChanged = (int state, int reason) {
-      if (kDebugMode) {
-        print('Connection state changed: $state, reason: $reason');
-      }
-      if (state == 5) {
-        _client!.logout();
-        if (kDebugMode) {
-          print('Logout.');
-        }
-      }
-    };
-  }
-
   Widget _pages(page, scaffold) {
     if (page == -24) {
       return Services();
     }
-     if (page == -23) {
+    if (page == -23) {
       return Specialization();
     }
     if (page == -22) {
@@ -168,7 +144,7 @@ class _DashboardState extends State<Dashboard> {
       return SocialMedia(scaffold);
     }
     if (page == -1) {
-      return ChatListScreen(scaffold, logController, _client);
+      return ChatListScreen(scaffold, logController);
     }
     if (page == 6) {
       return MyReminder();
