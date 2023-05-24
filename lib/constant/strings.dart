@@ -34,7 +34,7 @@ List<User> users = [
   //     status: 'Online',
   //     state: 1),
   User(
-      email: 'phoenixk54@gmail.com',
+      email: 'phoenixk545@gmail.com',
       name: 'Uchiha Madara',
       uid: 'phoenixk5weufuhieh',
       verified: true,

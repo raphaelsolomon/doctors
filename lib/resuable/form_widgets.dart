@@ -324,7 +324,7 @@ navDrawer(BuildContext context, scaffold) => Container(
                   ),
                   title: Text(
                     e.title,
-                    style: GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.black87.withOpacity(.7)),
+                    style: GoogleFonts.poppins(fontSize: 13.0, fontWeight: FontWeight.w400, color: Colors.black87.withOpacity(.7)),
                   ),
                   children: e.children.map((entries) {
                     return GestureDetector(

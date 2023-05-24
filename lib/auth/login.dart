@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:doctor/auth/register.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
 import 'package:doctor/model/person/user.dart';
 import 'package:doctor/resources/firebase_method.dart';
 import 'package:doctor/resuable/form_widgets.dart';
-import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -16,7 +14,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:linkedin_login/linkedin_login.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:http/http.dart' as http;
-import 'package:doctor/dialog/subscribe.dart' as popupMessage;
 
 class AuthLogin extends StatefulWidget {
   const AuthLogin({Key? key}) : super(key: key);
@@ -34,7 +31,7 @@ class _AuthLoginState extends State<AuthLogin> {
   final box = Hive.box<User>(BoxName);
   User user = User(
       uid: '8et7fugcsiahicsa',
-      name: 'phoenixk54',
+      name: 'phoenix king',
       email: 'phoenixk54@gmail.com',
       phone: '+2349067618740',
       country: '161',
@@ -189,17 +186,10 @@ class _AuthLoginState extends State<AuthLogin> {
                                 email: user.user.email!.elements!.first.handleDeep!.emailAddress,
                                 phone: '+2349067618740',
                                 verified: '1' == '0' ? false : true,
-                                country: 'Nigeria',
+                                country: '161',
                                 token: 'Bearer ${user.user.token.accessToken}',
                                 profilePhoto: user.user.profilePicture!.displayImageContent!.elements!.first.identifiers!.first.identifier,
-                                gender: 'Male',
-                                status: '1',
-                                dob: '2022-03-22',
-                                weight: '',
-                                height: '',
-                                age: '24',
-                                marital_status: 'Single',
-                                cat: '116');
+                                gender: 'Male');
 
                             box.put(USERPATH, person).then((value) => {Get.offAll(() => Dashboard())});
                             print(
@@ -296,62 +286,63 @@ class _AuthLoginState extends State<AuthLogin> {
       );
 
   void validDate() async {
-    if (password.text.trim().isEmpty) {
-      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'password required'));
-      return;
-    }
+    box.put(USERPATH, user).then((value) => Get.offAll(() => Dashboard()));
+    // if (password.text.trim().isEmpty) {
+    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'password required'));
+    //   return;
+    // }
 
-    if (isEmail && email.text.trim().isEmpty) {
-      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is required'));
-      return;
-    }
+    // if (isEmail && email.text.trim().isEmpty) {
+    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is required'));
+    //   return;
+    // }
 
-    if (isEmail && !email.text.trim().isEmail) {
-      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is not valid'));
-      return;
-    }
+    // if (isEmail && !email.text.trim().isEmail) {
+    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is not valid'));
+    //   return;
+    // }
 
-    if (!isEmail && phoneController.value == null) {
-      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Phone Nuber is required'));
-      return;
-    }
+    // if (!isEmail && phoneController.value == null) {
+    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Phone Nuber is required'));
+    //   return;
+    // }
 
-    setState(() {
-      isLoading = true;
-    });
+    // setState(() {
+    //   isLoading = true;
+    // });
 
-    try {
-      final res = await http.Client().post(Uri.parse('${ROOTAPI}/api/user/login'),
-          body: isEmail
-              ? {
-                  'email': email.text.trim(),
-                  'password': password.text.trim(),
-                }
-              : {
-                  'phone': '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
-                  'password': password.text.trim(),
-                });
-      if (res.statusCode == 200) {
-        final parsed = jsonDecode(res.body);
-        if (parsed['data']['category'] != 'Doctor') {
-          popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'This user is not a doctor', status: false));
-          setState(() => isLoading = false);
-          return;
-        }
-        getUserProfile(parsed['data']['access_token'], parsed['data']['redirect_url']);
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        final parsed = jsonDecode(res.body);
-        popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, parsed['message'], status: false));
-      }
-    } on SocketException {
-      setState(() {
-        isLoading = false;
-      });
-      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Plase check internect connection', status: false));
-    }
+    // try {
+    //   final res = await http.Client().post(Uri.parse('${ROOTAPI}/api/user/login'),
+    //       body: isEmail
+    //           ? {
+    //               'email': email.text.trim(),
+    //               'password': password.text.trim(),
+    //             }
+    //           : {
+    //               'phone': '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
+    //               'password': password.text.trim(),
+    //             });
+    //   if (res.statusCode == 200) {
+    //     final parsed = jsonDecode(res.body);
+    //     if (parsed['data']['category'] != 'Doctor') {
+    //       popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'This user is not a doctor', status: false));
+    //       setState(() => isLoading = false);
+    //       return;
+    //     }
+    //     getUserProfile(parsed['data']['access_token'], parsed['data']['redirect_url']);
+    //   } else {
+    //     setState(() {
+    //       isLoading = false;
+    //     });
+    //     final parsed = jsonDecode(res.body);
+    //     popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, parsed['message'], status: false));
+    //   }
+    // } on SocketException {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Plase check internect connection', status: false));
+    // }
   }
 
   getUserProfile(token, newURL) async {
@@ -360,7 +351,6 @@ class _AuthLoginState extends State<AuthLogin> {
       setState(() {
         isLoading = false;
       });
-      print(res.body);
       User user = User(
           uid: '${jsonDecode(res.body)['data']['id']}',
           name: jsonDecode(res.body)['data']['name'],
@@ -370,14 +360,7 @@ class _AuthLoginState extends State<AuthLogin> {
           country: jsonDecode(res.body)['data']['country_id'],
           token: 'Bearer ${token}',
           profilePhoto: jsonDecode(res.body)['data']['profile_image'],
-          gender: jsonDecode(res.body)['data']['gender'],
-          status: jsonDecode(res.body)['data']['status'],
-          dob: jsonDecode(res.body)['data']['dob'],
-          weight: jsonDecode(res.body)['data']['weight'],
-          height: jsonDecode(res.body)['data']['height'],
-          age: jsonDecode(res.body)['data']['age'],
-          marital_status: jsonDecode(res.body)['data']['marital_status'],
-          cat: jsonDecode(res.body)['data']['cat']);
+          gender: jsonDecode(res.body)['data']['gender']);
 
       box.put(USERPATH, user).then((value) => {Get.offAll(() => Dashboard())});
     }
