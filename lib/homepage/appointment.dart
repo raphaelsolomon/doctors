@@ -1,11 +1,11 @@
-import 'dart:convert';
-
 import 'package:doctor/constant/strings.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/model/appointment.model.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +19,7 @@ class MyAppointment extends StatefulWidget {
 class _MyAppointmentState extends State<MyAppointment> {
   List<String> headers = ['Appointments', 'Prescriptions', 'Medical Records', 'Billing'];
   final box = Hive.box<User>(BoxName);
-  Map<String, dynamic> resultMap = {};
+  late DoctorAppointment doctorAppointmentResult;
   bool isPageLoading = true;
 
   String index = 'Appointments';
@@ -29,19 +29,58 @@ class _MyAppointmentState extends State<MyAppointment> {
     getMyAppointment().then((value) {
       setState(() {
         isPageLoading = false;
-        resultMap = value;
+        doctorAppointmentResult = value;
       });
     });
     super.initState();
   }
 
-  Future<Map<String, dynamic>> getMyAppointment() async {
-    final response = await http.Client().get(Uri.parse('${ROOTNEWURL}/api/appointments'), headers: {'Authorization': 'Bearer ${box.get(USERPATH)!.token}'});
-    print(response.body);
+  Future<DoctorAppointment> getMyAppointment() async {
+    late DoctorAppointment doctorAppointment;
+    final response = await http.Client().get(Uri.parse('${ROOTAPI}/api/doctors/appointments'), headers: {'Authorization': '${box.get(USERPATH)!.token}'});
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      doctorAppointment = doctorAppointmentFromJson(response.body);
     }
-    return {};
+    return doctorAppointment;
+  }
+
+  Future<void> declineAppointment(id, AppointmentDatum data) async {
+    setState(() => data.setIsLoading(true));
+    final response = await http.Client().get(Uri.parse('${ROOTAPI}/api/appointments/4/decline'), headers: {'Authorization': '${box.get(USERPATH)!.token}'});
+    if (response.statusCode == 200) {
+      getMyAppointment().then((value) {
+        setState(() {
+          data.setIsLoading(false);
+          doctorAppointmentResult = value;
+        });
+      });
+    }
+  }
+
+  Future<void> acceptAppointment(id, AppointmentDatum data) async {
+    setState(() => data.setIsLoading(true));
+    final response = await http.Client().get(Uri.parse('${ROOTAPI}/api/appointments/4/accept'), headers: {'Authorization': '${box.get(USERPATH)!.token}'});
+    if (response.statusCode == 200) {
+      getMyAppointment().then((value) {
+        setState(() {
+          data.setIsLoading(false);
+          doctorAppointmentResult = value;
+        });
+      });
+    }
+  }
+
+  Future<void> scheduleAppointment(id, AppointmentDatum data) async {
+    setState(() => data.setIsLoading(true));
+    final response = await http.Client().get(Uri.parse('${ROOTAPI}/api/appointments/4/schedule'), headers: {'Authorization': '${box.get(USERPATH)!.token}'});
+    if (response.statusCode == 200) {
+      getMyAppointment().then((value) {
+        setState(() {
+          data.setIsLoading(false);
+          doctorAppointmentResult = value;
+        });
+      });
+    }
   }
 
   @override
@@ -87,7 +126,7 @@ class _MyAppointmentState extends State<MyAppointment> {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      children: List.generate(5, (index) => appointmentItem()),
+                      children: List.generate(doctorAppointmentResult.data.data.length, (i) => appointmentItem(doctorAppointmentResult.data.data[i])),
                     ),
                   )))
         ],
@@ -95,7 +134,7 @@ class _MyAppointmentState extends State<MyAppointment> {
     );
   }
 
-  Widget appointmentItem() {
+  Widget appointmentItem(AppointmentDatum data) {
     return Container(
         padding: const EdgeInsets.all(15.0),
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5.0),
@@ -109,13 +148,13 @@ class _MyAppointmentState extends State<MyAppointment> {
                 Flexible(
                     child: FittedBox(
                   child: Text(
-                    'Booking Date - 16 Mar 2022',
+                    'Booking Date - ${DateFormat('dd MMM yyyy').format(data.bookingDate)}',
                     maxLines: 1,
                     style: getCustomFont(size: 14.0, color: Colors.black, weight: FontWeight.w400),
                   ),
                 )),
                 Text(
-                  'dental',
+                  '${data.name}',
                   style: getCustomFont(size: 14.0, color: Colors.black45, weight: FontWeight.w400),
                 )
               ],
@@ -125,33 +164,42 @@ class _MyAppointmentState extends State<MyAppointment> {
               children: [
                 CircleAvatar(
                   radius: 30.0,
-                  backgroundImage: AssetImage('assets/imgs/1.png'),
+                  backgroundImage: NetworkImage(data.profilePicture ?? '', headers: {'Authorization': '${box.get(USERPATH)!.token}'}),
                 ),
                 const SizedBox(
                   width: 15.0,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Dr. Ruby Perrln',
-                      style: getCustomFont(color: Colors.black, size: 17.0, weight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 2.0,
-                    ),
-                    Text(
-                      'Appt Date - 22 Mar 2020, 4:30PM',
-                      style: getCustomFont(color: Colors.black54, size: 13.0, weight: FontWeight.w400),
-                    ),
-                    const SizedBox(
-                      height: 5.0,
-                    ),
-                    Text(
-                      '\$150.00',
-                      style: getCustomFont(color: Colors.black, size: 13.0, weight: FontWeight.w400),
-                    ),
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${data.legalname}',
+                        style: getCustomFont(color: Colors.black, size: 17.0, weight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 2.0,
+                      ),
+                      Text(
+                        'Appt Date -${DateFormat('dd MMM yyyy hh:mm a').format(data.appointmentDate)}',
+                        style: getCustomFont(color: Colors.black54, size: 13.0, weight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 2.0,
+                      ),
+                      Text(
+                        'Meeting Type -${data.meetingType}',
+                        style: getCustomFont(color: Colors.black54, size: 13.0, weight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Text(
+                        '\$${data.amount}',
+                        style: getCustomFont(color: Colors.black, size: 13.0, weight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -160,17 +208,23 @@ class _MyAppointmentState extends State<MyAppointment> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                getButton(context, () {}, icon: Icons.cancel, text: 'Decline', color: Colors.redAccent),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                getButton(context, () {}, icon: Icons.check, text: 'Confirm', color: Colors.lightGreen),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                getButton(context, () {}, icon: Icons.sync, text: 'Reschedule', color: Colors.orange),
-              ],
+              children: data.isLoading
+                  ? [CircularProgressIndicator()]
+                  : data.status == "Pending"
+                      ? [
+                          getButton(context, () => declineAppointment('id', data), icon: Icons.cancel, text: 'Decline', color: Colors.redAccent),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          getButton(context, () => acceptAppointment('id', data), icon: Icons.check, text: 'Confirm', color: Colors.lightGreen),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          getButton(context, () => scheduleAppointment('id', data), icon: Icons.sync, text: 'Reschedule', color: Colors.orange),
+                        ]
+                      : data.status == "declined"
+                          ? [Flexible(child: getButton(context, () => null, icon: Icons.cancel, text: 'Decline', color: Colors.grey))]
+                          : [Flexible(child: getButton(context, () => null, icon: Icons.check, text: 'Confirm', color: Colors.grey))],
             )
           ],
         ));

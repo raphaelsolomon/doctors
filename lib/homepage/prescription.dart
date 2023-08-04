@@ -4,7 +4,7 @@ import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/alert_item.dart';
 import 'package:doctor/dialog/edit_prescription.dart';
 import 'package:doctor/dialog/subscribe.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';

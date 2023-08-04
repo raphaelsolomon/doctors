@@ -1,6 +1,6 @@
 import 'package:doctor/callscreens/pickup/pick_layout.dart';
 import 'package:doctor/constant/strings.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/msg_log.dart';
 import 'package:doctor/resources/call_utilities.dart';
 import 'package:flutter/material.dart';

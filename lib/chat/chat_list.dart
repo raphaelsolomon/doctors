@@ -2,7 +2,7 @@ import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:agora_rtm/src/agora_rtm_client.dart';
 import 'package:doctor/chat/msg_screen.dart';
 import 'package:doctor/constant/strings.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/msg_log.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

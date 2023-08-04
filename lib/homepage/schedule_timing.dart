@@ -1,11 +1,15 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/model/scheduleModel.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
+import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class ScheduleTiming extends StatefulWidget {
   const ScheduleTiming({super.key});
@@ -17,6 +21,7 @@ class ScheduleTiming extends StatefulWidget {
 class _ScheduleTimingState extends State<ScheduleTiming> {
   List<ScheduleModel> scheduleModel = [];
   int index = 0;
+  final box = Hive.box<User>(BoxName);
   final controller = DatePickerController();
   DateTime current = new DateTime.now();
 
@@ -200,12 +205,15 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
                                 width: 20.0,
                               ),
                               Flexible(
-                                  child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                decoration: BoxDecoration(color: BLUECOLOR, borderRadius: BorderRadius.circular(7.0)),
-                                child: Center(
-                                  child: Text('Save Schedule', style: getCustomFont(size: 13.0, color: Colors.white)),
+                                  child: GestureDetector(
+                                onTap: () => execute(scheduleModel),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                  decoration: BoxDecoration(color: BLUECOLOR, borderRadius: BorderRadius.circular(7.0)),
+                                  child: Center(
+                                    child: Text('Save Schedule', style: getCustomFont(size: 13.0, color: Colors.white)),
+                                  ),
                                 ),
                               ))
                             ]),
@@ -482,5 +490,14 @@ class _ScheduleTimingState extends State<ScheduleTiming> {
     final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
     final format = DateFormat.jm(); //"6:00 AM"
     return format.format(dt);
+  }
+
+  Future<void> execute(List<ScheduleModel> scheduleModel) async {
+    Future.forEach(scheduleModel, (ScheduleModel element) async {
+      final response = await http.Client().post(Uri.parse('${ROOTAPI}/api/doctors/schedules'), body: {
+        "date": element.scheduleData.keys.first
+      }, headers: {'Authorization': '${box.get(USERPATH)!.token}'});
+      if (response.statusCode == 200) {}
+    });
   }
 }

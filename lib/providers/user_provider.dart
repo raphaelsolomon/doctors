@@ -1,6 +1,5 @@
-
 import 'package:doctor/model/call.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider with ChangeNotifier {

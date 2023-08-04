@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/callscreens/pickup/pickup_screen.dart';
 import 'package:doctor/model/call.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/resources/call_methods.dart';
 import 'package:flutter/material.dart';
 

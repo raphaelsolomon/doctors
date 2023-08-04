@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:doctor/constant/strings.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/resuable/form_widgets.dart';
 import 'package:doctor/services/request.dart';
@@ -9,8 +10,6 @@ import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-
-import '../model/person/user.dart';
 
 class MyPatients extends StatefulWidget {
   const MyPatients({super.key});

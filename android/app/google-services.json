@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "898273018789-5o4bld1ge18roj434kl3pdn655v0nff7.apps.googleusercontent.com",
+              "client_id": "898273018789-1v05fb4e4ui3ugq5l3la0u6inlke32d2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.gettheskydoctors.merchant"
+                "bundle_id": "com.gettheskydoctors.doctor"
               }
             }
           ]
@@ -67,10 +67,10 @@
               "client_type": 3
             },
             {
-              "client_id": "898273018789-5o4bld1ge18roj434kl3pdn655v0nff7.apps.googleusercontent.com",
+              "client_id": "898273018789-1v05fb4e4ui3ugq5l3la0u6inlke32d2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.gettheskydoctors.merchant"
+                "bundle_id": "com.gettheskydoctors.doctor"
               }
             }
           ]
@@ -111,10 +111,10 @@
               "client_type": 3
             },
             {
-              "client_id": "898273018789-5o4bld1ge18roj434kl3pdn655v0nff7.apps.googleusercontent.com",
+              "client_id": "898273018789-1v05fb4e4ui3ugq5l3la0u6inlke32d2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.gettheskydoctors.merchant"
+                "bundle_id": "com.gettheskydoctors.doctor"
               }
             }
           ]

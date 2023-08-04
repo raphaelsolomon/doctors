@@ -28,7 +28,7 @@ import 'package:doctor/homepage/reminder.dart';
 import 'package:doctor/homepage/schedule_timing.dart';
 import 'package:doctor/homepage/services.dart';
 import 'package:doctor/homepage/specialization.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/msg_log.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/resuable/custom_nav.dart';

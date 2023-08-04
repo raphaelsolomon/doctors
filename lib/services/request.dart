@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 const String ROOTAPI = 'https://api.gettheskydoctors.com';
-const String ROOTNEWURL = 'https://docapi.gettheskydoctors.com';
+const String ROOTNEWURL = 'https://api.gettheskydoctors.com';
 
 class RequestApiServices {
   String GOOGLEAPI = 'https://fcm.googleapis.com/fcm/send';

@@ -1,19 +1,25 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:doctor/auth/stage_two.dart';
+import 'package:doctor/model/login.model.dart';
+import 'package:doctor/person/user.dart';
+import 'package:doctor/resources/firebase_method.dart';
+import 'package:doctor/auth/forgotpass.dart';
 import 'package:doctor/auth/register.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
-import 'package:doctor/model/person/user.dart';
-import 'package:doctor/resources/firebase_method.dart';
 import 'package:doctor/resuable/form_widgets.dart';
+import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';
+import 'package:linkedin_login/linkedin_login.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:linkedin_login/linkedin_login.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:http/http.dart' as http;
+import 'package:doctor/dialog/subscribe.dart' as popupMessage;
 
 class AuthLogin extends StatefulWidget {
   const AuthLogin({Key? key}) : super(key: key);
@@ -29,16 +35,7 @@ class _AuthLoginState extends State<AuthLogin> {
   final email = TextEditingController();
   final password = TextEditingController();
   final box = Hive.box<User>(BoxName);
-  User user = User(
-      uid: '8et7fugcsiahicsa',
-      name: 'phoenix king',
-      email: 'phoenixk54@gmail.com',
-      phone: '+2349067618740',
-      country: '161',
-      token: 'Bearer ',
-      profilePhoto: 'https://cdn.britannica.com/52/219152-050-D500476A/Chinese-film-actor-Jet-Li-2008.jpg',
-      verified: true,
-      dob: '10-04-1998');
+  //final refbox = Hive.box(ReferralBox);
 
   @override
   void initState() {
@@ -70,7 +67,12 @@ class _AuthLoginState extends State<AuthLogin> {
               const SizedBox(
                 height: 50.0,
               ),
-              Image.asset('assets/auth/2.jpeg', repeat: ImageRepeat.noRepeat, fit: BoxFit.contain),
+              Image.asset(
+                'assets/auth/2.jpeg',
+                repeat: ImageRepeat.noRepeat,
+                fit: BoxFit.cover,
+                height: 250,
+              ),
               const SizedBox(
                 height: 40.0,
               ),
@@ -114,8 +116,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: InkWell(
-                      //onTap: () => Get.to(() => AuthForgotPass()),
-                      onTap: () => Get.to(() => Dashboard()),
+                      onTap: () => Get.to(() => AuthForgotPass()),
                       child: Text(
                         'Forgotten Password?',
                         style: GoogleFonts.poppins(fontSize: 14.5, color: Colors.black54),
@@ -180,18 +181,6 @@ class _AuthLoginState extends State<AuthLogin> {
                             ProjectionParameters.profilePicture,
                           ],
                           onGetUserProfile: (user) {
-                            User person = User(
-                                uid: '${1134}',
-                                name: '${user.user.firstName!.localized!.label} ${user.user.lastName!.localized!.label}',
-                                email: user.user.email!.elements!.first.handleDeep!.emailAddress,
-                                phone: '+2349067618740',
-                                verified: '1' == '0' ? false : true,
-                                country: '161',
-                                token: 'Bearer ${user.user.token.accessToken}',
-                                profilePhoto: user.user.profilePicture!.displayImageContent!.elements!.first.identifiers!.first.identifier,
-                                gender: 'Male');
-
-                            box.put(USERPATH, person).then((value) => {Get.offAll(() => Dashboard())});
                             print(
                                 '${user.user.token.accessToken} - ${user.user.firstName!.localized!.label} - ${user.user.lastName!.localized!.label} - ${user.user.profilePicture!.displayImageContent!.elements!.first.identifiers!.first.identifier} - ${user.user.userId} - ${user.user.email!.elements!.first.handleDeep!.emailAddress}');
                             Get.offAll(() => Dashboard());
@@ -216,7 +205,6 @@ class _AuthLoginState extends State<AuthLogin> {
                 children: [
                   Flexible(
                     child: GestureDetector(
-                      onTap: () => box.put(USERPATH, user).then((value) => Get.to(() => Dashboard())),
                       child: Text(
                         'Don\'t have an account?',
                         style: GoogleFonts.poppins(fontSize: 15.0, color: Colors.black45, fontWeight: FontWeight.normal),
@@ -286,83 +274,101 @@ class _AuthLoginState extends State<AuthLogin> {
       );
 
   void validDate() async {
-    box.put(USERPATH, user).then((value) => Get.offAll(() => Dashboard()));
-    // if (password.text.trim().isEmpty) {
-    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'password required'));
-    //   return;
-    // }
+    if (password.text.trim().isEmpty) {
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'password required'));
+      return;
+    }
 
-    // if (isEmail && email.text.trim().isEmpty) {
-    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is required'));
-    //   return;
-    // }
+    if (isEmail && email.text.trim().isEmpty) {
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is required'));
+      return;
+    }
 
-    // if (isEmail && !email.text.trim().isEmail) {
-    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is not valid'));
-    //   return;
-    // }
+    if (isEmail && !email.text.trim().isEmail) {
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'E-mail is not valid'));
+      return;
+    }
 
-    // if (!isEmail && phoneController.value == null) {
-    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Phone Nuber is required'));
-    //   return;
-    // }
+    if (!isEmail && phoneController.value == null) {
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Phone Nuber is required'));
+      return;
+    }
 
-    // setState(() {
-    //   isLoading = true;
-    // });
+    setState(() {
+      isLoading = true;
+    });
 
-    // try {
-    //   final res = await http.Client().post(Uri.parse('${ROOTAPI}/api/user/login'),
-    //       body: isEmail
-    //           ? {
-    //               'email': email.text.trim(),
-    //               'password': password.text.trim(),
-    //             }
-    //           : {
-    //               'phone': '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
-    //               'password': password.text.trim(),
-    //             });
-    //   if (res.statusCode == 200) {
-    //     final parsed = jsonDecode(res.body);
-    //     if (parsed['data']['category'] != 'Doctor') {
-    //       popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'This user is not a doctor', status: false));
-    //       setState(() => isLoading = false);
-    //       return;
-    //     }
-    //     getUserProfile(parsed['data']['access_token'], parsed['data']['redirect_url']);
-    //   } else {
-    //     setState(() {
-    //       isLoading = false;
-    //     });
-    //     final parsed = jsonDecode(res.body);
-    //     popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, parsed['message'], status: false));
-    //   }
-    // } on SocketException {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    //   popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Plase check internect connection', status: false));
-    // }
-  }
-
-  getUserProfile(token, newURL) async {
-    final res = await http.get(Uri.parse('${newURL}/api/user/profile'), headers: {'Authorization': 'Bearer ${token}'});
-    if (res.statusCode == 200) {
+    try {
+      final res = await http.post(Uri.parse('${ROOTAPI}/api/v1/login'),
+          body: isEmail
+              ? {
+                  'email': email.text.trim(),
+                  'password': password.text.trim(),
+                }
+              : {
+                  'phone_number': '+${phoneController.value!.countryCode}${phoneController.value!.nsn}',
+                  'password': password.text.trim(),
+                });
+      if (res.statusCode == 200) {
+        final parsed = jsonDecode(res.body);
+        debugPrint('${parsed['data']['doctor']['id']}');
+        User user = User(
+            uid: '${parsed['data']['id']}',
+            name: '${parsed['data']['first_name']} ${parsed['data']['last_name']}',
+            email: parsed['data']['email'],
+            phone: parsed['data']['phone'] ?? '',
+            country: parsed['data']['country_id'] ?? '',
+            token: 'Bearer ${parsed['data']['token']}',
+            profilePhoto: parsed['data']['profile_image'] ?? '',
+            verified: parsed['data']['is_verified'] == '1',
+            dob: parsed['data']['dob'] ?? '',
+            city: parsed['data']['city_id'] ?? '',
+            state: parsed['data']['state_id_id'] ?? '',
+            address: parsed['data']['address'] ?? '',
+            user_type: parsed['data']['user_type'],
+            google_id: parsed['data']['google_id'] ?? '',
+            facebook_id: parsed['data']['facebook_id'] ?? '',
+            created_at: parsed['data']['created_at'] ?? '',
+            weight: parsed['data']['weight'] ?? '',
+            height: parsed['data']['height'] ?? '',
+            bloodgroup: '',
+            zip_code: '',
+            doctor: DoctorHive.fromJson(parsed['data']['doctor']).toJson(),
+            onboarded: parsed['data']['onboarded'] == "0" ? false : true);
+        if (parsed['data']['onboarded'] == "0") {
+          box.put(USERPATH, user).then((value) => Get.offAll(() => CompleteRegistration('Bearer ${parsed['data']['token']}')));
+        } else
+          box.put(USERPATH, user).then((value) => Get.offAll(() => Dashboard()));
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        final parsed = jsonDecode(res.body);
+        popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, parsed['message'], status: false));
+      }
+    } on SocketException {
       setState(() {
         isLoading = false;
       });
-      User user = User(
-          uid: '${jsonDecode(res.body)['data']['id']}',
-          name: jsonDecode(res.body)['data']['name'],
-          email: jsonDecode(res.body)['data']['email'],
-          phone: jsonDecode(res.body)['data']['phone'],
-          verified: jsonDecode(res.body)['data']['phone_email_verified'] == '0' ? false : true,
-          country: jsonDecode(res.body)['data']['country_id'],
-          token: 'Bearer ${token}',
-          profilePhoto: jsonDecode(res.body)['data']['profile_image'],
-          gender: jsonDecode(res.body)['data']['gender']);
-
-      box.put(USERPATH, user).then((value) => {Get.offAll(() => Dashboard())});
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Please check internect connection', status: false));
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
+
+  // getReferral(token) async {
+  //   var request = http.Request('GET', Uri.parse('${ROOTAPI}/api/v1/auth/patient/referral/code'));
+  //   request.headers.addAll({'Authorization': 'Bearer ' + token});
+  //   http.StreamedResponse response = await request.send();
+  //   if (response.statusCode == 200) {
+  //     response.stream.bytesToString().then((value) {
+  //       final ref = ReferralModel.fromJson(jsonDecode(value));
+  //       refbox.put(USERPATH, jsonEncode(ref.toJson())).then((value) => Get.offAll(() => DashBoard()));
+  //     });
+  //   } else {
+  //     popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, response.reasonPhrase, status: false));
+  //   }
+  // }
 }

@@ -1,8 +1,16 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:doctor/constant/strings.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/model/doctor.model.dart';
+import 'package:doctor/model/login.model.dart';
+import 'package:doctor/model/state.model.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/services/request.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hive/hive.dart';
@@ -11,6 +19,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:provider/provider.dart';
+import 'package:doctor/dialog/subscribe.dart' as popupMessage;
 
 class ProfileSettings extends StatefulWidget {
   const ProfileSettings({Key? key}) : super(key: key);
@@ -27,9 +36,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   var selectedDate = DateTime.now();
   String index = 'Basic Info';
   String pricing = 'Free';
-  List membership = [];
   List regList = [];
-  List<String> headers = ['Basic Info', 'About Me', 'Hospital/Clinic Info', 'Contact Details', 'Education & Experience', 'Awards & Memberships', 'Registration'];
+  Uint8List? encodeedImage;
+  String fetchOnlineImage = '';
+  String fetchOnlineDocument = '';
+  StateCityModel? stateCityModel;
+  List<String> headers = ['Basic Info', 'About Me', 'Hospital/Clinic Info', 'Contact Details', 'Education & Experience', 'Awards & Memberships'];
 
   //============================Basic information =================
   bool isBasicInfoLoading = false;
@@ -67,18 +79,74 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     {'award': TextEditingController(), 'year': DateTime.now()}
   ];
 
+  //===========================Membership==================
+  bool isMembershipInfoLoading = false;
+  List<Map<String, dynamic>> membership = [
+    {'membership_name': TextEditingController()}
+  ];
+
+  //==============================PAge Loading========================
+  bool isPageLoading = true;
+  StateData? stateData;
+  City? city;
+  DoctorProfile? doctorProfile;
+
   @override
   void initState() {
     user = box.get(USERPATH)!;
-    isImage = user.profilePhoto == null ? false : true;
-    firstname.text = user.name!.split(' ')[0];
-    lastname.text = user.name!.split(' ').length > 1 ? user.name!.split(' ')[1] : '';
-    email.text = user.email!;
-    phone_controller = PhoneController(PhoneNumber(isoCode: IsoCode.NG, nsn: user.phone!));
-    gender = user.gender == null ? 'Male' : 'Female';
-    dob = user.dob == null ? DateTime(1980) : DateTime.parse(user.dob!);
-
+    getMyProfile()
+        .then((value) => setState(() {
+              doctorProfile = value;
+              firstname.text = user.name!.split(' ')[0];
+              lastname.text = user.name!.split(' ').length > 1 ? user.name!.split(' ')[1] : '';
+              email.text = doctorProfile!.data.primaryEmail;
+              phone_controller = PhoneController(PhoneNumber(isoCode: "NG", nsn: user.phone!));
+              gender = doctorProfile!.data.gender == "male" ? 'Male' : 'Female';
+              isPageLoading = false;
+              aboutMeController.text = doctorProfile!.data.about;
+              dob = (doctorProfile!.data.dob);
+            }))
+        .whenComplete(() async {
+      fetchOnlineImage = await networkImageToBase64(doctorProfile!.data.displayPicPath);
+      fetchOnlineDocument = await networkImageToBase64(doctorProfile!.data.documentPath);
+    });
     super.initState();
+  }
+
+  Future<String> networkImageToBase64(String url) async {
+    http.Response response = await http.get(Uri.parse(url));
+    final bytes = response.bodyBytes;
+    return base64.encode(bytes);
+  }
+
+  Future<StateCityModel> getAllState() async {
+    late StateCityModel stateModel;
+    try {
+      final res = await http.Client().get(Uri.parse('${ROOTAPI}/api/states/3/cities'), headers: {"Authorization": box.get(USERPATH)!.token!});
+      if (res.statusCode == 200) {
+        stateModel = stateCityModelFromJson(res.body);
+      }
+    } catch (e) {
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '$e', status: false));
+    } finally {
+      isPageLoading = false;
+    }
+    return stateModel;
+  }
+
+  Future<DoctorProfile> getMyProfile() async {
+    late DoctorProfile doctorProfile;
+    try {
+      final res = await http.Client().get(Uri.parse('${ROOTAPI}/api/doctors/${box.get(USERPATH)!.doctor!['id']}'), headers: {"Authorization": box.get(USERPATH)!.token!});
+      if (res.statusCode == 200) {
+        doctorProfile = doctorProfileFromJson(res.body);
+      }
+    } catch (e) {
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '$e', status: false));
+    } finally {
+      isPageLoading = false;
+    }
+    return doctorProfile;
   }
 
   @override
@@ -88,7 +156,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     aboutMeController.dispose();
     phone_controller.dispose();
     lastname.dispose();
-
     clinicAddress.dispose();
     clinicAddress.dispose();
     clinicPhoneNumber.dispose();
@@ -101,55 +168,56 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         color: Color(0xFFf6f6f6),
-        child: Column(children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
-            width: MediaQuery.of(context).size.width,
-            color: BLUECOLOR,
-            child: Column(children: [
-              const SizedBox(
-                height: 45.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(onTap: () => context.read<HomeController>().onBackPress(), child: Icon(Icons.arrow_back_ios, size: 18.0, color: Colors.white)),
-                  Text('Profile Settings', style: getCustomFont(size: 16.0, color: Colors.white)),
-                  Icon(
-                    null,
-                    color: Colors.white,
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15.0,
-              )
-            ]),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [...headers.map((e) => _dashList(e)).toList()],
-              ),
-            ),
-          ),
-          Expanded(
-              child: index == 'Basic Info'
-                  ? basicInfo()
-                  : index == 'About Me'
-                      ? aboutMe()
-                      : index == 'Hospital/Clinic Info'
-                          ? clinicInfo()
-                          : index == 'Contact Details'
-                              ? addressInfo()
-                              : index == 'Education & Experience'
-                                  ? educationExperience()
-                                  : index == 'Awards & Memberships'
-                                      ? awardAndMemberShip()
-                                      : registration())
-        ]));
+        child: isPageLoading
+            ? Center(child: CircularProgressIndicator.adaptive())
+            : Column(children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+                  width: MediaQuery.of(context).size.width,
+                  color: BLUECOLOR,
+                  child: Column(children: [
+                    const SizedBox(
+                      height: 45.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(onTap: () => context.read<HomeController>().onBackPress(), child: Icon(Icons.arrow_back_ios, size: 18.0, color: Colors.white)),
+                        Text('Profile Settings', style: getCustomFont(size: 16.0, color: Colors.white)),
+                        Icon(
+                          null,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15.0,
+                    )
+                  ]),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [...headers.map((e) => _dashList(e)).toList()],
+                    ),
+                  ),
+                ),
+                Expanded(
+                    child: index == 'Basic Info'
+                        ? basicInfo()
+                        : index == 'About Me'
+                            ? aboutMe()
+                            : index == 'Hospital/Clinic Info'
+                                ? clinicInfo()
+                                : index == 'Contact Details'
+                                    ? addressInfo()
+                                    : index == 'Education & Experience'
+                                        ? educationExperience()
+                                        : awardAndMemberShip())
+                // registration())
+              ]));
   }
 
   Widget _dashList(e) => GestureDetector(
@@ -164,7 +232,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             )),
       );
 
-  getCardForm(label, hint, {ctl, index, isList = false, items, max = 1, type = TextInputType.text}) {
+  getCardForm(label, hint, {ctl, index, isList = false, items, max = 1, type = TextInputType.text, isReadOnly = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -197,12 +265,17 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         ),
         Container(
           height: 45.0,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0), border: Border.all(color: Colors.grey.shade200), color: Colors.transparent),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: Colors.grey.shade200),
+            color: isReadOnly ? Colors.grey.shade300 : Colors.transparent,
+          ),
           child: TextField(
             style: getCustomFont(size: 14.0, color: Colors.black45),
             controller: ctl,
             maxLines: max,
             keyboardType: type,
+            readOnly: isReadOnly,
             decoration: InputDecoration(hintText: hint, contentPadding: const EdgeInsets.symmetric(horizontal: 10.0), hintStyle: getCustomFont(size: 14.0, color: Colors.black45), border: OutlineInputBorder(borderSide: BorderSide.none)),
           ),
         ),
@@ -235,7 +308,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     );
   }
 
-  getDropDownAssurance(label, hint, context, callBack) {
+  getDropDownAssurance(label, hint, context, callBack, List<String> list) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -257,13 +330,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               color: Colors.black,
             ),
             decoration: InputDecoration(
-              hintText: 'Male',
+              hintText: '$hint',
               hintStyle: getCustomFont(size: 13.0, color: Colors.black45),
               contentPadding: const EdgeInsets.symmetric(horizontal: 9.9, vertical: 5.0),
               border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(5.0)), borderSide: BorderSide.none),
             ),
             onChanged: (value) => callBack(value),
-            items: ['Male', 'Female', 'Rather Not Say']
+            items: list
                 .map((gender) => DropdownMenuItem(
                       value: gender,
                       child: Text(
@@ -272,6 +345,78 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       ),
                     ))
                 .toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  getDropDownState(label, hint, context, callBack, List<StateData> list) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$label',
+          style: getCustomFont(size: 13.0, color: Colors.black54, weight: FontWeight.normal),
+        ),
+        const SizedBox(
+          height: 5.0,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 45.0,
+          decoration: BoxDecoration(color: Colors.transparent, border: Border.all(color: Colors.grey.shade200), borderRadius: BorderRadius.circular(8.0)),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton2<StateData>(
+              hint: Text('$hint', style: getCustomFont(size: 13.0, color: Colors.black45)),
+              value: stateData,
+              onChanged: (StateData? value) => callBack(value),
+              items: list
+                  .map((stateData) => DropdownMenuItem<StateData>(
+                        value: stateData,
+                        child: Text(
+                          stateData.name,
+                          style: getCustomFont(size: 13.0, color: Colors.black45),
+                        ),
+                      ))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  getDropDownCity(label, hint, context, callBack, List<City> list) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$label',
+          style: getCustomFont(size: 13.0, color: Colors.black54, weight: FontWeight.normal),
+        ),
+        const SizedBox(
+          height: 5.0,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 45.0,
+          decoration: BoxDecoration(color: Colors.transparent, border: Border.all(color: Colors.grey.shade200), borderRadius: BorderRadius.circular(8.0)),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton2(
+              hint: Text('$hint', style: getCustomFont(size: 13.0, color: Colors.black45)),
+              value: city,
+              onChanged: (value) => callBack(value),
+              items: list
+                  .map((city) => DropdownMenuItem<City>(
+                        value: city,
+                        child: Text(
+                          city.name,
+                          style: getCustomFont(size: 13.0, color: Colors.black45),
+                        ),
+                      ))
+                  .toList(),
+            ),
           ),
         ),
       ],
@@ -369,7 +514,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     child: CircleAvatar(
                       radius: 60.0,
                       backgroundColor: Colors.grey,
-                      backgroundImage: AssetImage('assets/imgs/1.png'),
+                      backgroundImage: NetworkImage(doctorProfile!.data.displayPicPath),
                     ),
                   ),
                   Align(
@@ -379,6 +524,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       child: GestureDetector(
                         onTap: () async {
                           final image = await ImagePicker.platform.getImage(source: ImageSource.gallery);
+                          this.isImage = true;
+                          encodeedImage = await File(image!.path).readAsBytesSync();
                         },
                         child: Container(
                           decoration: BoxDecoration(color: BLUECOLOR, borderRadius: BorderRadius.circular(100.0)),
@@ -399,11 +546,11 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             const SizedBox(
               height: 20.0,
             ),
-            getCardForm('First Name', 'John', ctl: firstname),
+            getCardForm('First Name', 'John', ctl: firstname, isReadOnly: true),
             const SizedBox(
               height: 15.0,
             ),
-            getCardForm('Last Name', 'Doe', ctl: lastname),
+            getCardForm('Last Name', 'Doe', ctl: lastname, isReadOnly: true),
             const SizedBox(
               height: 15.0,
             ),
@@ -417,7 +564,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             ),
             getDropDownAssurance('Gender', gender, context, (value) {
               gender = gender;
-            }),
+            }, ['Male', 'Female', 'Rathe not say']),
             const SizedBox(
               height: 15.0,
             ),
@@ -441,29 +588,44 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     setState(() {
       isBasicInfoLoading = true;
     });
+
+    var body = {
+      "city_id": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).cityId,
+      "state_id": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).stateId,
+      "document_type_id": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).documentTypeId,
+      'primary_email': '${email.text.trim()}',
+      'gender': '${gender}'.toLowerCase(),
+      'dob': '${DateFormat('yyyy-MM-dd').format(dob)}',
+      "about": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).about,
+      "specialization": jsonEncode(DoctorHive.fromJson(box.get(USERPATH)!.doctor!).specialization),
+      "display_pic": isImage ? base64.encode(encodeedImage!) : fetchOnlineImage,
+      "reg_no": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).regNo,
+      "document": fetchOnlineDocument,
+      "address": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).address
+    };
+
     try {
-      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/profile/update-basic-info'), body: {
-        'fname': '${firstname.text.trim()}',
-        'lname': '${lastname.text.trim()}',
-        'phone': '+${phone_controller.value!.countryCode} ${phone_controller.value!.nsn}',
-        'email': '${email.text.trim()}',
-        'gender': '${gender}',
-        'dob': '${DateFormat('yyyy-MM-dd').format(dob)}'
-      }, headers: {
-        'Authorization': 'Bearer ${user.token}'
-      });
-      print(response.body);
-      if (response.statusCode == 200) {
-        print(response.body);
+      var response = await http.Client().put(Uri.parse('${ROOTNEWURL}/api/doctors/'), body: body, headers: {'Authorization': box.get(USERPATH)!.token!});
+      print(response.statusCode);
+      if (response.statusCode == 201) {
+        final parsed = jsonDecode(response.body);
+        popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${parsed['message']}', status: true));
       } else {
-        print(response.reasonPhrase);
+        popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${response.body}', status: false));
       }
     } catch (e) {
-      print(e);
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${e}', status: false));
     } finally {
-      setState(() {
-        isBasicInfoLoading = false;
-      });
+      getMyProfile().then((value) => setState(() {
+            doctorProfile = value;
+            firstname.text = user.name!.split(' ')[0];
+            lastname.text = user.name!.split(' ').length > 1 ? user.name!.split(' ')[1] : '';
+            email.text = doctorProfile!.data.primaryEmail;
+            phone_controller = PhoneController(PhoneNumber(isoCode: "NG", nsn: user.phone!));
+            gender = doctorProfile!.data.gender == "male" ? 'Male' : 'Female';
+            isBasicInfoLoading = false;
+            dob = (doctorProfile!.data.dob);
+          }));
     }
   }
 
@@ -485,49 +647,25 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               border: Border.all(color: const Color(0xFFE8E8E8), width: 1.0),
               color: Colors.white,
             ),
-            child: Row(
-              children: [
-                Flexible(
-                    child: Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: PhoneFormField(
-                    key: Key('phone-field'),
-                    controller: ctl, // controller & initialValue value
-                    shouldFormat: true, // default
-                    defaultCountry: IsoCode.NG, // default
-                    style: getCustomFont(size: 14.0, color: Colors.black45),
-                    autovalidateMode: AutovalidateMode.disabled,
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        hintText: 'Mobile Number', // default to null
-                        hintStyle: getCustomFont(size: 15.0, color: Colors.black45),
-                        border: OutlineInputBorder(borderSide: BorderSide.none) // default to UnderlineInputBorder(),
-                        ),
-                    validator: null,
-                    isCountryChipPersistent: false, // default
-                    isCountrySelectionEnabled: true, // default
-                    countrySelectorNavigator: CountrySelectorNavigator.dialog(),
-                    showFlagInInput: true, // default
-                    flagSize: 15, // default
-                    autofillHints: [AutofillHints.telephoneNumber], // default to null
-                    enabled: true, // default
+            child: PhoneFormField(
+              key: Key('phone-field'),
+              controller: ctl, // controller & initialValue value
+              shouldFormat: true, // default
+              defaultCountry: 'NG', // default
+              style: getCustomFont(size: 14.0, color: Colors.black45),
+              autovalidateMode: AutovalidateMode.disabled,
+              textAlign: TextAlign.left,
+              decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(0.0),
+                  // default to null
+                  hintStyle: getCustomFont(size: 15.0, color: Colors.black45),
+                  border: OutlineInputBorder(borderSide: BorderSide.none) // default to UnderlineInputBorder(),
                   ),
-                )),
-                PhysicalModel(
-                  elevation: 10.0,
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(100.0),
-                  shadowColor: Colors.grey,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
-                    child: Icon(
-                      Icons.smartphone,
-                      size: 15.0,
-                      color: Color(0xFF838383),
-                    ),
-                  ),
-                )
-              ],
+              validator: null,
+              showFlagInInput: true, // default
+              flagSize: 15, // default
+              autofillHints: [AutofillHints.telephoneNumber], // default to null
+              enabled: true, // default
             ),
           ),
         ],
@@ -571,23 +709,43 @@ class _ProfileSettingsState extends State<ProfileSettings> {
       isAboutMeLoading = true;
     });
     try {
-      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/profile/update-aboutme'), body: {
-        'aboutme': '${aboutMeController.text.trim()}',
+      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/doctors/'), body: {
+        'about': '${aboutMeController.text.trim()}',
+        "city_id": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).cityId,
+        "state_id": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).stateId,
+        "document_type_id": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).documentTypeId,
+        'primary_email': '${email.text.trim()}',
+        'gender': '${gender}'.toLowerCase(),
+        'dob': '${DateFormat('yyyy-MM-dd').format(dob)}',
+        "specialization": jsonEncode(DoctorHive.fromJson(box.get(USERPATH)!.doctor!).specialization),
+        "display_pic": isImage ? base64.encode(encodeedImage!) : fetchOnlineImage,
+        "reg_no": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).regNo,
+        "document": fetchOnlineDocument,
+        "address": DoctorHive.fromJson(box.get(USERPATH)!.doctor!).address
       }, headers: {
-        'Authorization': 'Bearer ${user.token}'
+        'Authorization': box.get(USERPATH)!.token!
       });
-      print(response.body);
-      if (response.statusCode == 200) {
-        print(response.body);
+
+      if (response.statusCode == 201) {
+        final parsed = jsonDecode(response.body);
+        popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${parsed['message']}', status: true));
       } else {
-        print(response.reasonPhrase);
+        popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${response.body}', status: false));
       }
     } catch (e) {
-      print(e);
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${e}', status: false));
     } finally {
-      setState(() {
-        isAboutMeLoading = false;
-      });
+      getMyProfile().then((value) => setState(() {
+            doctorProfile = value;
+            firstname.text = user.name!.split(' ')[0];
+            lastname.text = user.name!.split(' ').length > 1 ? user.name!.split(' ')[1] : '';
+            email.text = doctorProfile!.data.primaryEmail;
+            phone_controller = PhoneController(PhoneNumber(isoCode: "NG", nsn: user.phone!));
+            aboutMeController.text = doctorProfile!.data.about;
+            gender = doctorProfile!.data.gender == "male" ? 'Male' : 'Female';
+            isAboutMeLoading = false;
+            dob = (doctorProfile!.data.dob);
+          }));
     }
   }
 
@@ -610,7 +768,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             const SizedBox(
               height: 15.0,
             ),
-            getPhoneNumberForm(ctl: phone_controller, label: 'Hospital/Clinic Number'),
+            getPhoneNumberForm(ctl: clinicPhoneNumber, label: 'Hospital/Clinic Number'),
             const SizedBox(
               height: 15.0,
             ),
@@ -666,23 +824,22 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     setState(() {
       isClinicInfoLoading = true;
     });
+    if (clinicAddress.text.isEmpty) popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Clinic/Hospital Address are required'));
+    if (clinicName.text.isEmpty) popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Clinic/Hospital Name are required'));
+    if (clinicPhoneNumber.value!.nsn.isEmpty && clinicPhoneNumber.value!.countryCode.isEmpty) popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Clinic/Hospital contact are required'));
+    if (imagesClinic.isEmpty) return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Clinic/Hospital images are required'));
+
     try {
-      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/profile/clinic-info'), body: {
-        'name': '${clinicName.text.trim()}',
-        'add': '${clinicAddress.text.trim()}',
-        'image': '',
-        'phone': '+${phone_controller.value!.countryCode} ${phone_controller.value!.nsn}',
-      }, headers: {
-        'Authorization': 'Bearer ${user.token}'
-      });
-      print(response.body);
-      if (response.statusCode == 200) {
-        print(response.body);
-      } else {
-        print(response.reasonPhrase);
+      final res = await http.Client().post(Uri.parse('${ROOTAPI}/api/doctors/clinic'),
+          body: {'name': clinicName.text.trim(), 'address': clinicAddress.text.trim(), 'phone_number': '+${clinicPhoneNumber.value!.countryCode}${clinicPhoneNumber.value!.nsn}', 'clinic_pic_path': 'default.jpg'},
+          headers: {"Authorization": box.get(USERPATH)!.token!});
+      print(res.statusCode);
+      if (res.statusCode == 201) {
+        return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'New clinic/hospital record added successfully', status: true));
       }
+      return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${jsonDecode(res.body)['message']}'));
     } catch (e) {
-      print(e);
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '$e'));
     } finally {
       setState(() {
         isClinicInfoLoading = false;
@@ -717,11 +874,20 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             const SizedBox(
               height: 15.0,
             ),
-            getCardForm('State / Province', ''),
+            getDropDownState('State / Province', stateData!.name, context, (StateData s) {
+              setState(() {
+                stateData = s;
+                city = s.cities.first;
+              });
+            }, stateCityModel!.data),
             const SizedBox(
               height: 15.0,
             ),
-            getCardForm('City', 'Doe'),
+            getDropDownCity('City', city!.name, context, (s) {
+              setState(() {
+                city = s;
+              });
+            }, stateData!.cities),
             const SizedBox(
               height: 35.0,
             ),
@@ -841,22 +1007,22 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             isEducationInfoLoading
                 ? SizedBox(width: MediaQuery.of(context).size.width, child: Center(child: CircularProgressIndicator()))
                 : getButton(context, () {
+                    if (educationControllers.isEmpty) return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Enter the required Informations', status: false));
                     setState(() {
                       isEducationInfoLoading = true;
                     });
                     Future.forEach(educationControllers, (Map<String, dynamic> element) async {
-                      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/profile/education'), body: {
-                        'dgree': '${element['degree'].text.trim()}',
-                        'college': '${element['college'].text.trim()}',
-                        'year': '${DateFormat('yyyy').format(element['year'])}',
+                      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/doctors/educations'), body: {
+                        'degree': '${element['degree'].text.trim()}',
+                        'institution': '${element['college'].text.trim()}',
+                        'date_of_completion': '${DateFormat('yyyy-MM-dd').format(element['year'])}',
                       }, headers: {
-                        'Authorization': 'Bearer ${user.token}'
+                        'Authorization': '${box.get(USERPATH)!.token}'
                       });
-                      print(response.body);
                       if (response.statusCode == 200) {
-                        print(response.body);
+                        return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'New Education record successfully added...', status: true));
                       } else {
-                        print(response.reasonPhrase);
+                        return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${response.body}', status: false));
                       }
                     }).whenComplete(() => setState(() => isEducationInfoLoading = false));
                   }),
@@ -894,23 +1060,23 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             isExperienceInfoLoading
                 ? SizedBox(width: MediaQuery.of(context).size.width, child: Center(child: CircularProgressIndicator()))
                 : getButton(context, () {
+                    if (experienceControllers.isEmpty) return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Enter the required Informations', status: false));
                     setState(() {
                       isExperienceInfoLoading = true;
                     });
-                    Future.forEach(educationControllers, (Map<String, dynamic> element) async {
-                      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/profile/work-experience'), body: {
-                        'name': '${element['clinicName'].text.trim()}',
-                        'from': '${DateFormat('yyyy').format(element['from'])}',
-                        'to': '${DateFormat('yyyy').format(element['to'])}',
-                        'desig': '${element['description'].text.trim()}',
+                    Future.forEach(experienceControllers, (Map<String, dynamic> element) async {
+                      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/doctors/${box.get(USERPATH)!.uid}/experiences'), body: {
+                        'clinic_name': '${element['clinicName'].text.trim()}',
+                        'from': '${DateFormat('yyyy-MM-dd').format(element['from'])}',
+                        'to': '${DateFormat('yyyy-MM-dd').format(element['to'])}',
+                        'designation': '${element['description'].text.trim()}',
                       }, headers: {
-                        'Authorization': 'Bearer ${user.token}'
+                        'Authorization': '${box.get(USERPATH)!.token}'
                       });
-                      print(response.body);
                       if (response.statusCode == 200) {
-                        print(response.body);
+                        return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'New Experience record successfully added...', status: true));
                       } else {
-                        print(response.reasonPhrase);
+                        return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${response.body}', status: false));
                       }
                     }).whenComplete(() => setState(() => isExperienceInfoLoading = false));
                   }),
@@ -952,23 +1118,23 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             isAwardsInfoLoading
                 ? SizedBox(width: MediaQuery.of(context).size.width, child: Center(child: CircularProgressIndicator()))
                 : getButton(context, () {
+                    if (awardControllers.isEmpty) return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Enter the required Informations', status: false));
                     setState(() {
-                      isEducationInfoLoading = true;
+                      isAwardsInfoLoading = true;
                     });
-                    Future.forEach(educationControllers, (Map<String, dynamic> element) async {
-                      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/profile/awards'), body: {
-                        'award': '${element['award'].text.trim()}',
-                        'year': '${DateFormat('yyyy').format(element['year'])}',
+                    Future.forEach(awardControllers, (Map<String, dynamic> element) async {
+                      var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/doctors/awards'), body: {
+                        'award_title': '${element['award'].text.trim()}',
+                        'date': '${DateFormat('yyyy-MM-dd').format(element['year'])}',
                       }, headers: {
-                        'Authorization': 'Bearer ${user.token}'
+                        'Authorization': '${box.get(USERPATH)!.token}'
                       });
-                      print(response.body);
                       if (response.statusCode == 200) {
-                        print(response.body);
+                        return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'New Award record successfully added...', status: true));
                       } else {
-                        print(response.reasonPhrase);
+                        return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${response.body}', status: false));
                       }
-                    }).whenComplete(() => setState(() => isEducationInfoLoading = false));
+                    }).whenComplete(() => setState(() => isAwardsInfoLoading = false));
                   }, text: 'Save'),
             const SizedBox(
               height: 20.0,
@@ -988,16 +1154,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             const SizedBox(
               height: 20.0,
             ),
-            getCardForm('Memberships', '', ctl: null),
-            const SizedBox(
-              height: 10.0,
-            ),
             ...List.generate(membership.length, (i) => getMemberShipItem(membership[i], i)),
             const SizedBox(
               height: 10.0,
             ),
             GestureDetector(
-                onTap: () => setState(() => membership.add({'membership': TextEditingController()})),
+                onTap: () => setState(() => membership.add({'membership_name': TextEditingController()})),
                 child: Icon(
                   Icons.add_circle_outline,
                   color: BLUECOLOR,
@@ -1005,7 +1167,24 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             const SizedBox(
               height: 30.0,
             ),
-            getButton(context, () {}),
+            getButton(context, () {
+              if (membership.isEmpty) return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Enter the required Informations', status: false));
+              setState(() {
+                isMembershipInfoLoading = true;
+              });
+              Future.forEach(membership, (Map<String, dynamic> element) async {
+                var response = await http.Client().post(Uri.parse('${ROOTNEWURL}/api/doctors/${box.get(USERPATH)!.uid}/memberships'), body: {
+                  'membership_name': '${element['membership_name'].text.trim()}',
+                }, headers: {
+                  'Authorization': '${box.get(USERPATH)!.token}'
+                });
+                if (response.statusCode == 200) {
+                  return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'New Award record successfully added...', status: true));
+                } else {
+                  return popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '${response.body}', status: false));
+                }
+              }).whenComplete(() => setState(() => isMembershipInfoLoading = false));
+            }),
             const SizedBox(
               height: 10.0,
             ),

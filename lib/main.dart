@@ -2,19 +2,17 @@ import 'package:doctor/auth/login.dart';
 import 'package:doctor/auth/onboarding.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/homepage/dashboard.dart';
-import 'package:doctor/model/person/user.dart';
 import 'package:doctor/notification/helper_notification.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/providers/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:phone_form_field/l10n/generated/phone_field_localization.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
@@ -37,7 +35,9 @@ Future<void> main() async {
   var directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   Hive.registerAdapter(UserAdapter());
+
   await Hive.openBox<User>(BoxName);
+  await Hive.openBox(ReferralBox);
   await Hive.openBox('Initialization');
   runApp(const MyApp());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -72,12 +72,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
       ],
       child: GetMaterialApp(
-        localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate, PhoneFieldLocalization.delegate],
-        locale: Locale('en', ''),
-        supportedLocales: const [
-          Locale('en', ''),
-          Locale('ar', ''),
-        ],
         title: 'Doctor',
         defaultTransition: Transition.zoom,
         debugShowCheckedModeBanner: true,

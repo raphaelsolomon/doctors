@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:doctor/callscreens/videocallscreen.dart';
 import 'package:doctor/callscreens/voicecallscreen.dart';
 import 'package:doctor/model/call.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/resources/call_methods.dart';
 import 'package:flutter/material.dart';
 

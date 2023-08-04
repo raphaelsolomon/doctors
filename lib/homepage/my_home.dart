@@ -1,6 +1,6 @@
 import 'package:doctor/auth/otp.dart';
 import 'package:doctor/constant/strings.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/store/index.dart';
 import 'package:flutter/material.dart';

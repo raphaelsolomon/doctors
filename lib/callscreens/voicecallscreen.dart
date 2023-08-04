@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/callscreens/time_view.dart';
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/model/call.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/user_provider.dart';
 import 'package:doctor/resources/call_methods.dart';
 import 'package:flutter/material.dart';

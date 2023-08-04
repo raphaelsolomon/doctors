@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:doctor/auth/login.dart';
 import 'package:doctor/auth/stage_two.dart';
 import 'package:doctor/constant/strings.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/resuable/form_widgets.dart';
 import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';

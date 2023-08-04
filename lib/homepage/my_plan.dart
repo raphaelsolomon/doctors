@@ -1,11 +1,15 @@
 import 'package:doctor/constant/strings.dart';
 import 'package:doctor/dialog/subscribe.dart';
+import 'package:doctor/person/user.dart';
 import 'package:doctor/providers/page_controller.dart';
 import 'package:doctor/services/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:doctor/dialog/subscribe.dart' as popupMessage;
+import 'package:http/http.dart' as http;
 
 class MyPlan extends StatefulWidget {
   const MyPlan({Key? key}) : super(key: key);
@@ -26,15 +30,18 @@ class _MyPlanState extends State<MyPlan> {
   ];
 
   List<String> services = [];
-  List<String> Specialization = [];
+  List<String> specialization = [];
   List<String> currencies = [];
   Map curMap = {};
   String shift = 'Morning';
-  String bookingClass = 'Standard';
+  Map<String, String> bookingClass = {'name': 'Standard', 'class': 'standard'};
   String type = 'Audio Call';
   String frequency = 'Seconds';
   String fromCurrency = "USD";
   String toCurrency = "NGN";
+  String bookingShift = 'morning';
+  final box = Hive.box<User>(BoxName);
+  bool isPageLoading = false;
 
   @override
   void initState() {
@@ -231,13 +238,14 @@ class _MyPlanState extends State<MyPlan> {
                         child: Container(
                           width: 120.0,
                           margin: const EdgeInsets.only(right: 15.0, left: 10.0),
-                          decoration: BoxDecoration(color: bookingClass == e ? BLUECOLOR : Colors.white, border: Border.all(color: bookingClass == e ? BLUECOLOR : Colors.black, width: 1.0), borderRadius: BorderRadius.circular(50.0)),
+                          decoration: BoxDecoration(
+                              color: bookingClass['name'] == e['name'] ? BLUECOLOR : Colors.white, border: Border.all(color: bookingClass['name'] == e['name'] ? BLUECOLOR : Colors.black, width: 1.0), borderRadius: BorderRadius.circular(50.0)),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Center(
                               child: Text(
-                                '$e',
-                                style: getCustomFont(size: 13.0, color: bookingClass == e ? Colors.white : BLUECOLOR),
+                                '${e['name']}',
+                                style: getCustomFont(size: 13.0, color: bookingClass['name'] == e['name'] ? Colors.white : BLUECOLOR),
                               ),
                             ),
                           ),
@@ -364,7 +372,7 @@ class _MyPlanState extends State<MyPlan> {
                       children: [
                         Flexible(
                           fit: FlexFit.tight,
-                          child: Wrap(children: Specialization.map((e) => itemContainer(Specialization, e)).toList()),
+                          child: Wrap(children: specialization.map((e) => itemContainer(specialization, e)).toList()),
                         ),
                         GestureDetector(
                             onTap: () => showBottomSheet(),
@@ -391,13 +399,48 @@ class _MyPlanState extends State<MyPlan> {
             const SizedBox(
               height: 30.0,
             ),
-            getButton(context, () {}, 'Save Plan'),
+            getButton(context, () async {}, 'Save Plan'),
             const SizedBox(
               height: 80.0,
             ),
           ]),
         ),
       );
+
+  Future<void> getAllState() async {
+    try {
+      final res = await http.Client().post(Uri.parse('${ROOTAPI}/api/doctors/plans'), headers: {
+        "Authorization": box.get(USERPATH)!.token!
+      }, body: {
+        "price_types": pricing == 'Free' ? "free_plan" : 'custom_plan',
+        "consultation_type": type == 'Audio Call'
+            ? 'audio_call'
+            : type == 'Video Call'
+                ? 'video_call'
+                : type == 'Chat'
+                    ? 'chat'
+                    : 'physical_vist',
+        "frequency": frequency == "Seconds"
+            ? 'seconds'
+            : frequency == 'Minutes'
+                ? 'minutes'
+                : 'hours',
+        "booking_class": bookingClass['name'],
+        "booking_shift": bookingShift,
+        "currency": "naira",
+        "amount": converted.text,
+        "services": services,
+        "specializations": specialization
+      });
+      if (res.statusCode == 200) {
+        popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, 'Plan Successfully Added..', status: true));
+      }
+    } catch (e) {
+      popupMessage.dialogMessage(context, popupMessage.serviceMessage(context, '$e', status: false));
+    } finally {
+      isPageLoading = false;
+    }
+  }
 
   Widget itemContainer(List<String> item, e) => Container(
         margin: const EdgeInsets.all(5.0),
@@ -603,8 +646,13 @@ class _MyPlanState extends State<MyPlan> {
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      // initialValue: 'Male',
-                      items: ['Morning', 'Afternoon', 'Evening', 'Mid Night ']
+                      onChanged: (value) {
+                        if (value == 'Morning') bookingShift = 'morning';
+                        if (value == 'Afternoon') bookingShift = 'afternoon';
+                        if (value == 'Evening') bookingShift = 'evening';
+                        if (value == 'Mid Night') bookingShift = 'night';
+                      },
+                      items: ['Morning', 'Afternoon', 'Evening', 'Mid Night']
                           .map((gender) => DropdownMenuItem(
                                 value: gender,
                                 child: Text(
@@ -651,8 +699,8 @@ class _MyPlanState extends State<MyPlan> {
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        if (!Specialization.contains(SpecialitiesFilter[i])) {
-                                          Specialization.add(SpecialitiesFilter[i]);
+                                        if (!specialization.contains(SpecialitiesFilter[i])) {
+                                          specialization.add(SpecialitiesFilter[i]);
                                         }
                                       });
                                       Navigator.pop(context);

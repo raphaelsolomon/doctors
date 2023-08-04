@@ -1,5 +1,4 @@
 import 'package:doctor/constant/strings.dart';
-import 'package:fincra_flutter/fincra_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
@@ -82,19 +81,19 @@ class _TopUpState extends State<TopUp> {
                 }
 
                 if (paymentMethod == 'Fincra' && amountController.text.trim().isNotEmpty) {
-                  FincraFlutter.launchFincra(
-                    context,
-                    publicKey: "<public_test_key|public_prod_key>",
-                    amount: "4000",
-                    name: "oyee",
-                    phoneNumber: "+2348012345679",
-                    currency: "NGN",
-                    email: "test@gmail.com",
-                    feeBearer: "business",
-                    onSuccess: (data) {},
-                    onError: (data) {},
-                    onClose: () {},
-                  );
+                  // FincraFlutter.launchFincra(
+                  //   context,
+                  //   publicKey: "<public_test_key|public_prod_key>",
+                  //   amount: "4000",
+                  //   name: "oyee",
+                  //   phoneNumber: "+2348012345679",
+                  //   currency: "NGN",
+                  //   email: "test@gmail.com",
+                  //   feeBearer: "business",
+                  //   onSuccess: (data) {},
+                  //   onError: (data) {},
+                  //   onClose: () {},
+                  // );
                 }
               }),
               const SizedBox(

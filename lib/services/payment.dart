@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:doctor/person/user.dart';
 import 'package:doctor/services/fincra_payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../constant/strings.dart';
-import '../model/person/user.dart';
 
 chargeCard(
   BuildContext context,

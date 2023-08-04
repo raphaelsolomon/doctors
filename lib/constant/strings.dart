@@ -1,13 +1,14 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:doctor/model/nav_drawer.model.dart';
-import 'package:doctor/model/person/user.dart';
+import 'package:doctor/person/user.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const String CALL_COLLECTION = "call";
+const ReferralBox = 'refBox';
 const LINKEDIN_CLIENTID = '772wa1uu6cvroc';
 const LINKEDIN_SECRET = 'aQF6dRF0wmkPm366';
 const LINKEDIN_REDIRECT = 'https://www.linkedin.com/developers/tools/oauth/redirect';
@@ -896,7 +897,14 @@ List<String> doctorsExperience = ['1-3 Years', '4–6 Years', '7–9 Years', '10
 
 List<String> doctorPrice = ['0 – 2500', '2501 – 5000', '5001 – 7500', '7501 – 10,000', '10,001 – 15,000', '15,000 – Above'];
 
-List<String> bookClass = ['Standard', 'Future', 'Urgent', 'Private', 'VIP', 'VVIP'];
+List<Map<String, String>> bookClass = [
+  {'name': 'Standard', 'class': 'standard'},
+  {'name': 'Future', 'class': 'future'},
+  {'name': 'Urgent', 'class': 'urgent'},
+  {'name': 'Private', 'class': 'private'},
+  {'name': 'VIP', 'class': 'vip'},
+  {'name': 'VVIP', 'class': 'vvip'},
+];
 
 List<String> consultationShift = ['Early Morning', 'Morning', 'Noon', 'Evening', 'Night', 'Mid Night', 'Rounds'];
 
